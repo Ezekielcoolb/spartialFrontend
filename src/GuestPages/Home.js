@@ -7,18 +7,20 @@ import { fetchHomepage, fetchObjectpage } from "../Redux/slice/homeSlice";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import CountUp from "react-countup";
+import { useInView } from "react-intersection-observer";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
-
+import { useSwipeable } from "react-swipeable";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const HomeRap = styled.div`
   background: #000000;
   @media (max-width: 778px) {
-  padding-top: 60px;
- }
+    padding-top: 60px;
+  }
   .home-1 {
     /* background-size: cover;
     background-repeat: no-repeat; */
@@ -65,24 +67,52 @@ const HomeRap = styled.div`
     animation-delay: 0.6s;
   }
 
-  .get-in-touch {
-    display: inline-block;
-    padding: 12px 24px;
-    background: #218838;
-    color: white;
-    width: 231px;
-    height: 48px;
-    border-radius: 100px;
-    margin-top: 10px;
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-    font-size: 16px;
-    animation: fadeInUp 1s ease-out;
-    animation-delay: 0.9s;
-  }
+.get-in-touch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 24px;
+  background: #025726ff;
+  color: white;
+  width: 231px;
+  height: 48px;
+  border-radius: 100px;
+  margin-top: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  animation: fadeInUp 1s ease-out;
+  animation-delay: 0.9s;
+
+  position: relative;   /* for ::before */
+  overflow: hidden;     /* keep overlay inside */
+  z-index: 0;
+}
+
+/* overlay background */
+.get-in-touch::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(
+  180deg,
+  #8b4513 0%,   
+  #025726 50%,  
+  #1c1c1c 100%  
+);  
+  border-radius: 100px;
+  z-index: -1;
+  transition: height 0.5s ease;
+}
+
+/* grow background on hover */
+.get-in-touch:hover::before {
+  height: 100%;
+}
+
 
   .slider-wrapper {
     padding: 0px;
@@ -106,8 +136,7 @@ const HomeRap = styled.div`
     max-width: 427px;
   }
 
-
-.home-2-new-upper p {
+  .home-2-new-upper p {
     border: 1px solid #cc9430;
     border-radius: 20px;
     width: 103px;
@@ -166,15 +195,43 @@ const HomeRap = styled.div`
     font-weight: 600;
     color: #ffffff;
   }
-  .home-2-new-down-inner {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 30px;
-    background: green;
-    border-radius: 12px;
-    margin-left: -40px;
-  }
+ .home-2-new-down-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+  background: #025726ff;
+  border-radius: 12px;
+  margin-left: -40px;
+  position: relative;   /* needed for ::before */
+  overflow: hidden;     /* hide overflow when animating */
+  z-index: 0;
+}
+
+/* overlay background */
+.home-2-new-down-inner::before {
+  content: "";
+  position: absolute;
+  bottom: 0;   /* start from bottom */
+  left: 0;
+  width: 100%;
+  height: 0;   /* initially hidden */
+  background: linear-gradient(
+  180deg,
+  #8b4513 0%,   
+  #025726 50%,  
+  #1c1c1c 100%  
+);  
+  z-index: -1; /* stay behind the content */
+  transition: height 0.5s ease;
+  border-radius: 12px;
+}
+
+/* grow from bottom to top on hover */
+.home-2-new-down-inner:hover::before {
+  height: 100%;
+}
+
   .home-2-new-down img {
     max-width: 670px;
     height: 480px;
@@ -194,35 +251,35 @@ const HomeRap = styled.div`
   }
 
   .slide-left {
-  animation: slideFromLeft 1s ease-out forwards;
-}
+    animation: slideFromLeft 1s ease-out forwards;
+  }
 
-.slide-right {
-  animation: slideFromRight 1s ease-out forwards;
-}
+  .slide-right {
+    animation: slideFromRight 1s ease-out forwards;
+  }
 
-@keyframes slideFromLeft {
-  from {
-    transform: translateX(-1000px);
-    opacity: 0;
+  @keyframes slideFromLeft {
+    from {
+      transform: translateX(-1000px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
 
-@keyframes slideFromRight {
-  from {
-    transform: translateX(1000px);
-    opacity: 0;
+  @keyframes slideFromRight {
+    from {
+      transform: translateX(1000px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
- @media (max-width: 1024px) {
+  @media (max-width: 1024px) {
     .home-2-new-down {
       flex-direction: column;
     }
@@ -234,18 +291,18 @@ const HomeRap = styled.div`
       flex-direction: column;
     }
   }
-   @media (max-width: 700px) {
+  @media (max-width: 700px) {
     .home-2-new-down img {
       max-width: 500px;
     }
   }
-   @media (max-width: 550px) {
+  @media (max-width: 550px) {
     .home-2-new-down img {
       max-width: 400px;
       height: 400px;
     }
   }
-    @media (max-width: 400px) {
+  @media (max-width: 400px) {
     .home-2-new-down img {
       max-width: 350px;
       height: 400px;
@@ -344,8 +401,18 @@ const HomeRap = styled.div`
     margin-right: 20px;
   }
   .over-4 {
-        background: #1a1a1a;
-border-radius: 30px;
+    background: radial-gradient(
+      circle at center,
+      #2a2a2a,
+      #1a1a1a,
+      #000000,
+      #6e4223ff,
+      #28a745
+    );
+    background-size: 200% 200%;
+    animation: pulseGlow 10s ease-in-out infinite;
+
+    border-radius: 30px;
     display: flex;
     flex-direction: column;
     gap: 50px;
@@ -353,6 +420,23 @@ border-radius: 30px;
     padding-bottom: 50px;
     margin: 50px 20px;
   }
+
+  /* Inside-out growing animation */
+  @keyframes pulseGlow {
+    0% {
+      background-size: 100% 100%;
+      background-position: center;
+    }
+    50% {
+      background-size: 150% 150%;
+      background-position: center;
+    }
+    100% {
+      background-size: 100% 100%;
+      background-position: center;
+    }
+  }
+
   .gallery-container {
     position: relative;
     display: flex;
@@ -418,37 +502,75 @@ border-radius: 30px;
   }
 
   .galery-div {
-    width: 40%;
-    flex: 0 0 50%; /* Each item takes 50% of container */
-    box-sizing: border-box;
-    height: auto;
-    border-radius: 8px;
-    background: #ffffff;
-    padding-bottom: 20px;
-  }
+  width: 40%;
+  flex: 0 0 50%; /* Each item takes 50% of container */
+  box-sizing: border-box;
+  height: auto;
+  border-radius: 8px;
+  background: linear-gradient(
+  180deg,
+  #1c1c1c 0%,   
+  #025726 50%,  
+  #8b4513 100%  
+);
+  padding-bottom: 20px;
+cursor: pointer;
+  position: relative;   /* needed for ::before */
+  overflow: hidden;     /* keep hover effect inside */
+  z-index: 0;
+  color: #00001c;
+}
+
+/* overlay background */
+.galery-div::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+background: linear-gradient(
+  180deg,
+  #8b4513 0%,   
+  #025726 50%,  
+  #1c1c1c 100%  
+);  
+border-radius: 8px;
+  z-index: -1;
+  color: #ffff;
+  transition: height 0.5s ease;
+}
+
+/* grow background on hover */
+.galery-div:hover::before {
+  height: 100%;
+}
+
   .galery-div-inner {
     padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 15px;
   }
-  .galery-div-inner h4 { 
-  font-size: 18px;
+  .galery-div-inner h4 {
+    font-size: 18px;
     font-weight: 600;
+    color: #ffffff;
   }
   .galery-div p {
     font-size: 16px;
     font-weight: 400;
     max-width: 592px;
+     color: #ffffff;
     line-height: 23px;
   }
   .galery-div-inner-icon {
     display: flex;
     align-items: center;
     gap: 10px;
-     font-size: 14px;
+    font-size: 14px;
     font-weight: 400;
-    color: #716c6bff;
+    color: #c1bfbeff;
   }
   .nav-btn {
     background-color: white;
@@ -536,15 +658,51 @@ border-radius: 30px;
     font-size: 18px;
     max-width: 337px;
   }
-.choose-div-sub {
+  .choose-div-sub {
   display: flex;
-  background-color: white;
+  background: white; /* default state */
   padding: 20px;
   border-radius: 20px;
   flex-direction: column;
   gap: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* subtle shadow */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;   /* needed for overlay */
+  overflow: hidden;     /* keeps hover effect inside */
+  z-index: 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
+
+/* gradient overlay */
+.choose-div-sub::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;  /* grows on hover */
+  background: linear-gradient(
+    180deg,
+    #8b4513 0%,   
+  #025726 50%,  
+  #1c1c1c 100% 
+  );
+  border-radius: 20px;
+  z-index: -1;
+  transition: height 0.6s ease;
+}
+
+/* hover effect */
+.choose-div-sub:hover::before {
+  height: 100%;
+}
+
+.choose-div-sub:hover h4,
+.choose-div-sub:hover p {
+  color: #ffffff; /* text turns white for contrast */
+  transition: color 0.4s ease;
+}
+
 
   .choose-div-body {
     display: flex;
@@ -568,6 +726,10 @@ border-radius: 30px;
     border-radius: 50%;
     background: #12121229;
   }
+
+  .choose-div-sub:hover .choose-div-icon {
+  background: #ffffff;
+}
   .choose-div-icon img {
     width: 20px;
     height: 20px;
@@ -602,19 +764,49 @@ border-radius: 30px;
     color: #e1dbdb;
   }
   .sub-col-5-btn {
-    color: #ffffff;
-    background: #218838;
-    width: 200px;
-    height: 50px;
-    border-radius: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-  }
+  color: #ffffff;
+  background: #025726ff; 
+  width: 200px;
+  height: 50px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+
+  position: relative;   /* needed for ::before */
+  overflow: hidden;     /* keep overlay inside */
+  z-index: 0;
+}
+
+/* overlay background */
+.sub-col-5-btn::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(
+  180deg,
+  #8b4513 0%,   
+  #025726 50%,  
+  #1c1c1c 100%  
+); 
+ 
+  border-radius: 100px;
+  z-index: -1;
+  transition: height 0.5s ease;
+}
+
+/* grow background on hover */
+.sub-col-5-btn:hover::before {
+  height: 100%;
+}
+
   .sub-col-5-mobile p {
     max-width: 700px !important;
   }
@@ -625,15 +817,33 @@ border-radius: 30px;
     width: 156px;
     height: 44px;
   }
-  .home-4, .mobile4-home {
-    background: #1a1a1a;
+  .home-4,
+  .mobile4-home {
+    background: linear-gradient(-45deg, #04250bff, #1d1007ff, #2a2a2a, #1c1c1c);
+    background-size: 300% 300%;
+    animation: darkShadeShift 20s ease-in-out infinite;
+
     margin: 100px 20px;
     overflow: hidden;
     padding-top: 80px;
     border-radius: 30px;
   }
+
+  /* Subtle gradient movement */
+  @keyframes darkShadeShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
   .mobile4-home {
-     display: none ;
+    display: none;
   }
   .home-4-mobile {
     display: none !important;
@@ -684,7 +894,7 @@ border-radius: 30px;
     max-width: 544px;
   }
 
- .sub-col-2 {
+  .sub-col-2 {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -710,7 +920,8 @@ border-radius: 30px;
     gap: 20px;
     margin-top: 100px;
   }
-  .col-3 h2 {
+  .col-3 h2,
+  .counter-head h2 {
     max-width: 589px;
     margin: 0px;
     font-size: 40px;
@@ -719,7 +930,9 @@ border-radius: 30px;
     line-height: 40px;
     color: #ffffff;
   }
-  .col-3 p {
+
+  .col-3 p,
+  .counter-head p {
     font-size: 18px;
     text-align: center;
     color: #ffffffb2;
@@ -748,7 +961,7 @@ border-radius: 30px;
     text-align: center;
     max-width: 885px;
   }
-  
+
   .task-img {
     width: 350px;
     height: 233px;
@@ -795,93 +1008,315 @@ border-radius: 30px;
     margin: 16px 0;
   }
 
-
-.triangle-carousel {
-  position: relative;
-  width: 100%;
-  max-width: 1000px;
-  height: 600px;
-  margin: auto;
-  perspective: 1000px;
-}
-
-.card {
-  position: absolute;
-  width: 30vw;
-  max-width: 350px;
-  padding: 20px;
-  background: #f1f4fd;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.8s ease;
-  opacity: 0;
-  padding-top: 0px;
-  transform: scale(0.8);
-}
-
-.card img {
-  width: 100%;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-.card.center {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1.1);
-  opacity: 1;
-  z-index: 3;
-}
-
-.card.left {
-  top: 60%;
-  left: 15%;
-  transform: translate(-50%, -50%) rotate(-10deg) scale(0.9);
-  opacity: 0.7;
-  z-index: 2;
-}
-
-.card.right {
-  top: 60%;
-  right: 15%;
-  transform: translate(50%, -50%) rotate(10deg) scale(0.9);
-  opacity: 0.7;
-  z-index: 2;
-}
-
-.card.hidden {
-  opacity: 0;
-  transform: scale(0.5);
-  pointer-events: none;
-}
-
-/* ✅ Responsive styles */
-@media screen and (max-width: 768px) {
   .triangle-carousel {
-    height: 500px;
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    height: 600px;
+    margin: auto;
+    perspective: 1000px;
   }
 
   .card {
-    width: 70vw;
+    position: absolute;
+    width: 30vw;
+    max-width: 350px;
+    padding: 20px;
+    background: #f1f4fd;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.8s ease;
+    opacity: 0;
+    padding-top: 0px;
+    transform: scale(0.8);
+  }
+
+  .card img {
+    width: 100%;
+    height: 350px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+
+  .card.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+    z-index: 3;
   }
 
   .card.left {
-    top: 65%;
-    left: 10%;
-    transform: translate(-50%, -50%) rotate(-5deg) scale(0.85);
+    top: 60%;
+    left: 15%;
+    transform: translate(-50%, -50%) rotate(-10deg) scale(0.9);
+    opacity: 0.7;
+    z-index: 2;
   }
 
   .card.right {
-    top: 65%;
-    right: 10%;
-    transform: translate(50%, -50%) rotate(5deg) scale(0.85);
+    top: 60%;
+    right: 15%;
+    transform: translate(50%, -50%) rotate(10deg) scale(0.9);
+    opacity: 0.7;
+    z-index: 2;
   }
-}
 
+  .card.hidden {
+    opacity: 0;
+    transform: scale(0.5);
+    pointer-events: none;
+  }
 
+  .counter-div {
+    width: 100%;
+    height: fit-content; /* adjust to your need */
+    border-radius: 30px; /* optional: smooth corners */
+    background: linear-gradient(
+      -45deg,
+      #031e01ff,
+      #401e05ff,
+      #1d0943ff,
+      #0f1510ff,
+      #1c1c1c,
+      #080604ff
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    color: white; /* so text is visible */
+    font-size: 2rem;
+    margin: 50px 20px;
+  }
 
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 
+  .counter-head {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  .counter-head h2,
+  .counter-head p {
+    text-align: center;
+  }
 
+  .counter-sub h4 {
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: 600;
+  }
+
+  .counter-sub p {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 450;
+  }
+
+  .counter-sub {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .counter-body {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .home-10-sub h6 {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .home-10-sub span {
+    background: #3a954f;
+    width: 10px;
+    height: 3px;
+  }
+  .home-10-sub h2 {
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 40px;
+    max-width: 551px;
+    text-align: center;
+  }
+  .home-10-sub {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 50px;
+  }
+  .home-11-inner-1 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+  .home-11-inner-1 h2 {
+    color: #34302f;
+    font-size: 45px;
+    font-weight: 500;
+    text-align: center;
+    max-width: 571px;
+    margin: 0px;
+  }
+  .home-11-inner-2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .home-11-inner-2 img {
+    width: 270px;
+    height: 245px;
+  }
+  .logitech img {
+    width: 50px;
+    height: 50px;
+  }
+  .logitech p {
+    color: #e9e6e6ff;
+    font-size: 18px;
+    font-weight: 450;
+    line-height: 23px;
+    max-width: 600px;
+    text-align: center;
+  }
+  .logitech h5 {
+    color: #8b4513;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .logitech {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  .home-11 {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+  .home-10 {
+    background: radial-gradient(circle at top, #0c2813ff, #0b0b0bff 80%);
+    position: relative; /* ensure stacking context */
+    z-index: 0;
+    border-radius: 30px;
+    margin: 50px 30px;
+    padding-top: 50px;
+    padding-bottom: 50px !important;
+    margin-bottom: 0px !important;
+  }
+
+  /* Stars effect */
+  .home-10::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: transparent;
+    background-image: radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 200px 150px, #fff, transparent),
+      radial-gradient(2px 2px at 400px 100px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 600px 200px, #fff, transparent),
+      radial-gradient(2px 2px at 800px 50px, #fff, transparent),
+      radial-gradient(2px 2px at 1000px 250px, #fff, transparent);
+    animation: starsMove 60s linear infinite;
+    opacity: 0.8;
+
+    z-index: -1; /* push behind content */
+    pointer-events: none; /* make sure it never blocks clicks */
+  }
+
+  /* fade/slide effects */
+  .slide-left {
+    animation: slideLeft 0.6s ease;
+  }
+  .slide-right {
+    animation: slideRight 0.6s ease;
+  }
+
+  @keyframes slideLeft {
+    from {
+      opacity: 0;
+      transform: translateX(1000px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideRight {
+    from {
+      opacity: 0;
+      transform: translateX(-1000px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Stars moving slowly */
+  @keyframes starsMove {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-200px);
+    }
+  }
+
+  /* ✅ Responsive styles */
+  @media screen and (max-width: 768px) {
+    .triangle-carousel {
+      height: 500px;
+    }
+
+    .card {
+      width: 70vw;
+    }
+
+    .card.left {
+      top: 65%;
+      left: 10%;
+      transform: translate(-50%, -50%) rotate(-5deg) scale(0.85);
+    }
+
+    .card.right {
+      top: 65%;
+      right: 10%;
+      transform: translate(50%, -50%) rotate(5deg) scale(0.85);
+    }
+  }
 
   @media (max-width: 1130px) {
     .modal-content {
@@ -900,9 +1335,9 @@ border-radius: 30px;
     .choose-div-body {
       flex-wrap: wrap;
     }
-      .mobile4-home {
-     display: block !important ;
-  }
+    .mobile4-home {
+      display: block !important ;
+    }
     .home-4-gone {
       display: none;
     }
@@ -934,6 +1369,9 @@ border-radius: 30px;
     .nav-btn {
       display: none;
     }
+    .icon-home-11 {
+      display: none;
+    }
   }
   @media (max-width: 550px) {
     .over-4 {
@@ -941,17 +1379,30 @@ border-radius: 30px;
       margin-top: 80px !important;
     }
     .home-1 {
-    padding-left: 10px !important;
-
+      padding-left: 10px !important;
     }
     .home-4,
     .about-3 {
+      margin: 0px 0px !important;
       padding-bottom: 0px !important;
       margin-top: 80px;
     }
+
+    .counter-div,
+    .mobile4-home,
+    .home-10 {
+      margin: 0px 0px !important;
+    }
+
+     .counter-div {
+      margin-top: 50px !important;
+     }
+    /* .counter-body {
+  flex-direction: column;
+  align-items: center;
+} */
   }
   @media (max-width: 450px) {
-    
   }
 `;
 
@@ -1029,31 +1480,73 @@ const Home = () => {
       id: 0,
       title: "Task management",
       overview: "Lorem ipsum dolor sit amet consectetur. Et diam aenean",
-      image: "/images/task_img.png"
+      image: "/images/task_img.png",
     },
-     {
+    {
       id: 1,
       title: "Environmental certification",
       overview: "Lorem ipsum dolor sit amet consectetur. Et diam aenean",
-      image: "/images/task_img.png"
+      image: "/images/task_img.png",
     },
-     {
+    {
       id: 2,
       title: "Document management",
       overview: "Lorem ipsum dolor sit amet consectetur. Et diam aenean",
-      image: "/images/task_img.png"
+      image: "/images/task_img.png",
     },
-     {
+    {
       id: 3,
       title: "Training management",
       overview: "Lorem ipsum dolor sit amet consectetur. Et diam aenean",
-      image: "/images/task_img.png"
-    }
-  ]
+      image: "/images/task_img.png",
+    },
+  ];
+
+  const testimonials = [
+    {
+      id: 1,
+      full_name: "MARIA JABLONSKI",
+      testimony:
+        "Their team are easy to work with and helped me make amazing websites in a short amount of time. Thanks guys for all your hard work. Trust us we looked for a very long time.",
+      image: "/images/image-8.png",
+      pic: "images/img-3.png",
+    },
+    {
+      id: 2,
+      full_name: "LIONEL MESSI",
+      testimony:
+        "Their team are easy to work with and helped me make amazing websites in a short amount of time. Thanks guys for all your hard work. Trust us we looked for a very long time.",
+      image: "/images/image-8.png",
+      pic: "images/img-3.png",
+    },
+  ];
 
   const [activeSlideIndexes, setActiveSlideIndexes] = useState(0);
+  const [currentSlider, setCurrentSlider] = useState(services[0]);
+  const [currentIndexNew, setCurrentIndexNew] = useState(0);
 
-   const [currentSlider, setCurrentSlider] = useState(services[0]);
+  const currentTestimony = testimonials[currentIndexNew];
+
+  const [animation, setAnimation] = useState("");
+
+  const handleNextNew = () => {
+    setAnimation("slide-left");
+    setCurrentIndexNew((prevIndex) => (prevIndex + 1) % testimonials.length);
+  };
+
+  const handlePrevNew = () => {
+    setAnimation("slide-right");
+    setCurrentIndexNew((prevIndex) =>
+      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => handleNextNew(),
+    onSwipedRight: () => handlePrevNew(),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true, // works for mouse drag too
+  });
 
   const settingsing = {
     dots: true,
@@ -1066,10 +1559,13 @@ const Home = () => {
     arrows: false,
   };
 
-
   const containerRef = useRef(null);
   const textDivRef = useRef(null);
   const imagesDivRef = useRef(null);
+  const { ref, inView } = useInView({
+    triggerOnce: true, // run only once
+    threshold: 0.3, // start when 30% visible
+  });
 
   useEffect(() => {
     const container = containerRef.current;
@@ -1122,7 +1618,7 @@ const Home = () => {
   const sectionThree = aboutObject?.data?.secThree;
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(slider[0]);
-    const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   // const currentSlide = slider[currentIndex];
   const settings = {
@@ -1139,7 +1635,6 @@ const Home = () => {
     },
   };
 
-
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % documents.length);
@@ -1149,7 +1644,8 @@ const Home = () => {
   }, []);
 
   const getPositionClass = (index) => {
-    const relativeIndex = (index - activeIndex + documents.length) % documents.length;
+    const relativeIndex =
+      (index - activeIndex + documents.length) % documents.length;
     if (relativeIndex === 0) return "center";
     if (relativeIndex === 1) return "right";
     if (relativeIndex === documents.length - 1) return "left";
@@ -1243,38 +1739,38 @@ const Home = () => {
     }
   };
 
-
-const portfolio = [
-  {
-    image: "/images/image-2.jpg",
-    video: "/images/video-1.mp4",
-    title: "Environmental Impact Assessment (EIA) for CNG Facility",
-    content: "Conducted a comprehensive EIA to assess the potential environmental and socio-economic impacts of a proposed Compressed Natural Gas (CNG) facility. The study ensured alignment with regulatory standards and provided mitigation strategies to support sustainable energy development.",
-    client: "Basswood Energy Limited",
-    address: "Lagos-Ibadan Expressway, Ogun State"
-  },
-   {
-    image: "/images/image-3.jpg",
-    video: "/images/video-2.mp4",
-    title: "Environmental and Social Due Diligence (ESDD)",
-    content: ": Conducted an ESDD to assess environmental, health, safety, and social risks associated with industrial operations. The findings informed risk mitigation plans and compliance strategies in line with international best practices.",
-    client: "Supertech Industries Limited",
-    address: "Ondo State"
-  },
-   {
-    image: "/images/image-4.jpg",
-    video: "",
-    title: "Training in Occupational Health",
-    content: "Development and implementation of a certified management system covering environment, quality, and occupational safety. Risk prevention and safety culture in telecom operations.",
-    client: "Ikeja Electricity Distribution Company",
-    address: "Lagos"
-  }
-]
+  const portfolio = [
+    {
+      image: "/images/image-2.jpg",
+      video: "/images/video-1.mp4",
+      title: "Environmental Impact Assessment (EIA) for CNG Facility",
+      content:
+        "Conducted a comprehensive EIA to assess the potential environmental and socio-economic impacts of a proposed Compressed Natural Gas (CNG) facility. The study ensured alignment with regulatory standards and provided mitigation strategies to support sustainable energy development.",
+      client: "Basswood Energy Limited",
+      address: "Lagos-Ibadan Expressway, Ogun State",
+    },
+    {
+      image: "/images/image-3.jpg",
+      video: "/images/video-2.mp4",
+      title: "Environmental and Social Due Diligence (ESDD)",
+      content:
+        ": Conducted an ESDD to assess environmental, health, safety, and social risks associated with industrial operations. The findings informed risk mitigation plans and compliance strategies in line with international best practices.",
+      client: "Supertech Industries Limited",
+      address: "Ondo State",
+    },
+    {
+      image: "/images/image-4.jpg",
+      video: "",
+      title: "Training in Occupational Health",
+      content:
+        "Development and implementation of a certified management system covering environment, quality, and occupational safety. Risk prevention and safety culture in telecom operations.",
+      client: "Ikeja Electricity Distribution Company",
+      address: "Lagos",
+    },
+  ];
 
   const visibleImages = 2;
-  const totalSlides = Math.ceil(
-    (portfolio.length || 0) / visibleImages
-  );
+  const totalSlides = Math.ceil((portfolio.length || 0) / visibleImages);
 
   const handlePrevTwo = () => {
     if (currentIndexp > 0) {
@@ -1314,7 +1810,7 @@ const portfolio = [
     }
   };
 
- const leftVariant = {
+  const leftVariant = {
     hidden: { opacity: 0, x: -200, y: -100 },
     visible: { opacity: 1, x: 0, y: 0, transition: { duration: 0.8 } },
   };
@@ -1415,37 +1911,39 @@ const portfolio = [
         </Slider>
       </div>
 
+      <div className="home-2-new containers">
+        <h3>Who We Are</h3>
 
-        <div className="home-2-new containers">
-          <h3>Who We Are</h3>
-      
-       <div className="home-2-new-down" >
-      {/* Image - from up-left */}
-      <motion.img
-        src="/images/image-1.jpeg"
-        alt=""
-        variants={leftVariant}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.2 }}
-      />
+        <div className="home-2-new-down">
+          {/* Image - from up-left */}
+          <motion.img
+            src="/images/image-1.jpeg"
+            alt=""
+            variants={leftVariant}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+          />
 
-      {/* Text - from up-right */}
-      <motion.div
-        className="home-2-new-down-inner"
-        variants={rightVariant}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.2 }}
-      >
-        <h4>Welcome To Spatial Ecosystems Limited</h4>
-        <p>
-          Spatial Ecosystems Limited is a multinational HSEQ management company offering sustainable solutions through consulting,
-          training, audits, and project management. With global affiliations like NEBOSH, IOSH, and OSHA, the firm delivers
-          innovative, professional services even in challenging conditions to ensure client success.
-        </p>
-      </motion.div>
-    </div>
+          {/* Text - from up-right */}
+          <motion.div
+            className="home-2-new-down-inner"
+            variants={rightVariant}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+          >
+            <h4>Welcome To Spatial Ecosystems Limited</h4>
+            <p>
+              Spatial Ecosystems Limited is a multinational HSEQ management
+              company offering sustainable solutions through consulting,
+              training, audits, and project management. With global affiliations
+              like NEBOSH, IOSH, and OSHA, the firm delivers innovative,
+              professional services even in challenging conditions to ensure
+              client success.
+            </p>
+          </motion.div>
+        </div>
       </div>
 
       <div>
@@ -1501,91 +1999,152 @@ const portfolio = [
           </div>
         </div>
         <div className="mobile4-home containers">
-<div className="sub-col-5" >
-              {/* <div className="sub-col-2 not-align">
+          <div className="sub-col-5">
+            {/* <div className="sub-col-2 not-align">
                 <img src="/images/green_svg.png" />
                 <p>The modern standard</p>
               </div> */}
-              <h2>Our Services</h2>
-              <p>
-                Lorem ipsum dolor sit amet consectetur. Elementum tellus eu
-                pulvinar amet aliquam nullam massa augue. Lorem suspendisse
-                interdum bibendum morbi neque nullam. Etiam mattis nulla.
-              </p>
-              <Link className="sub-col-5-btn btn" to="">
-                Learn{" "}
-                <Icon
-                  icon="charm:arrow-right"
-                  width="12"
-                  height="12"
-                  style={{ color: "white" }}
-                />
-              </Link>
-            </div>
-     <div style={{ maxWidth: "1000px", margin: "auto", paddingRight: "10px", paddingTop: "20px", paddingBottom: "20px" }}>
-      <Slider {...settingsing}>
-        {services.map((service, index) => (
-          <div key={index}>
-            <div  className="services-text"
-              style={{
-                backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.3), #000), url(${service.banner})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                height: "400px",
-                borderRadius: "12px",
-                padding: "20px",
-                color: "#fff",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                gap: "15px",
-                padding: "40px"
-              }}
-            >
-              <h4>{service.title}</h4>
-              <p>{service.sub_title}</p>
-            </div>
+            <h2>Our Services</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur. Elementum tellus eu
+              pulvinar amet aliquam nullam massa augue. Lorem suspendisse
+              interdum bibendum morbi neque nullam. Etiam mattis nulla.
+            </p>
+            <Link className="sub-col-5-btn btn" to="">
+              Learn{" "}
+              <Icon
+                icon="charm:arrow-right"
+                width="12"
+                height="12"
+                style={{ color: "white" }}
+              />
+            </Link>
           </div>
-        ))}
-      </Slider>
-
+          <div
+            style={{
+              maxWidth: "1000px",
+              margin: "auto",
+              paddingRight: "10px",
+              paddingTop: "20px",
+              paddingBottom: "20px",
+            }}
+          >
+            <Slider {...settingsing}>
+              {services.map((service, index) => (
+                <div key={index}>
+                  <div
+                    className="services-text"
+                    style={{
+                      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.3), #000), url(${service.banner})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      height: "400px",
+                      borderRadius: "12px",
+                      padding: "20px",
+                      color: "#fff",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-end",
+                      gap: "15px",
+                      padding: "40px",
+                    }}
+                  >
+                    <h4>{service.title}</h4>
+                    <p>{service.sub_title}</p>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          </div>
         </div>
       </div>
+
+      <div className="containers home-2">
+        <div className="col-3">
+          <h2>Beautiful documentation that converts users</h2>
+          <p>A platform you can rely on to reach your audience</p>
+        </div>
+        <div>
+          <div className="triangle-carousel">
+            {documents.map((doc, index) => (
+              <div key={doc.id} className={`card ${getPositionClass(index)}`}>
+                <img src={doc.image} alt={doc.title} />
+                <div className="task-div">
+                  <h3>{doc.title}</h3>
+                  <p>{doc.overview}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
-
-       <div className="containers home-2">
-          <div className="col-3">
-           
-            <h2>Beautiful documentation that converts users</h2>
-            <p>A platform you can rely on to reach your audience</p>
+      <div className="counter-div containers">
+        <div className="counter-head">
+          <h2>Helping Small Business to Grow and Expand</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore.
+          </p>
+        </div>
+        <div className="counter-body" ref={ref}>
+          <div className="counter-sub">
+            <Icon
+              className="icon"
+              width="40px"
+              height="40px"
+              icon="file-icons:microsoft-project"
+              color="white"
+            />
+            <h4>{inView && <CountUp end={200} duration={3} />}+</h4>
+            <p>Project Done</p>
           </div>
-          <div>
-  <div className="triangle-carousel">
-      {documents.map((doc, index) => (
-        <div key={doc.id} className={`card ${getPositionClass(index)}`}>
-          <img src={doc.image} alt={doc.title} />
-          <div className="task-div">
-            <h3>{doc.title}</h3>
-            <p>{doc.overview}</p>
+          <div className="counter-sub">
+            <Icon
+              className="icon"
+              width="40px"
+              height="40px"
+              icon="arcticons:pixel-experience"
+              color="white"
+            />
+            <h4>{inView && <CountUp end={15} duration={3} />}+</h4>
+            <p>Years of Experience</p>
+          </div>
+          <div className="counter-sub">
+            <Icon
+              className="icon"
+              width="40px"
+              height="40px"
+              icon="hugeicons:star-award-01"
+              color="white"
+            />
+            <h4>{inView && <CountUp end={56} duration={3} />}+</h4>
+            <p>Award Winning</p>
+          </div>
+          <div className="counter-sub">
+            <Icon
+              className="icon"
+              width="40px"
+              height="40px"
+              icon="streamline:information-desk-customer-remix"
+              color="white"
+            />
+            <h4>{inView && <CountUp end={200} duration={3} />}+</h4>
+            <p>Satisfied Customers</p>
           </div>
         </div>
-      ))}
-    </div>
-
-          
-          </div>
-        </div>
-      
+      </div>
 
       <div id="company" className="over-4 containers">
         <div className="over-4-header-all">
           <div className="over-4-header">
             <h4>Explore Ongoing Projects</h4>
-             <p>We have successfully executed numerous high-impact environmental projects across various industries and regions in Nigeria.
-               Below are some of our most recent engagements:</p>
+            <p>
+              We have successfully executed numerous high-impact environmental
+              projects across various industries and regions in Nigeria. Below
+              are some of our most recent engagements:
+            </p>
           </div>
-         
         </div>
 
         <div className="gallery-container">
@@ -1617,28 +2176,28 @@ const portfolio = [
                   </div>
                   <div className="galery-div-inner">
                     <h4>{item.title}</h4>
-                  <p>{item?.content}</p>
-                  <div className="galery-div-inner-icon">
+                    <p>{item?.content}</p>
+                    <div className="galery-div-inner-icon">
                       <Icon
-                                  width="14px"
-                                  height="14px"
-                                  icon="ion:people-sharp"
-                                  style={{ color: "#716c6bff" }}
-                                />
+                        width="14px"
+                        height="14px"
+                        icon="ion:people-sharp"
+                        style={{ color: "#c1bfbeff" }}
+                      />
 
-                                {item.client}
-                  </div>
-                     <div className="galery-div-inner-icon">
+                      {item.client}
+                    </div>
+                    <div className="galery-div-inner-icon">
                       <Icon
-                                  width="14px"
-                                  height="14px"
-                                  icon="ep:location"
-                                  style={{ color: "#716c6bff" }}
-                                />
+                        width="14px"
+                        height="14px"
+                        icon="ep:location"
+                        style={{ color: "#c1bfbeff" }}
+                      />
 
-                                {item.address}
+                      {item.address}
+                    </div>
                   </div>
-                </div>
                 </div>
               ))}
             </div>
@@ -1683,10 +2242,7 @@ const portfolio = [
                   </video>
                 )
               ) : (
-                <img
-                  src={selectedImage?.image}
-                  alt="enlarged"
-                />
+                <img src={selectedImage?.image} alt="enlarged" />
               )}
 
               <button
@@ -1704,78 +2260,122 @@ const portfolio = [
         <div className="choose-div-header">
           <h2>We're reliable and trusted by clients</h2>
         </div>
-         <div className="choose-div-body">
-      {/* Left Card */}
-      <motion.div
-        className="choose-div-sub"
-        initial={{ opacity: 0, x: -300 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: false }}
-      >
-        <div className="choose-div-icon">
-          <Icon
-            className="icon"
-            width="20px"
-            height="20px"
-            icon="grommet-icons:user-expert"
-            color="black"
-          />
-        </div>
-        <h4>People</h4>
-        <p>
-        Our people are professionals from different industry with a wealth of experience in HSE  management. They are able to discover and uncover underlying issues challenging many companies  as regards to safety management. 
-        </p>
-      </motion.div>
+        <div className="choose-div-body">
+          {/* Left Card */}
+          <motion.div
+            className="choose-div-sub"
+            initial={{ opacity: 0, x: -300 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: false }}
+          >
+            <div className="choose-div-icon">
+              <Icon
+                className="icon"
+                width="20px"
+                height="20px"
+                icon="grommet-icons:user-expert"
+                color="black"
+              />
+            </div>
+            <h4>People</h4>
+            <p>
+              Our people are professionals from different industry with a wealth
+              of experience in HSE management. They are able to discover and
+              uncover underlying issues challenging many companies as regards to
+              safety management.
+            </p>
+          </motion.div>
 
-      {/* Middle Card */}
-      <motion.div
-        className="choose-div-sub"
-        initial={{ opacity: 0, y: -200 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: false }}
-      >
-        <div className="choose-div-icon">
-          <Icon
-            className="icon"
-            width="20px"
-            height="20px"
-            icon="fluent:calendar-record-16-regular"
-            color="black"
-          />
-        </div>
-        <h4>Process</h4>
-        <p>
-         Our process flow is guided by ISO and globally accepted standards and certifications.  We ensure that our solutions meet with regulatory policies and put our clients
-          in the green as  far as compliance is concerned 
-        </p>
-      </motion.div>
+          {/* Middle Card */}
+          <motion.div
+            className="choose-div-sub"
+            initial={{ opacity: 0, y: -200 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: false }}
+          >
+            <div className="choose-div-icon">
+              <Icon
+                className="icon"
+                width="20px"
+                height="20px"
+                icon="fluent:calendar-record-16-regular"
+                color="black"
+              />
+            </div>
+            <h4>Process</h4>
+            <p>
+              Our process flow is guided by ISO and globally accepted standards
+              and certifications. We ensure that our solutions meet with
+              regulatory policies and put our clients in the green as far as
+              compliance is concerned
+            </p>
+          </motion.div>
 
-      {/* Right Card */}
-      <motion.div
-        className="choose-div-sub"
-        initial={{ opacity: 0, x: 300 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: false }}
-      >
-        <div className="choose-div-icon">
-          <Icon
-            className="icon"
-            width="20px"
-            height="20px"
-            icon="ph:user-focus-bold"
-            color="black"
+          {/* Right Card */}
+          <motion.div
+            className="choose-div-sub"
+            initial={{ opacity: 0, x: 300 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: false }}
+          >
+            <div className="choose-div-icon">
+              <Icon
+                className="icon"
+                width="20px"
+                height="20px"
+                icon="ph:user-focus-bold"
+                color="black"
+              />
+            </div>
+            <h4>Technology</h4>
+            <p>
+              In a technology driven world, Spatial Ecosystem deploy the latest
+              E-solutions when needed, incorporating management information
+              systems that will ensure a smooth running of processes with lesser
+              effort but with greater results.
+            </p>
+          </motion.div>
+        </div>
+      </div>
+      <div className="home-10 containers">
+        <div className="home-10-sub">
+          <h6>
+            <span></span>A world wide Distributor green energy
+          </h6>
+          <h2>Our customers also share their success stories.</h2>
+        </div>
+        <div className="home-11-inner-2" {...handlers}>
+          <Icon className="icon-home-11"
+            icon="solar:arrow-left-outline"
+            width="24"
+            height="24"
+            style={{ color: "#ffffff", cursor: "pointer" }}
+            onClick={handlePrevNew}
+          />
+
+          <div
+            className={`logitech ${animation}`}
+            onAnimationEnd={() => setAnimation("")} // reset animation after it plays
+          >
+            <p>{currentTestimony?.testimony}</p>
+            <img
+              src="/images/listener-person.png"
+              alt={currentTestimony?.full_name}
+            />
+            <h5 className="leonel">{currentTestimony?.full_name}</h5>
+          </div>
+
+          <Icon className="icon-home-11"
+            icon="icons8:right-arrow"
+            width="24"
+            height="24"
+            style={{ color: "#ffffff", cursor: "pointer" }}
+            onClick={handleNextNew}
           />
         </div>
-        <h4>Technology</h4>
-        <p>
-        In a technology driven world, Spatial Ecosystem deploy the latest E-solutions when  needed, incorporating management information systems that will ensure a smooth running of  processes with lesser 
-        effort but with greater results.
-        </p>
-      </motion.div>
-    </div>
       </div>
     </HomeRap>
   );

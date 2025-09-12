@@ -133,7 +133,7 @@ const AboutRap = styled.div`
     flex-direction: column;
     gap: 20px;
     padding: 30px;
-    background: green;
+    background: #218838;
     border-radius: 12px;
     margin-left: -40px;
   }

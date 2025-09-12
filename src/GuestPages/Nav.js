@@ -142,7 +142,7 @@ const ContactLink = styled(Link)`
   text-decoration: none;
   margin-left: auto;
   padding: ${(props) => (props.isSticky ? "8px 16px" : "0")};
-  color: ${(props) => (props.isSticky ? "white" : (props.color || "#e77817"))};
+  color: ${(props) => (props.isSticky ? "white" : (props.color || "#a5f8c8ff"))};
   border: ${(props) => (props.isSticky ? "2px solid white" : "none")};
   border-radius: 100px;
   width: 120px;
@@ -151,7 +151,7 @@ const ContactLink = styled(Link)`
    justify-content: center;
     align-items: center;
     height: ${(props) => (props.isSticky ? "40px" : "fit-content")};
-  font-weight: ${(props) => (props.isSticky ? "600" : "500")};
+  font-weight: ${(props) => (props.isSticky ? "600" : "600")};
   transition: all 0.3s ease-in-out;
   background: ${(props) => (props.isSticky ? "green" : "transparent")};
     @media (max-width: 778px) { 

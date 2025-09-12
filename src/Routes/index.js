@@ -6,6 +6,8 @@ import Services from "../GuestPages/Services";
 import Project from "../GuestPages/Project";
 import ProjectDetail from "../GuestPages/ProjectDetails";
 import Contact from "../GuestPages/Contact";
+import UserDashboardLayout from "../Controller.js/UserController";
+import Dashboard from "../UserPages/Dashboard";
 
 
 
@@ -31,6 +33,14 @@ export default function Routers () {
                     ]
                 },
              
+                 {
+      path: "/users",
+      element: <UserDashboardLayout />,
+      children: [
+        { path: "/users/dashboard", element: <Dashboard /> },
+       
+      ],
+    },
               
             ]
         )
