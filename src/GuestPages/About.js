@@ -64,7 +64,7 @@ const AboutRap = styled.div`
     height: 50px;
   }
 
-  .home-2-new-upper p {
+  .home-2-upper-left p {
     border: 1px solid #e77817;
     border-radius: 20px;
     width: 103px;
@@ -152,6 +152,7 @@ const AboutRap = styled.div`
     gap: 50px;
     margin: 80px 0px;
   }
+  
   .home-3-upper p {
     border: 1px solid #e77817;
     border-radius: 100px;
@@ -264,6 +265,174 @@ const AboutRap = styled.div`
     gap: 40px;
     margin-bottom: 80px;
   }
+
+
+
+ .about-10-upper h2 {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 60px;
+    line-height: 70px;
+    max-width: 450px;
+      transform: translateY(20px);
+  animation: fadeUp 1.2s ease-in-out 0.5s forwards;
+  opacity: 0;
+  }
+  .about-10-upper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .about-10-upper-right h4 {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 32px;
+    max-width: 605px;
+      opacity: 0;
+  transform: translateX(30px);
+  animation: fadeRight 1s ease-in-out 0.7s forwards;
+  }
+  .about-10-upper-right p {
+    max-width: 617px;
+    color: #ffffffb2;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    opacity: 0;
+  transform: translateX(30px);
+  animation: fadeRight 1s ease-in-out 0.9s forwards;
+  }
+  .about-10-upper-all {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  /* 🔥 Keyframes */
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(70px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeRight {
+  0% {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+  .about-10-upper-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+     animation: slideInRight 1s ease-in-out forwards;
+  }
+  .schedule-btn {
+    animation: pulseGlow 2s infinite;
+  }
+
+  .schedule-btn {
+    text-decoration: none;
+    display: flex;
+    border: 1px solid #025726ff;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    color: #ffffff;
+    background: #025726ff; /* base color */
+    font-size: 13px;
+    font-weight: 700;
+    width: 188px;
+    height: 60px;
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s ease;
+  }
+
+  /* Gradient overlay with 4 colors */
+  .schedule-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+     background: linear-gradient(
+  180deg,
+  #8b4513 0%,   
+  #025726 50%,  
+  #1c1c1c 100%  
+);
+    transform: translateY(100%);
+    transition: transform 0.4s ease-in-out;
+    z-index: 0;
+    border-radius: inherit;
+  }
+
+  .schedule-btn:hover::before {
+    transform: translateY(0);
+  }
+
+  /* Make sure button text & icons are visible above gradient */
+  .schedule-btn * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .schedule-btn span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .schedule-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #cc9430;
+    border-radius: 100px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .about-10 {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin: 80px 0px;
+  }
+
+
+
   .about-2-left p,
   .about-4-upper p,
   .home-4-upper p {
@@ -947,8 +1116,50 @@ useEffect(() => {
   <h2 >About Us</h2>
 </div>
 
-
-      <div className="home-2-new containers">
+  <div className="about-10 containers">
+        <div className="about-10-upper-all">
+          <div className="about-10-upper">
+            <div className="home-2-upper-left">
+              
+                <p>About us</p>
+             
+            </div>
+            <h2>Shaping the world of things to come</h2>
+          </div>
+          <div className="about-10-upper-right">
+            <h4>
+            We’d love to share more with you, please complete this form and our dedicated team will get back to you shortly.
+            </h4>
+            {/* <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+              }}
+              dangerouslySetInnerHTML={{ __html: about?.content }}
+            /> */}
+            <p>In markets from renewable energy, sports and entertainment, to data centers and healthcare, we work to ensure the built environment leaves a lasting positive impact. Together, we strive to make your project better than you imagined possible.</p>
+            <Link
+              href="" // replace with the actual link
+              target="_blank"
+              rel="noopener noreferrer"
+              className="schedule-btn"
+            >
+              <span> Learn More</span>
+              <div className="schedule-circle">
+                <Icon
+                  width="18px"
+                  height="18px"
+                  icon="tabler:arrow-up-right"
+                  style={{ color: "#ffffff" }}
+                />
+              </div>
+            </Link>
+          </div>
+        </div>
+       
+      </div>
+      {/* <div className="home-2-new containers">
         <div className="home-2-new-upper">
           <p>About Us</p>
           <h3>About Spatial Ecosystems Limited</h3>
@@ -994,7 +1205,7 @@ useEffect(() => {
             </p>
           </motion.div>
         </div>
-      </div>
+      </div> */}
 
       <div id="core-values" className="home-3 containers">
         <div className="home-3-upper">

@@ -231,7 +231,7 @@ const [whyChooseData, setWhyChooseData] = useState({
     content: "",
   });
 
-  console.log(listForm);
+  console.log(listTesti);
   
 
 const handleHeadingSubmitTesti = (e) => {

@@ -67,52 +67,46 @@ const HomeRap = styled.div`
     animation-delay: 0.6s;
   }
 
-.get-in-touch {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 12px 24px;
-  background: #025726ff;
-  color: white;
-  width: 231px;
-  height: 48px;
-  border-radius: 100px;
-  margin-top: 10px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 16px;
-  animation: fadeInUp 1s ease-out;
-  animation-delay: 0.9s;
+  .get-in-touch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 24px;
+    background: #025726ff;
+    color: white;
+    width: 231px;
+    height: 48px;
+    border-radius: 100px;
+    margin-top: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    animation: fadeInUp 1s ease-out;
+    animation-delay: 0.9s;
 
-  position: relative;   /* for ::before */
-  overflow: hidden;     /* keep overlay inside */
-  z-index: 0;
-}
+    position: relative; /* for ::before */
+    overflow: hidden; /* keep overlay inside */
+    z-index: 0;
+  }
 
-/* overlay background */
-.get-in-touch::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 0;
-  background: linear-gradient(
-  180deg,
-  #8b4513 0%,   
-  #025726 50%,  
-  #1c1c1c 100%  
-);  
-  border-radius: 100px;
-  z-index: -1;
-  transition: height 0.5s ease;
-}
+  /* overlay background */
+  .get-in-touch::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(180deg, #8b4513 0%, #025726 50%, #1c1c1c 100%);
+    border-radius: 100px;
+    z-index: -1;
+    transition: height 0.5s ease;
+  }
 
-/* grow background on hover */
-.get-in-touch:hover::before {
-  height: 100%;
-}
-
+  /* grow background on hover */
+  .get-in-touch:hover::before {
+    height: 100%;
+  }
 
   .slider-wrapper {
     padding: 0px;
@@ -136,120 +130,362 @@ const HomeRap = styled.div`
     max-width: 427px;
   }
 
-  .home-2-new-upper p {
-    border: 1px solid #cc9430;
+  .home-2-upper-left,
+  .home-2-upper-left-two {
+    border: 1px solid #cc8825;
     border-radius: 20px;
-    width: 103px;
-    height: 35px;
+    padding: 10px 15px;
+    margin: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #00001c;
-    font-size: 13px;
-    font-weight: 500;
+    height: fit-content;
+    width: 130px;
   }
-  .home-2-new h3 {
+  .home-2-upper-left p,
+  .home-2-upper-left p {
     color: #ffffff;
-    font-size: 40px;
-    font-weight: 600;
-    line-height: 50px;
-    text-align: center;
-    max-width: 617px;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 10px !important;
   }
-  .home-2-upper p {
-    border: 1px solid #cc9430;
-    border-radius: 20px;
-    width: 168px;
-    height: 35px;
+
+  .home-2-upper-left-two p {
+    color: #cc8825;
+  }
+
+  .home-2-upper-right h2 {
+    color: #ffffff !important;
+    font-size: 60px !important;
+    font-weight: 700;
+    line-height: 65px !important;
+    max-width: 792px;
+  }
+  .mission-upper img {
+    width: 24px;
+    height: 24px;
+  }
+  .mission-upper h4 {
+    color: #191816;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .mission-upper {
     display: flex;
-    justify-content: center;
     align-items: center;
-    color: #000000;
-    font-size: 13px;
-    font-weight: 600;
+    gap: 5px;
   }
-  .home-2-upper h2 {
-    color: #00001c;
-    font-size: 50px;
-    font-weight: 600;
-    line-height: 50px;
-    max-width: 554px;
-  }
-  .home-2-upper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .home-2-new-down-inner p {
-    max-width: 420px;
-    color: #dedef4ff;
+  .mission-vission p {
+    color: #42413e;
     font-size: 18px;
     font-weight: 400;
-    line-height: 25px;
+    max-width: 365px;
+    line-height: 26px;
   }
-  .home-2-new-down-inner h4 {
-    max-width: 400px;
-    line-height: 32px;
-    font-size: 32px;
-    font-weight: 600;
+  .mission-vission {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .all-mission-vision {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+  }
+
+  .home-2-upper-right h2,
+  .home-2-upper-right .mission-vission {
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 0.8s ease-out;
+  }
+
+  /* When in view */
+  .home-2-upper-right.in-view h2 {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
+  }
+
+  .home-2-upper-right.in-view .mission-vission:nth-child(1) {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
+  }
+
+  .home-2-upper-right.in-view .mission-vission:nth-child(2) {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.5s;
+  }
+
+  /* Extra polish: mission card hover effect */
+  .mission-vission {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .mission-vission:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  .home-2-upper-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .home-2-upper {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  .home-2-inner {
+    width: 300px;
+    height: 320px;
+    border-radius: 25px;
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  /* Hover grows gradient from top-right down */
+  .home-2-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 25px;
+    background: linear-gradient(to top, #b47c1f, #cc9430, #523803, #816924);
+    background-size: 0% 0%; /* start hidden */
+    background-position: top right;
+    background-repeat: no-repeat;
+    transition: background-size 1s ease-out;
+    z-index: 0; /* behind text */
+  }
+
+  .home-2-inner:hover::before {
+    background-size: 200% 200%; /* expand from corner */
+  }
+
+  .home-2-inner:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Keep text above gradient */
+  .home-2-inner * {
+    position: relative;
+    z-index: 1;
+    transition: color 0.4s ease;
+  }
+
+  .home-2-inner h6 {
+    color: #e77817;
+    font-size: 11px;
+    font-weight: 700;
+    border-bottom: 1px solid #e77817;
+    padding-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .home-2-inner-sub h4 {
+    color: #ffffff;
+    font-size: 26px;
+    font-weight: 700;
+  }
+
+  .home-2-inner-sub p {
+    color: #ffffffb2;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    max-width: 250px;
+  }
+
+  .home-2-inner-sub span {
+    color: #cc8825 !important;
+    font-size: 42px !important;
+  }
+  .home-2-inner-sub {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .home-2-inner:hover h6,
+  .home-2-inner:hover h4 {
     color: #ffffff;
   }
- .home-2-new-down-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 30px;
-  background: #025726ff;
-  border-radius: 12px;
-  margin-left: -40px;
-  position: relative;   /* needed for ::before */
-  overflow: hidden;     /* hide overflow when animating */
-  z-index: 0;
-}
 
-/* overlay background */
-.home-2-new-down-inner::before {
-  content: "";
-  position: absolute;
-  bottom: 0;   /* start from bottom */
-  left: 0;
-  width: 100%;
-  height: 0;   /* initially hidden */
-  background: linear-gradient(
-  180deg,
-  #8b4513 0%,   
-  #025726 50%,  
-  #1c1c1c 100%  
-);  
-  z-index: -1; /* stay behind the content */
-  transition: height 0.5s ease;
-  border-radius: 12px;
-}
-
-/* grow from bottom to top on hover */
-.home-2-new-down-inner:hover::before {
-  height: 100%;
-}
-
-  .home-2-new-down img {
-    max-width: 670px;
-    height: 480px;
-    border-radius: 12px;
+  .home-2-inner:hover .home-2-inner-sub span {
+    color: #ffe08a !important;
   }
-  .home-2-new-down {
+  .home-2-sub img {
+    width: 300px;
+    height: 320px;
+    border-radius: 25px;
+  }
+  .home-2-sub {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .home-2-down-img {
+    width: 100%;
+    height: 700px;
+    max-width: 500px;
+    border-radius: 25px;
+  }
+  .home-2-down {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 30px;
   }
-  .home-2-new {
+  .home-2 {
+    margin-top: 80px;
     display: flex;
     flex-direction: column;
     gap: 50px;
-    align-items: center;
-    margin: 80px 0px;
   }
 
+  .home-8 {
+    background-size: cover; /* ensures the image fits */
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 30px;
+    padding: 50px;
+    margin-top: 100px;
+    position: relative;
+    border-radius: 30px;
+    background-image: url("./images/footer.png");
+  }
+  .home-8-upper h2 {
+    max-width: 584px;
+    text-align: center;
+    font-weight: 700;
+    line-height: 36px;
+    color: #191816;
+    font-size: 35px;
+  }
+  .home-8-upper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  input {
+    background: #f7f6f2;
+    width: 300px;
+    border: none;
+    height: 60px;
+    border-radius: 30px;
+    padding-left: 15px;
+  }
+  .home-8-input {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .home-8-down-sub h4 {
+    max-width: 279px;
+    color: #42413e;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 26px;
+  }
+  .home-8-down-sub {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  .home-8-down {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 3;
+  }
+  .home-8-all {
+    background: #ffffff;
+    width: 100%;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    border-radius: 30px;
+    position: relative;
+  }
+  .side-img-1 {
+    position: absolute;
+    bottom: -10px;
+    right: -30px;
+    z-index: 1;
+  }
+  .side-img-2 {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1;
+  }
+
+  .schedule-btn {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    color: #ffffff;
+    background: #025726ff; /* base color */
+    font-size: 13px;
+    font-weight: 700;
+    width: 188px;
+    height: 60px;
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s ease;
+  }
+
+  /* Gradient overlay with 4 colors */
+  .schedule-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #8b4513 0%, #025726 50%, #1c1c1c 100%);
+    transform: translateY(100%);
+    transition: transform 0.4s ease-in-out;
+    z-index: 0;
+    border-radius: inherit;
+  }
+
+  .schedule-btn:hover::before {
+    transform: translateY(0);
+  }
+
+  /* Make sure button text & icons are visible above gradient */
+  .schedule-btn * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .schedule-btn span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .schedule-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 100px;
+    width: 50px;
+    height: 50px;
+  }
   .slide-left {
     animation: slideFromLeft 1s ease-out forwards;
   }
@@ -279,6 +515,14 @@ const HomeRap = styled.div`
       opacity: 1;
     }
   }
+  @media (max-width: 1200px) {
+    .home-2-down {
+      flex-direction: column;
+    }
+    .home-2-down-img {
+      max-width: 100% !important;
+    }
+  }
   @media (max-width: 1024px) {
     .home-2-new-down {
       flex-direction: column;
@@ -291,15 +535,49 @@ const HomeRap = styled.div`
       flex-direction: column;
     }
   }
+
+  @media (max-width: 992px) {
+    .home-2-upper-right h2 {
+      font-size: 50px !important;
+      line-height: 55px !important;
+      text-align: center;
+    }
+    .home-2-upper {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
   @media (max-width: 700px) {
     .home-2-new-down img {
       max-width: 500px;
+    }
+    .home-2-sub {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+    .home-2-down-img {
+      height: 600px !important;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .all-mission-vision {
+      flex-direction: column;
+      align-items: centers;
     }
   }
   @media (max-width: 550px) {
     .home-2-new-down img {
       max-width: 400px;
       height: 400px;
+    }
+    .home-2-sub {
+      margin-bottom: 70px;
+    }
+    .home-2-down-img {
+      height: 500px !important;
     }
   }
   @media (max-width: 400px) {
@@ -502,49 +780,39 @@ const HomeRap = styled.div`
   }
 
   .galery-div {
-  width: 40%;
-  flex: 0 0 50%; /* Each item takes 50% of container */
-  box-sizing: border-box;
-  height: auto;
-  border-radius: 8px;
-  background: linear-gradient(
-  180deg,
-  #1c1c1c 0%,   
-  #025726 50%,  
-  #8b4513 100%  
-);
-  padding-bottom: 20px;
-cursor: pointer;
-  position: relative;   /* needed for ::before */
-  overflow: hidden;     /* keep hover effect inside */
-  z-index: 0;
-  color: #00001c;
-}
+    width: 40%;
+    flex: 0 0 50%; /* Each item takes 50% of container */
+    box-sizing: border-box;
+    height: auto;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #1c1c1c 0%, #025726 50%, #8b4513 100%);
+    padding-bottom: 20px;
+    cursor: pointer;
+    position: relative; /* needed for ::before */
+    overflow: hidden; /* keep hover effect inside */
+    z-index: 0;
+    color: #00001c;
+  }
 
-/* overlay background */
-.galery-div::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 0;
-background: linear-gradient(
-  180deg,
-  #8b4513 0%,   
-  #025726 50%,  
-  #1c1c1c 100%  
-);  
-border-radius: 8px;
-  z-index: -1;
-  color: #ffff;
-  transition: height 0.5s ease;
-}
+  /* overlay background */
+  .galery-div::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(180deg, #8b4513 0%, #025726 50%, #1c1c1c 100%);
+    border-radius: 8px;
+    z-index: -1;
+    color: #ffff;
+    transition: height 0.5s ease;
+  }
 
-/* grow background on hover */
-.galery-div:hover::before {
-  height: 100%;
-}
+  /* grow background on hover */
+  .galery-div:hover::before {
+    height: 100%;
+  }
 
   .galery-div-inner {
     padding: 20px;
@@ -561,7 +829,7 @@ border-radius: 8px;
     font-size: 16px;
     font-weight: 400;
     max-width: 592px;
-     color: #ffffff;
+    color: #ffffff;
     line-height: 23px;
   }
   .galery-div-inner-icon {
@@ -659,50 +927,44 @@ border-radius: 8px;
     max-width: 337px;
   }
   .choose-div-sub {
-  display: flex;
-  background: white; /* default state */
-  padding: 20px;
-  border-radius: 20px;
-  flex-direction: column;
-  gap: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  position: relative;   /* needed for overlay */
-  overflow: hidden;     /* keeps hover effect inside */
-  z-index: 0;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
+    display: flex;
+    background: white; /* default state */
+    padding: 20px;
+    border-radius: 20px;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative; /* needed for overlay */
+    overflow: hidden; /* keeps hover effect inside */
+    z-index: 0;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
 
-/* gradient overlay */
-.choose-div-sub::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 0;  /* grows on hover */
-  background: linear-gradient(
-    180deg,
-    #8b4513 0%,   
-  #025726 50%,  
-  #1c1c1c 100% 
-  );
-  border-radius: 20px;
-  z-index: -1;
-  transition: height 0.6s ease;
-}
+  /* gradient overlay */
+  .choose-div-sub::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0; /* grows on hover */
+    background: linear-gradient(180deg, #8b4513 0%, #025726 50%, #1c1c1c 100%);
+    border-radius: 20px;
+    z-index: -1;
+    transition: height 0.6s ease;
+  }
 
-/* hover effect */
-.choose-div-sub:hover::before {
-  height: 100%;
-}
+  /* hover effect */
+  .choose-div-sub:hover::before {
+    height: 100%;
+  }
 
-.choose-div-sub:hover h4,
-.choose-div-sub:hover p {
-  color: #ffffff; /* text turns white for contrast */
-  transition: color 0.4s ease;
-}
-
+  .choose-div-sub:hover h4,
+  .choose-div-sub:hover p {
+    color: #ffffff; /* text turns white for contrast */
+    transition: color 0.4s ease;
+  }
 
   .choose-div-body {
     display: flex;
@@ -728,8 +990,8 @@ border-radius: 8px;
   }
 
   .choose-div-sub:hover .choose-div-icon {
-  background: #ffffff;
-}
+    background: #ffffff;
+  }
   .choose-div-icon img {
     width: 20px;
     height: 20px;
@@ -764,48 +1026,43 @@ border-radius: 8px;
     color: #e1dbdb;
   }
   .sub-col-5-btn {
-  color: #ffffff;
-  background: #025726ff; 
-  width: 200px;
-  height: 50px;
-  border-radius: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 16px;
+    color: #ffffff;
+    background: #025726ff;
+    width: 200px;
+    height: 50px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
 
-  position: relative;   /* needed for ::before */
-  overflow: hidden;     /* keep overlay inside */
-  z-index: 0;
-}
+    position: relative; /* needed for ::before */
+    overflow: hidden; /* keep overlay inside */
+    z-index: 0;
+  }
 
-/* overlay background */
-.sub-col-5-btn::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 0;
-  background: linear-gradient(
-  180deg,
-  #8b4513 0%,   
-  #025726 50%,  
-  #1c1c1c 100%  
-); 
- 
-  border-radius: 100px;
-  z-index: -1;
-  transition: height 0.5s ease;
-}
+  /* overlay background */
+  .sub-col-5-btn::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(180deg, #8b4513 0%, #025726 50%, #1c1c1c 100%);
 
-/* grow background on hover */
-.sub-col-5-btn:hover::before {
-  height: 100%;
-}
+    border-radius: 100px;
+    z-index: -1;
+    transition: height 0.5s ease;
+  }
+
+  /* grow background on hover */
+  .sub-col-5-btn:hover::before {
+    height: 100%;
+  }
 
   .sub-col-5-mobile p {
     max-width: 700px !important;
@@ -1085,9 +1342,9 @@ border-radius: 8px;
     animation: gradientShift 15s ease infinite;
     display: flex;
     flex-direction: column;
-    gap: 70px;
     padding-top: 50px;
-    padding-bottom: 50px;
+    gap: 70px;
+    justify-content: space-between;
     color: white; /* so text is visible */
     font-size: 2rem;
     margin: 50px 20px;
@@ -1228,9 +1485,71 @@ border-radius: 8px;
     z-index: 0;
     border-radius: 30px;
     margin: 50px 30px;
-    padding-top: 50px;
+    margin-top: 130px;
+    padding-top: 150px;
     padding-bottom: 50px !important;
     margin-bottom: 0px !important;
+  }
+
+  .home-11-cut {
+    position: absolute;
+    top: 0px;
+    right: 40%;
+  }
+  .all-circle-con {
+    position: absolute;
+    top: -70px;
+    right: 46%;
+  }
+
+  .circle-container {
+    position: relative;
+    height: 170px;
+  }
+
+  .center-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .circle-text {
+    width: 100%;
+    height: 100%;
+    animation: spin 20s linear infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .orbit-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: center -125px; /* radius of orbit */
+  }
+
+  .orbit-text:nth-child(1) {
+    transform: rotate(0deg);
+  }
+  .orbit-text:nth-child(2) {
+    transform: rotate(90deg);
+  }
+  .orbit-text:nth-child(3) {
+    transform: rotate(180deg);
+  }
+  .orbit-text:nth-child(4) {
+    transform: rotate(270deg);
   }
 
   /* Stars effect */
@@ -1262,6 +1581,108 @@ border-radius: 8px;
   .slide-right {
     animation: slideRight 0.6s ease;
   }
+
+  .counter-1 {
+    border-left: 1px solid #FFFFFF;
+    width: 300px;
+    position: relative;
+    padding-left: 50px;
+
+}
+.counter-1:nth-child(1) {
+  height: 300px;
+}
+
+.counter-1:nth-child(2) {
+  height: 400px;
+}
+
+.counter-1:nth-child(3) {
+  height: 280px;
+}
+
+.counter-1:nth-child(4) {
+  height: 350px;
+}
+.all-circle-contain {
+    position: absolute;
+    left: -20px;
+    top: -20px;
+    
+}
+.circular-cirle {
+    background: #ffffff;
+    width: 5px;
+    height: 5px;
+    border-radius: 100px;
+    position: absolute;
+    top: -3px;
+    left: -3px;
+}
+.counter-text h4 {
+    color: #ffffff;
+    font-size: 73px;
+    font-weight: 700;
+    display: flex;
+    gap: 4px;
+    align-items: flex-start;
+}
+.counter-text span {
+    color: #cc8825;
+    font-size: 54px;
+    font-weight: 700;
+}
+.counter-text p {
+    color: #FFFFFF99;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 600;
+    max-width: 109px;
+
+}
+.counter-text {
+    margin-top: -70px;
+}
+.circle-container {
+  position: relative;
+  height: 40px;
+ 
+}
+
+
+
+.circle-text {
+  width: 100%;
+  height: 100%;
+  animation: spin 20s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.orbit-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center -125px; /* radius of orbit */
+}
+
+.orbit-text:nth-child(1) { transform: rotate(0deg); }
+.orbit-text:nth-child(2) { transform: rotate(90deg); }
+.orbit-text:nth-child(3) { transform: rotate(180deg); }
+.orbit-text:nth-child(4) { transform: rotate(270deg); }
+
+
+.all-counter {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+   align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 50px;
+}
 
   @keyframes slideLeft {
     from {
@@ -1317,7 +1738,11 @@ border-radius: 8px;
       transform: translate(50%, -50%) rotate(5deg) scale(0.85);
     }
   }
-
+ @media (max-width: 1300px) { 
+.counter-1 {
+  width: 200px ;
+}
+  }
   @media (max-width: 1130px) {
     .modal-content {
       max-width: 90% !important;
@@ -1335,6 +1760,29 @@ border-radius: 8px;
     .choose-div-body {
       flex-wrap: wrap;
     }
+    .home-11-cut {
+      position: absolute;
+      top: 0px;
+      right: 30% !important;
+    }
+    .all-circle-con {
+      position: absolute;
+      top: -70px;
+      right: 39%;
+    }
+    .home-8-input {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    input {
+      width: 70vw;
+    }
+    .home-8-down-sub {
+      flex-direction: column;
+    }
+    .home-8-all,
+    .home-8 {
+      padding: 50px 10px !important;
+    }
     .mobile4-home {
       display: block !important ;
     }
@@ -1344,6 +1792,39 @@ border-radius: 8px;
     .home-4-mobile {
       display: block;
     }
+    .all-counter {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0px !important;
+    }
+    .counter-1 {
+      width: 300px;
+      height: 250px !important;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .home-11-cut {
+      position: absolute;
+      top: 0px;
+      right: 30% !important;
+    }
+    .all-circle-con {
+      position: absolute;
+      top: -70px;
+      right: 39%;
+    }
+  }
+  @media (max-width: 800px) {
+    /* .home-11-cut {
+    position: absolute;
+    top: 0px;
+    right: 25% !important;
+  }
+  .all-circle-con {
+    position: absolute;
+    top: -70px;
+    right: 36%;
+  } */
   }
   @media (max-width: 678px) {
     .home-1,
@@ -1354,7 +1835,16 @@ border-radius: 8px;
       gap: 20px;
       padding-bottom: 10px;
     }
-
+    .home-11-cut {
+      position: absolute;
+      top: 0px;
+      right: 20% !important;
+    }
+    .all-circle-con {
+      position: absolute;
+      top: -70px;
+      right: 33%;
+    }
     .home-1 h1 {
       font-size: 40px;
       line-height: 50px;
@@ -1372,8 +1862,17 @@ border-radius: 8px;
     .icon-home-11 {
       display: none;
     }
+
+     .counter-1 {
+      width: 200px;
+      height: 250px !important;
+    }
   }
   @media (max-width: 550px) {
+    .home-8 {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
     .over-4 {
       margin: 0px 0px !important;
       margin-top: 80px !important;
@@ -1394,17 +1893,94 @@ border-radius: 8px;
       margin: 0px 0px !important;
     }
 
-     .counter-div {
+    .counter-div {
       margin-top: 50px !important;
-     }
+    }
+    .all-counter {
+      padding-left: 40px;
+      grid-template-columns: repeat(1, 1fr);
+    }
     /* .counter-body {
   flex-direction: column;
   align-items: center;
 } */
   }
   @media (max-width: 450px) {
+    .home-11-cut {
+      position: absolute;
+      top: 0px;
+      right: 15% !important;
+    }
+    .all-circle-con {
+      position: absolute;
+      top: -70px;
+      right: 32%;
+    }
+  }
+
+  @media (max-width: 410px) {
+    .home-11-cut {
+      position: absolute;
+      top: 0px;
+      right: 10% !important;
+    }
+    .all-circle-con {
+      position: absolute;
+      top: -70px;
+      right: 29%;
+    }
+  }
+  @media (max-width: 370px) {
+    .home-11-cut {
+      position: absolute;
+      top: 0px;
+      right: 5% !important;
+    }
+    .all-circle-con {
+      position: absolute;
+      top: -70px;
+      right: 26%;
+    }
   }
 `;
+
+const useInViewAnimation = (selector) => {
+  useEffect(() => {
+    const elements = document.querySelectorAll(selector);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+          }
+        });
+      },
+      { threshold: 0.2 } // 20% visible triggers it
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [selector]);
+};
+const Counter = ({ end, duration = 2000 }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const stepTime = Math.abs(Math.floor(duration / end));
+
+    const timer = setInterval(() => {
+      start += 1;
+      setCount(start);
+      if (start === end) clearInterval(timer);
+    }, stepTime);
+
+    return () => clearInterval(timer);
+  }, [end, duration]);
+
+  return <>{count}</>;
+};
 
 const Home = () => {
   const slider = [
@@ -1521,6 +2097,25 @@ const Home = () => {
     },
   ];
 
+  const counters = [
+    {
+      counter: "Our Training",
+      title:
+        "We engage as early as possible, typically during the conceptual or schematic stage",
+    },
+    {
+      counter: "Our Impact",
+      title:
+        "Engage as early as possible, typically during the conceptual or schematic stage",
+      image: "/images/image-3.jpg",
+    },
+    {
+      counter: "Local experties",
+      title: "We engage as early as possible, typically during the conceptual.",
+      image: "/images/image-4.jpg",
+    },
+  ];
+
   const [activeSlideIndexes, setActiveSlideIndexes] = useState(0);
   const [currentSlider, setCurrentSlider] = useState(services[0]);
   const [currentIndexNew, setCurrentIndexNew] = useState(0);
@@ -1540,7 +2135,7 @@ const Home = () => {
       prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
     );
   };
-
+  useInViewAnimation(".home-2-upper-right");
   const handlers = useSwipeable({
     onSwipedLeft: () => handleNextNew(),
     onSwipedRight: () => handlePrevNew(),
@@ -1910,38 +2505,86 @@ const Home = () => {
           ))}
         </Slider>
       </div>
-
-      <div className="home-2-new containers">
-        <h3>Who We Are</h3>
-
-        <div className="home-2-new-down">
-          {/* Image - from up-left */}
+      <div className="home-2 containers">
+        <div className="home-2-upper">
+          <div className="home-2-upper-left">
+            <p>Who we are</p>
+          </div>
+          <div className="home-2-upper-right">
+            <h2>
+              The largest privately held Health, safety and regulatory
+              compliance in the world
+            </h2>
+            <div className="all-mission-vision">
+              <div className="mission-vission">
+                <div className="mission-upper">
+                  <Icon
+                    className="icon"
+                    width="30px"
+                    height="30px"
+                    icon="game-icons:extra-vision"
+                    color="black"
+                  />
+                  <h4>Our Vision</h4>
+                </div>
+                <p>
+                  To empower businesses with cutting-edge web solutions that
+                  enhance their digital presence and drive growth.
+                </p>
+              </div>
+              <div className="mission-vission">
+                <div className="mission-upper">
+                  <Icon
+                    className="icon"
+                    width="30px"
+                    height="30px"
+                    icon="icon-park-outline:user-to-user-transmission"
+                    color="black"
+                  />
+                  <h4>Our Mission</h4>
+                </div>
+                <p>
+                  Our solutions are designed to meet the needs of modern
+                  enterprises, ensuring they thrive in today’s competitive
+                  online landscape.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="home-2-down">
           <motion.img
-            src="/images/image-1.jpeg"
-            alt=""
             variants={leftVariant}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, amount: 0.2 }}
+            className="home-2-down-img"
+            src="/images/image-1.jpeg"
+            alt=""
           />
-
-          {/* Text - from up-right */}
           <motion.div
-            className="home-2-new-down-inner"
             variants={rightVariant}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, amount: 0.2 }}
+            className="home-2-sub"
           >
-            <h4>Welcome To Spatial Ecosystems Limited</h4>
-            <p>
-              Spatial Ecosystems Limited is a multinational HSEQ management
-              company offering sustainable solutions through consulting,
-              training, audits, and project management. With global affiliations
-              like NEBOSH, IOSH, and OSHA, the firm delivers innovative,
-              professional services even in challenging conditions to ensure
-              client success.
-            </p>
+            {counters?.map((items, index) => (
+              <div
+                style={{
+                  backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${items?.image})`,
+                }}
+                className="home-2-inner"
+              >
+                <h6>0{index + 1}</h6>
+                <div className="home-2-inner-sub">
+                  <h4>{items?.counter}</h4>
+                  <p>{items?.title}</p>
+                </div>
+              </div>
+            ))}
+
+            <img src="/images/image-3.jpg" alt="" />
           </motion.div>
         </div>
       </div>
@@ -2087,7 +2730,7 @@ const Home = () => {
             eiusmod tempor incididunt ut labore.
           </p>
         </div>
-        <div className="counter-body" ref={ref}>
+        {/* <div className="counter-body" ref={ref}>
           <div className="counter-sub">
             <Icon
               className="icon"
@@ -2132,6 +2775,125 @@ const Home = () => {
             <h4>{inView && <CountUp end={200} duration={3} />}+</h4>
             <p>Satisfied Customers</p>
           </div>
+        </div> */}
+        <div className="all-counter" ref={ref}> 
+
+        <div className="counter-1">
+          <div className="counter-text">
+            <h4>
+             {inView && <CountUp end={200} duration={3} />}
+            </h4>
+            <p>Project Done</p>
+          </div>
+          <div className="all-circle-contain">
+            <div class="circle-container">
+              <svg class="circle-text" viewBox="0 0 300 300">
+                <defs>
+                  <path
+                    id="circlePath"
+                    d="M 150, 150
+                    m -120, 0
+                    a 120,120 0 1,1 240,0
+                    a 120,120 0 1,1 -240,0"
+                  />
+                </defs>
+                <text fill="#ffffff" font-size="100" font-weight="700">
+                  <textPath href="#circlePath" startOffset="0%">
+                    - - - - - - - - - - - -
+                  </textPath>
+                </text>
+              </svg>
+            </div>
+          </div>
+          <div className="circular-cirle"></div>
+        </div>
+         <div className="counter-1">
+          <div className="counter-text">
+            <h4>
+              {inView && <CountUp end={15} duration={3} />}
+            </h4>
+            <p>Years of Experience</p>
+          </div>
+          <div className="all-circle-contain">
+            <div class="circle-container">
+              <svg class="circle-text" viewBox="0 0 300 300">
+                <defs>
+                  <path
+                    id="circlePath"
+                    d="M 150, 150
+                    m -120, 0
+                    a 120,120 0 1,1 240,0
+                    a 120,120 0 1,1 -240,0"
+                  />
+                </defs>
+                <text fill="#ffffff" font-size="100" font-weight="700">
+                  <textPath href="#circlePath" startOffset="0%">
+                    - - - - - - - - - - - -
+                  </textPath>
+                </text>
+              </svg>
+            </div>
+          </div>
+          <div className="circular-cirle"></div>
+        </div>
+         <div className="counter-1">
+          <div className="counter-text">
+            <h4>
+              {inView && <CountUp end={56} duration={3} />}
+            </h4>
+            <p>Number of Training Conducted</p>
+          </div>
+          <div className="all-circle-contain">
+            <div class="circle-container">
+              <svg class="circle-text" viewBox="0 0 300 300">
+                <defs>
+                  <path
+                    id="circlePath"
+                    d="M 150, 150
+                    m -120, 0
+                    a 120,120 0 1,1 240,0
+                    a 120,120 0 1,1 -240,0"
+                  />
+                </defs>
+                <text fill="#ffffff" font-size="100" font-weight="700">
+                  <textPath href="#circlePath" startOffset="0%">
+                    - - - - - - - - - - - -
+                  </textPath>
+                </text>
+              </svg>
+            </div>
+          </div>
+          <div className="circular-cirle"></div>
+        </div>
+         <div className="counter-1 ">
+          <div className="counter-text">
+            <h4>
+              {inView && <CountUp end={200} duration={3} />}
+            </h4>
+            <p>Satisfied customers</p>
+          </div>
+          <div className="all-circle-contain">
+            <div class="circle-container">
+              <svg class="circle-text" viewBox="0 0 300 300">
+                <defs>
+                  <path
+                    id="circlePath"
+                    d="M 150, 150
+                    m -120, 0
+                    a 120,120 0 1,1 240,0
+                    a 120,120 0 1,1 -240,0"
+                  />
+                </defs>
+                <text fill="#ffffff" font-size="100" font-weight="700">
+                  <textPath href="#circlePath" startOffset="0%">
+                    - - - - - - - - - - - -
+                  </textPath>
+                </text>
+              </svg>
+            </div>
+          </div>
+          <div className="circular-cirle"></div>
+        </div>
         </div>
       </div>
 
@@ -2207,6 +2969,8 @@ const Home = () => {
             ▶
           </button>
         </div>
+
+        
 
         {selectedImage && (
           <div className="modal-overlay" onClick={() => setSelectedImage(null)}>
@@ -2340,6 +3104,56 @@ const Home = () => {
           </motion.div>
         </div>
       </div>
+
+      <div className="home-8">
+        <div className="home-8-all">
+          <div className="home-8-upper">
+            <div className="home-2-upper-left">
+              <p
+                style={{
+                  color: "black",
+                }}
+              >
+                Quick Enquiry
+              </p>
+            </div>
+            <h2>
+              Get specialist advice for residential, commercial or property
+            </h2>
+          </div>
+          <div className="home-8-down">
+            <div className="home-8-input">
+              <input type="text" placeholder="Your Name" />
+              <input type="email" placeholder="Email" />
+              <input type="text" placeholder="Phone Number" />
+              <input type="text" placeholder="You inquiry about..." />
+            </div>
+            <div className="home-8-down-sub">
+              <h4>
+                We're excited to connect with you! Required fields are marked *
+              </h4>
+              <Link
+                target="_blank"
+                rel="noopener noreferrer"
+                className="schedule-btn"
+              >
+                <span> Get a call back </span>
+                <div className="schedule-circle">
+                  <Icon
+                    width="18px"
+                    height="18px"
+                    icon="tabler:arrow-up-right"
+                    style={{ color: "#cc9430" }}
+                  />
+                </div>
+              </Link>
+            </div>
+          </div>
+          <img className="side-img-1" src="/images/side-img-1.png" alt="" />
+          <img className="side-img-2" src="/images/side-img-2.png" alt="" />
+        </div>
+      </div>
+
       <div className="home-10 containers">
         <div className="home-10-sub">
           <h6>
@@ -2348,7 +3162,8 @@ const Home = () => {
           <h2>Our customers also share their success stories.</h2>
         </div>
         <div className="home-11-inner-2" {...handlers}>
-          <Icon className="icon-home-11"
+          <Icon
+            className="icon-home-11"
             icon="solar:arrow-left-outline"
             width="24"
             height="24"
@@ -2368,13 +3183,42 @@ const Home = () => {
             <h5 className="leonel">{currentTestimony?.full_name}</h5>
           </div>
 
-          <Icon className="icon-home-11"
+          <Icon
+            className="icon-home-11"
             icon="icons8:right-arrow"
             width="24"
             height="24"
             style={{ color: "#ffffff", cursor: "pointer" }}
             onClick={handleNextNew}
           />
+        </div>
+        <img className="home-11-cut" src="/images/cut-in-2.png" alt="" />
+        <div className="all-circle-con">
+          <div class="circle-container">
+            <img
+              src="/images/image-1.jpeg"
+              alt="round image"
+              class="center-image"
+            />
+
+            <svg class="circle-text" viewBox="0 0 300 300">
+              <defs>
+                <path
+                  id="circlePath"
+                  d="M 150, 150
+           m -120, 0
+           a 120,120 0 1,1 240,0
+           a 120,120 0 1,1 -240,0"
+                />
+              </defs>
+              <text fill="#e77817" font-size="22" font-weight="700">
+                <textPath href="#circlePath" startOffset="0%">
+                  What people say • What people say • What people say • What
+                  people say •
+                </textPath>
+              </text>
+            </svg>
+          </div>
         </div>
       </div>
     </HomeRap>

@@ -11,14 +11,14 @@ const sidebarConfig = [
     img: "/images/home-1.png",
     imgTwo: "/images/home-2.png",
     link: "/users/dashboard",
-    title: "Home",
+    title: "Home Page",
   },
   {
     id: 2,
     img: "/images/pro-1.png",
     imgTwo: "/images/pro-2.png",
-    link: "/users/properties",
-    title: "Properties",
+    link: "/users/aboutus",
+    title: "About Us Page",
   },
   
  
@@ -26,15 +26,23 @@ const sidebarConfig = [
     id: 3,
     img: "/images/pay-1.png",
     imgTwo: "/images/pay-2.png",
-    link: "/users/my-property",
-    title: "My Property",
+    link: "/users/projects",
+    title: "Projects",
+  },
+
+  {
+    id: 3,
+    img: "/images/pay-1.png",
+    imgTwo: "/images/pay-2.png",
+    link: "/users/services",
+    title: "Services",
   },
   {
     id: 4,
     img: "/images/set-1.png",
-    imgTwo: "/images/set-2.png",
-    link: "/users/setting",
-    title: "Setting",
+    imgTwo: "/images/set-2.png",  
+    link: "/users/settings",
+    title: "Web Setting",
   },
    
 

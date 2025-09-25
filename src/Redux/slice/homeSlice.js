@@ -2,12 +2,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
+const API_URL = "http://localhost:5000/api/home"
+const API_URL_TWO = "http://localhost:5000/api/general"
+const BASE_URL = "http://localhost:5000/api/about"
+const BASE_URL_NEW = "http://localhost:5000/api/project"
+const BASE_URL_TWO = "http://localhost:5000/api/service"
 // Async thunk for fetching Home data
 export const fetchHomepage = createAsyncThunk(
   "content/fetchFeatures",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("https://admin.abrigo-llc.com/api/request/home-page");
+      const response = await axios.get(`${API_URL}/user/auth/all-home`);
       return response.data;
     } catch (error) {
       console.error("Error fetching Home data:", error);
@@ -20,7 +26,7 @@ export const fetchObjectpage = createAsyncThunk(
     "content/fetchOjectpage",
     async (_, { rejectWithValue }) => {
       try {
-        const response = await axios.get("https://backoffice.sylvastarresidences.com/api/request/about-us");
+        const response = await axios.get(`${BASE_URL}/user/auth/about/fetch-all-data`);
         return response.data;
       } catch (error) {
         console.error("Error fetching about data:", error);
@@ -33,7 +39,7 @@ export const fetchObjectpage = createAsyncThunk(
     "content/fetchProjectpage",
     async (_, { rejectWithValue }) => {
       try {
-        const response = await axios.get("https://admin.abrigo-llc.com/api/request/project");
+        const response = await axios.get(`${BASE_URL_NEW}/user/auth/projects/all-project`);
         return response.data;
       } catch (error) {
         console.error("Error fetching about data:", error);
@@ -41,11 +47,38 @@ export const fetchObjectpage = createAsyncThunk(
       }
     }
   );
-export const fetchResidentialProject = createAsyncThunk(
-  "residentialProject/fetch",
+
+    export const fetchProjectDetails = createAsyncThunk(
+  "fetchProjectDetails/fetch",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`https://admin.abrigo-llc.com/api/request/project/property/${id}`);
+      const response = await axios.get(`${BASE_URL_NEW}/user/auth/projects/single-project/${id}`);
+      return response.data?.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
+
+ export const fetchServicepage = createAsyncThunk(
+    "content/fetchServicepage",
+    async (_, { rejectWithValue }) => {
+      try {
+        const response = await axios.get(`${BASE_URL_TWO}/user/auth/services/all-services/service`);
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching about data:", error);
+        return rejectWithValue(error.response?.data || "An error occurred while fetching Home data");
+      }
+    }
+  );
+
+    export const fetchServiceDetails = createAsyncThunk(
+  "fetchServiceDetails/fetch",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${BASE_URL_TWO}/user/auth/services/specific-service/${id}`);
       return response.data?.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
@@ -57,7 +90,7 @@ export const fetchResidentialProject = createAsyncThunk(
     "content/fetchGeneralpage",
     async (_, { rejectWithValue }) => {
       try {
-        const response = await axios.get("https://admin.abrigo-llc.com/api/request/general-settings");
+        const response = await axios.get(`${API_URL_TWO}/general-setting`);
         return response.data;
       } catch (error) {
         console.error("Error fetching about data:", error);
@@ -79,31 +112,10 @@ export const fetchResidentialProject = createAsyncThunk(
     }
   );
 
-  export const fetchServicepage = createAsyncThunk(
-    "content/fetchServicepage",
-    async (_, { rejectWithValue }) => {
-      try {
-        const response = await axios.get("https://admin.abrigo-llc.com/api/request/service");
-        return response.data;
-      } catch (error) {
-        console.error("Error fetching about data:", error);
-        return rejectWithValue(error.response?.data || "An error occurred while fetching Home data");
-      }
-    }
-  );
+ 
 
 
-  export const fetchServiceDetails = createAsyncThunk(
-  "fetchServiceDetails/fetch",
-  async (id, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(`https://admin.abrigo-llc.com/api/request/service/details/${id}`);
-      return response.data?.data;
-    } catch (err) {
-      return rejectWithValue(err.response?.data || err.message);
-    }
-  }
-);
+
 
 export const submitContactForm = createAsyncThunk(
   'contact/submit',
@@ -235,20 +247,7 @@ builder
         state.error = action.payload;
       });
 
-    builder
-      .addCase(fetchResidentialProject.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchResidentialProject.fulfilled, (state, action) => {
-        state.loading = false;
-        state.data = action.payload;
-      })
-      .addCase(fetchResidentialProject.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || "Failed to fetch project";
-      });
-
+   
       builder
       // Fetch Home Data
       .addCase(fetchContactpage.pending, (state) => {

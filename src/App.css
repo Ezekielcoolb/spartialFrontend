@@ -42,17 +42,54 @@ font-family: 'Roboto';
   top: 0;
   left: 0;
 }
+
+  .dropdown-container-two {
+  position: fixed;
+  width: 100vw;
+  height: 100vh !important;
+  display: flex;
+flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8); /* Semi-transparent dark background */
+  backdrop-filter: blur(4px); /* Adds a blur effect */
+  z-index: 100000;
+  top: 0;
+  left: 0;
+
+}
+  .dropdown-containerTwo {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3); /* Semi-transparent dark background */
+  backdrop-filter: blur(1px); /* Adds a blur effect */
+  z-index: 10000;
+  top: 0;
+  left: 0;
+}
 .successPop {
   width: fit-content;
   padding: 30px;
+  max-width: 600px;
   border-radius: 15px;
   background: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  max-height: 600px;
 }
+
+.successPop .slider {
+  max-height: 500px;   /* give space for padding/buttons */
+  overflow-y: auto;    /* scrollable here */
+}
+
 .successPop p {
   color: #112240 !important;
   font-size: 20px !important;
@@ -72,6 +109,138 @@ font-family: 'Roboto';
   font-weight: 600;
   border-radius: 10px;
 }
+
+ /* .tr-hover:hover {
+    background: #dee2e6;
+    cursor: pointer;
+  } */
+  th {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    color: #353546;
+  }
+  td {
+    font-size: 16px;
+    font-weight: 400;
+    color: #444460;
+  }
+  .table-container {
+    margin: 15px auto;
+  }
+  .new-table-scroll {
+    width: 100% !important;
+    overflow-x: auto;
+  }
+
+  /* For WebKit Browsers (Chrome, Edge, Safari) */
+  .new-table-scroll::-webkit-scrollbar {
+    height: 3px; /* Set scrollbar width */
+  }
+
+  .new-table-scroll::-webkit-scrollbar-thumb {
+    background: #888; /* Scrollbar thumb color */
+    border-radius: 4px; /* Optional for rounded scrollbar */
+  }
+
+  .new-table-scroll::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Thumb hover color */
+  }
+
+  .new-table-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Scrollbar track color */
+  }
+
+  /* Hide Up and Down Arrows in Scrollbar */
+  .new-table-scroll::-webkit-scrollbar-button {
+    display: none; /* Hides the arrows */
+  }
+  .table-div-con {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto; /* horizontal scrolling */
+    overflow-y: hidden; /* keep vertical clean; switch to auto if you want vertical too */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Make the table at least 1000px wide; fill larger screens */
+  .custom-table {
+    border-collapse: collapse;
+    text-align: left;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    /* 🔑 forces overflow on small screens, fits on large */
+    width: max(100%, 1000px);
+  }
+
+  /* (Optional) If your layout parent is a flex item, also add: */
+  .outlet,
+  .table-scroll {
+    min-width: 0; /* ensures scrolling works inside flex layouts */
+  }
+
+  /* your existing scrollbar styling still applies if you like */
+  .table-scroll::-webkit-scrollbar {
+    height: 6px;
+  }
+  .table-scroll::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  .table-scroll::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  .table-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  table {
+  }
+  .custom-table thead {
+    height: 40px;
+  }
+  .custom-table thead th {
+    padding:  20px;
+    background: #dee2e6;
+   
+    border-top: 0px;
+    border-right: 1px;
+    border-bottom: 1px;
+    border-left: 0px;
+
+    border-style: solid;
+
+    border-color: #dee2e6;
+
+    font-weight: 600;
+    font-size: 18px;
+    color: #000000;
+  }
+  .custom-table tbody {
+    background: #ffffff;
+  }
+  .custom-table tbody tr {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+  }
+  .custom-table tbody td {
+    padding: 10px;
+    border-top: 0px;
+    border-right: 1px;
+    border-bottom: 1px;
+    border-left: 0px;
+
+    border-style: solid;
+
+    border-color: #dee2e6;
+
+    font-size: 15px;
+    font-weight: 400;
+    color: #667085;
+  }
 
 @media (max-width: 1300px) {
   .containers {
