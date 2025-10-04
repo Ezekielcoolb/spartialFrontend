@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { fetchHomepage } from "../../Redux/slice/homeSlice";
 import { resetUpload, uploadMedia } from "../../Redux/slice/uploadSlice";
-import { resetWhoWeAre, updateHomeCounter, updateWhoWeAre } from "../../Redux/slice/userSlice";
+import {
+  resetWhoWeAre,
+  updateHomeCounter,
+  updateWhoWeAre,
+} from "../../Redux/slice/userSlice";
 import { ClipLoader } from "react-spinners";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Link } from "react-router-dom";
@@ -186,22 +190,62 @@ const AboutRap = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+
+  @media (max-width: 700px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 500px;
+    }
+    .btns button {
+      width: 500px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 350px;
+    }
+  }
+
+  @media (max-width: 410px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 300px;
+    }
+  }
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 270px;
+    }
+  }
 `;
 
 const CounterSectionHome = () => {
   const dispatch = useDispatch();
   const { homeObject, loading, error } = useSelector((state) => state.content);
   const { loading: uploading } = useSelector((state) => state.upload);
-  const { counterLoading, counterData } =
-    useSelector((state) => state.users);
-   const [homeCounterData, setHomeCounterData] = useState({
-     title: "",
-     projectDone: "",
-     yearsOfExperience:  "",
-     awardWinning:  "",
-     satisfiedCustomers:  "",
-     subtitle: "",
-   });
+  const { counterLoading, counterData } = useSelector((state) => state.users);
+  const [homeCounterData, setHomeCounterData] = useState({
+    title: "",
+    projectDone: "",
+    yearsOfExperience: "",
+    awardWinning: "",
+    satisfiedCustomers: "",
+    subtitle: "",
+  });
   console.log(counterData);
 
   const counters = homeObject?.counter;
@@ -223,11 +267,10 @@ const CounterSectionHome = () => {
     dispatch(fetchHomepage()); // Call API on component mount
   }, [dispatch]);
 
-  
-   const handleSubmitCounter = (e) => {
-      e.preventDefault();
-      dispatch(updateHomeCounter(homeCounterData));
-    };
+  const handleSubmitCounter = (e) => {
+    e.preventDefault();
+    dispatch(updateHomeCounter(homeCounterData));
+  };
 
   return (
     <AboutRap>
@@ -252,84 +295,116 @@ const CounterSectionHome = () => {
             <h2>Home Counter Section</h2>
           </div>
         </div>
-             <form>
-      <div className="slider-group">
-        <label>Counter Heading Title
-        <input
-          type="text"
-          placeholder=" Title"
-          value={homeCounterData.title}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, title: e.target.value })
-          }
-        />
-        </label>
-        <label> Counter Heading subtitle
-        <textarea
-          type="text"
-          placeholder=" Subtitle"
-          value={homeCounterData.subtitle}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, subtitle: e.target.value })
-          }
-        />
-        </label>
-        <h3 style={{
-            marginTop: "30px",
-            marginBottom: "10px"
-        }}>Counters</h3>
-        <label>Project Done Count
-        <input
-          type="number"
-          placeholder=" Project Done Count"
-          value={homeCounterData.projectDone}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, projectDone: e.target.value })
-          }
-        />
-        </label>
-        <label>Years of Experience
-        <input
-          type="number"
-          placeholder="Years of Experience"
-          value={homeCounterData.yearsOfExperience}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, yearsOfExperience: e.target.value })
-          }
-        />
-        </label>
-        <label> No. of Training Conducted
-         <input
-          type="number"
-          placeholder="Number of training conducted"
-          value={homeCounterData.awardWinning}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, awardWinning: e.target.value })
-          }
-        />
-        </label>
-        <label> No of Customer Satisfied
-        <input
-          type="number"
-          placeholder="Number of Customers Satisfied"
-          value={homeCounterData.satisfiedCustomers}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, satisfiedCustomers: e.target.value })
-          }
-        />
-        </label>
-       
+        <form>
+          <div className="slider-group">
+            <label>
+              Counter Heading Title
+              <input
+                type="text"
+                placeholder=" Title"
+                value={homeCounterData.title}
+                onChange={(e) =>
+                  setHomeCounterData({
+                    ...homeCounterData,
+                    title: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <label>
+              {" "}
+              Counter Heading subtitle
+              <textarea
+                type="text"
+                placeholder=" Subtitle"
+                value={homeCounterData.subtitle}
+                onChange={(e) =>
+                  setHomeCounterData({
+                    ...homeCounterData,
+                    subtitle: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <h3
+              style={{
+                marginTop: "30px",
+                marginBottom: "10px",
+              }}
+            >
+              Counters
+            </h3>
+            <label>
+              Project Done Count
+              <input
+                type="number"
+                placeholder=" Project Done Count"
+                value={homeCounterData.projectDone}
+                onChange={(e) =>
+                  setHomeCounterData({
+                    ...homeCounterData,
+                    projectDone: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <label>
+              Years of Experience
+              <input
+                type="number"
+                placeholder="Years of Experience"
+                value={homeCounterData.yearsOfExperience}
+                onChange={(e) =>
+                  setHomeCounterData({
+                    ...homeCounterData,
+                    yearsOfExperience: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <label>
+              {" "}
+              No. of Training Conducted
+              <input
+                type="number"
+                placeholder="Number of training conducted"
+                value={homeCounterData.awardWinning}
+                onChange={(e) =>
+                  setHomeCounterData({
+                    ...homeCounterData,
+                    awardWinning: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <label>
+              {" "}
+              No of Customer Satisfied
+              <input
+                type="number"
+                placeholder="Number of Customers Satisfied"
+                value={homeCounterData.satisfiedCustomers}
+                onChange={(e) =>
+                  setHomeCounterData({
+                    ...homeCounterData,
+                    satisfiedCustomers: e.target.value,
+                  })
+                }
+              />
+            </label>
 
-      
-         <div className="btns">
-        <button className="btn-2" onClick={handleSubmitCounter}> {counterLoading ? (
-                          <ClipLoader color="white" size={35} />
-                        ) : (
-                          "Update Counter"
-                        )}</button>
-        </div>
-      </div>
-</form>
+            <div className="btns">
+              <button className="btn-2" onClick={handleSubmitCounter}>
+                {" "}
+                {counterLoading ? (
+                  <ClipLoader color="white" size={35} />
+                ) : (
+                  "Update Counter"
+                )}
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
       {counterData ? (
         <div className="dropdown-container">

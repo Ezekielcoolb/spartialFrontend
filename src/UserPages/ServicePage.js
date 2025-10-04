@@ -17,7 +17,12 @@ import {
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { resetUpload, uploadMedia } from "../Redux/slice/uploadSlice";
-import { addToServiceList, deleteSpecificService, updateHomeServiceHeadings, updateSpecificService } from "../Redux/slice/serviceSlice";
+import {
+  addToServiceList,
+  deleteSpecificService,
+  updateHomeServiceHeadings,
+  updateSpecificService,
+} from "../Redux/slice/serviceSlice";
 
 const SliderRap = styled.div`
   padding: 30px;
@@ -229,6 +234,53 @@ const SliderRap = styled.div`
     border-top: 1px solid #ccc;
     padding-top: 30px;
   }
+
+  @media (max-width: 700px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 500px;
+    }
+    .btn-3 {
+      width: 500px;
+    }
+  }
+
+  @media (max-width: 550px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btn-3 {
+      width: 350px;
+    }
+  }
+
+  @media (max-width: 410px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btn-3 {
+      width: 300px;
+    }
+  }
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btn-3 {
+      width: 270px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .be-done {
+      display: none;
+    }
+  }
 `;
 
 const ServiceUserPage = () => {
@@ -282,26 +334,26 @@ const ServiceUserPage = () => {
   const [listTesti, setListTesti] = useState({
     name: "",
     overview: "",
-   
+
     serviceFaq: [],
     whyChoose: [],
     servicesOffered: [],
-   
+
     description: "",
-    
+
     banner: "",
   });
 
   const [formData, setFormData] = useState({
-  name: "",
+    name: "",
     overview: "",
-   
+
     serviceFaq: [],
     whyChoose: [],
     servicesOffered: [],
-   
+
     description: "",
-    
+
     banner: "",
   });
 
@@ -312,12 +364,11 @@ const ServiceUserPage = () => {
         name: selectedSlide.name || "",
         overview: selectedSlide.overview || "",
         serviceFaq: selectedSlide.serviceFaq || [],
-         whyChoose: selectedSlide.whyChoose || [],
-          servicesOffered: selectedSlide.servicesOffered || [],
+        whyChoose: selectedSlide.whyChoose || [],
+        servicesOffered: selectedSlide.servicesOffered || [],
         description: selectedSlide.description || "",
-       
+
         banner: selectedSlide.banner || "",
-      
       });
     }
   }, [selectedSlide]);
@@ -342,16 +393,16 @@ const ServiceUserPage = () => {
     setNewSliderOpen(false);
     setSelectedId(null);
     setListTesti({
-       name: "",
-    overview: "",
-   
-    serviceFaq: [],
-    whyChoose: [],
-    servicesOffered: [],
-   
-    description: "",
-    
-    banner: "",
+      name: "",
+      overview: "",
+
+      serviceFaq: [],
+      whyChoose: [],
+      servicesOffered: [],
+
+      description: "",
+
+      banner: "",
     });
   };
   const handleHeadingSubmitTesti = (e) => {
@@ -469,7 +520,7 @@ const ServiceUserPage = () => {
 
             {headingTesti.servicePageBanner && (
               <img
-                src={`http://localhost:5000${headingTesti.servicePageBanner}`}
+                src={`https://spatial-backend.onrender.com${headingTesti.servicePageBanner}`}
                 alt="banner"
                 className="preview-image"
               />
@@ -502,8 +553,12 @@ const ServiceUserPage = () => {
               <tr style={{ background: "#f4f4f4" }}>
                 <th style={{ textAlign: "left" }}>S/N</th>
                 <th style={{ textAlign: "left" }}>Name </th>
-                <th style={{ textAlign: "left" }}>overview</th>
-                <th style={{ textAlign: "left" }}>Date</th>
+                <th className="be-done" style={{ textAlign: "left" }}>
+                  overview
+                </th>
+                <th className="be-done" style={{ textAlign: "left" }}>
+                  Date
+                </th>
                 <th style={{ textAlign: "left" }}>Action</th>
               </tr>
             </thead>
@@ -512,8 +567,8 @@ const ServiceUserPage = () => {
                 <tr className="tr-hover">
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
-                  <td>{items.overview}</td>
-                  <td>
+                  <td className="be-done">{items.overview}</td>
+                  <td className="be-done">
                     {new Date(items.dateCreated).toLocaleDateString("en-GB", {
                       day: "2-digit",
                       month: "2-digit",
@@ -591,7 +646,6 @@ const ServiceUserPage = () => {
                           setFormData({ ...formData, overview: e.target.value })
                         }
                       />
-                    
 
                       <ReactQuill
                         theme="snow"
@@ -601,7 +655,7 @@ const ServiceUserPage = () => {
                         }
                       />
 
-                     {/* Service Offer Array */}
+                      {/* Service Offer Array */}
                       <div>
                         <h4>Services Offered</h4>
                         {formData.servicesOffered.map((feat, idx) => (
@@ -664,9 +718,8 @@ const ServiceUserPage = () => {
                           Add Srvice offered
                         </button>
                       </div>
-                    
 
-                     {/* Why Choose  Array */}
+                      {/* Why Choose  Array */}
                       <div>
                         <h4>Why Choose Us Section</h4>
                         {formData.whyChoose.map((feat, idx) => (
@@ -795,7 +848,7 @@ const ServiceUserPage = () => {
                       </div>
 
                       {/* Banner List Upload */}
-                     
+
                       <div className="upload-container">
                         <label className="upload-box">
                           <input
@@ -813,14 +866,12 @@ const ServiceUserPage = () => {
 
                         {formData.banner && (
                           <img
-                            src={`http://localhost:5000${formData.banner}`}
+                            src={`https://spatial-backend.onrender.com${formData.banner}`}
                             alt="banner"
                             className="preview-image"
                           />
                         )}
                       </div>
-
-                    
 
                       <div className="upper-slide">
                         <button
@@ -917,8 +968,7 @@ const ServiceUserPage = () => {
                       setListTesti({ ...listTesti, overview: e.target.value })
                     }
                   />
-                
-               
+
                   <ReactQuill
                     theme="snow"
                     value={listTesti.description}
@@ -927,205 +977,197 @@ const ServiceUserPage = () => {
                     }
                   />
 
-                  
-                
-
-                 
-
                   {/* Service Offer Array */}
-                      <div>
-                        <h4>Services Offered</h4>
-                        {listTesti.servicesOffered.map((feat, idx) => (
-                          <div key={idx} style={{ marginBottom: 8 }}>
-                            <input
-                              type="text"
-                              placeholder="Service Offered Title"
-                              value={feat.title}
-                              onChange={(e) => {
-                                const arr = [...listTesti.servicesOffered];
-                                arr[idx].title = e.target.value;
-                                setListTesti({
-                                  ...listTesti,
-                                  servicesOffered: arr,
-                                });
-                              }}
-                              style={{ marginRight: 8 }}
-                            />
-                            <input
-                              type="text"
-                              placeholder="Service Offer Content"
-                              value={feat.content}
-                              onChange={(e) => {
-                                const arr = [...listTesti.servicesOffered];
-                                arr[idx].content = e.target.value;
-                                setListTesti({
-                                  ...listTesti,
-                                  servicesOffered: arr,
-                                });
-                              }}
-                            />
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const arr = [...listTesti.servicesOffered];
-                                arr.splice(idx, 1);
-                                setListTesti({
-                                  ...listTesti,
-                                  servicesOffered: arr,
-                                });
-                              }}
-                              style={{ marginLeft: 8 }}
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        ))}
-                        <button
-                          type="button"
-                          onClick={() =>
+                  <div>
+                    <h4>Services Offered</h4>
+                    {listTesti.servicesOffered.map((feat, idx) => (
+                      <div key={idx} style={{ marginBottom: 8 }}>
+                        <input
+                          type="text"
+                          placeholder="Service Offered Title"
+                          value={feat.title}
+                          onChange={(e) => {
+                            const arr = [...listTesti.servicesOffered];
+                            arr[idx].title = e.target.value;
                             setListTesti({
                               ...listTesti,
-                              servicesOffered: [
-                                ...(listTesti.servicesOffered || []),
-                                { title: "", content: "" },
-                              ],
-                            })
-                          }
-                        >
-                          Add Srvice offered
-                        </button>
-                      </div>
-                    
-
-                     {/* Why Choose  Array */}
-                      <div>
-                        <h4>Why Choose Us Section</h4>
-                        {listTesti.whyChoose.map((feat, idx) => (
-                          <div key={idx} style={{ marginBottom: 8 }}>
-                            <input
-                              type="text"
-                              placeholder="Why Choose Title"
-                              value={feat.title}
-                              onChange={(e) => {
-                                const arr = [...listTesti.whyChoose];
-                                arr[idx].title = e.target.value;
-                                setListTesti({
-                                  ...listTesti,
-                                  whyChoose: arr,
-                                });
-                              }}
-                              style={{ marginRight: 8 }}
-                            />
-                            <input
-                              type="text"
-                              placeholder="Why Choose Content"
-                              value={feat.content}
-                              onChange={(e) => {
-                                const arr = [...listTesti.whyChoose];
-                                arr[idx].content = e.target.value;
-                                setListTesti({
-                                  ...listTesti,
-                                  whyChoose: arr,
-                                });
-                              }}
-                            />
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const arr = [...listTesti.whyChoose];
-                                arr.splice(idx, 1);
-                                setListTesti({
-                                  ...listTesti,
-                                  whyChoose: arr,
-                                });
-                              }}
-                              style={{ marginLeft: 8 }}
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        ))}
-                        <button
-                          type="button"
-                          onClick={() =>
+                              servicesOffered: arr,
+                            });
+                          }}
+                          style={{ marginRight: 8 }}
+                        />
+                        <input
+                          type="text"
+                          placeholder="Service Offer Content"
+                          value={feat.content}
+                          onChange={(e) => {
+                            const arr = [...listTesti.servicesOffered];
+                            arr[idx].content = e.target.value;
                             setListTesti({
                               ...listTesti,
-                              whyChoose: [
-                                ...(listTesti.whyChoose || []),
-                                { title: "", content: "" },
-                              ],
-                            })
-                          }
-                        >
-                          Add New
-                        </button>
-                      </div>
-
-                      {/* Service Faq Array */}
-                      <div>
-                        <h4>Faq List</h4>
-                        {listTesti.serviceFaq.map((feat, idx) => (
-                          <div key={idx} style={{ marginBottom: 8 }}>
-                            <input
-                              type="text"
-                              placeholder="Faq Question"
-                              value={feat.title}
-                              onChange={(e) => {
-                                const arr = [...listTesti.serviceFaq];
-                                arr[idx].title = e.target.value;
-                                setListTesti({
-                                  ...listTesti,
-                                  serviceFaq: arr,
-                                });
-                              }}
-                              style={{ marginRight: 8 }}
-                            />
-                            <input
-                              type="text"
-                              placeholder="Faq Answer"
-                              value={feat.content}
-                              onChange={(e) => {
-                                const arr = [...listTesti.serviceFaq];
-                                arr[idx].content = e.target.value;
-                                setListTesti({
-                                  ...listTesti,
-                                  serviceFaq: arr,
-                                });
-                              }}
-                            />
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const arr = [...listTesti.serviceFaq];
-                                arr.splice(idx, 1);
-                                setListTesti({
-                                  ...listTesti,
-                                  serviceFaq: arr,
-                                });
-                              }}
-                              style={{ marginLeft: 8 }}
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        ))}
+                              servicesOffered: arr,
+                            });
+                          }}
+                        />
                         <button
                           type="button"
-                          onClick={() =>
+                          onClick={() => {
+                            const arr = [...listTesti.servicesOffered];
+                            arr.splice(idx, 1);
                             setListTesti({
                               ...listTesti,
-                              serviceFaq: [
-                                ...(listTesti.serviceFaq || []),
-                                { title: "", content: "" },
-                              ],
-                            })
-                          }
+                              servicesOffered: arr,
+                            });
+                          }}
+                          style={{ marginLeft: 8 }}
                         >
-                          Add Faq
+                          Remove
                         </button>
                       </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setListTesti({
+                          ...listTesti,
+                          servicesOffered: [
+                            ...(listTesti.servicesOffered || []),
+                            { title: "", content: "" },
+                          ],
+                        })
+                      }
+                    >
+                      Add Srvice offered
+                    </button>
+                  </div>
 
-                 
+                  {/* Why Choose  Array */}
+                  <div>
+                    <h4>Why Choose Us Section</h4>
+                    {listTesti.whyChoose.map((feat, idx) => (
+                      <div key={idx} style={{ marginBottom: 8 }}>
+                        <input
+                          type="text"
+                          placeholder="Why Choose Title"
+                          value={feat.title}
+                          onChange={(e) => {
+                            const arr = [...listTesti.whyChoose];
+                            arr[idx].title = e.target.value;
+                            setListTesti({
+                              ...listTesti,
+                              whyChoose: arr,
+                            });
+                          }}
+                          style={{ marginRight: 8 }}
+                        />
+                        <input
+                          type="text"
+                          placeholder="Why Choose Content"
+                          value={feat.content}
+                          onChange={(e) => {
+                            const arr = [...listTesti.whyChoose];
+                            arr[idx].content = e.target.value;
+                            setListTesti({
+                              ...listTesti,
+                              whyChoose: arr,
+                            });
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const arr = [...listTesti.whyChoose];
+                            arr.splice(idx, 1);
+                            setListTesti({
+                              ...listTesti,
+                              whyChoose: arr,
+                            });
+                          }}
+                          style={{ marginLeft: 8 }}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setListTesti({
+                          ...listTesti,
+                          whyChoose: [
+                            ...(listTesti.whyChoose || []),
+                            { title: "", content: "" },
+                          ],
+                        })
+                      }
+                    >
+                      Add New
+                    </button>
+                  </div>
+
+                  {/* Service Faq Array */}
+                  <div>
+                    <h4>Faq List</h4>
+                    {listTesti.serviceFaq.map((feat, idx) => (
+                      <div key={idx} style={{ marginBottom: 8 }}>
+                        <input
+                          type="text"
+                          placeholder="Faq Question"
+                          value={feat.title}
+                          onChange={(e) => {
+                            const arr = [...listTesti.serviceFaq];
+                            arr[idx].title = e.target.value;
+                            setListTesti({
+                              ...listTesti,
+                              serviceFaq: arr,
+                            });
+                          }}
+                          style={{ marginRight: 8 }}
+                        />
+                        <input
+                          type="text"
+                          placeholder="Faq Answer"
+                          value={feat.content}
+                          onChange={(e) => {
+                            const arr = [...listTesti.serviceFaq];
+                            arr[idx].content = e.target.value;
+                            setListTesti({
+                              ...listTesti,
+                              serviceFaq: arr,
+                            });
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const arr = [...listTesti.serviceFaq];
+                            arr.splice(idx, 1);
+                            setListTesti({
+                              ...listTesti,
+                              serviceFaq: arr,
+                            });
+                          }}
+                          style={{ marginLeft: 8 }}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setListTesti({
+                          ...listTesti,
+                          serviceFaq: [
+                            ...(listTesti.serviceFaq || []),
+                            { title: "", content: "" },
+                          ],
+                        })
+                      }
+                    >
+                      Add Faq
+                    </button>
+                  </div>
 
                   <div className="upload-container">
                     <label className="upload-box">
@@ -1144,14 +1186,12 @@ const ServiceUserPage = () => {
 
                     {listTesti.banner && (
                       <img
-                        src={`http://localhost:5000${listTesti.banner}`}
+                        src={`https://spatial-backend.onrender.com${listTesti.banner}`}
                         alt="banner"
                         className="preview-image"
                       />
                     )}
                   </div>
-
-               
 
                   <div className="upper-slide">
                     <button className="btn-2" onClick={handleListSubmitTesti}>

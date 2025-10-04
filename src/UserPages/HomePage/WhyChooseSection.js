@@ -191,6 +191,47 @@ const AboutRap = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+
+  @media (max-width: 700px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 500px;
+    }
+    .btns button {
+      width: 500px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 350px;
+    }
+  }
+
+  @media (max-width: 410px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 300px;
+    }
+  }
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 270px;
+    }
+  }
 `;
 
 const WhyChooseSectionHome = () => {
@@ -198,9 +239,9 @@ const WhyChooseSectionHome = () => {
   const { homeObject, loading, error } = useSelector((state) => state.content);
   const { loading: uploading } = useSelector((state) => state.upload);
   const { chooseUsLoading, chooseUsData } = useSelector((state) => state.users);
-const [whyChooseData, setWhyChooseData] = useState({
+  const [whyChooseData, setWhyChooseData] = useState({
     heading: "",
-     titleOne: "",
+    titleOne: "",
     subtitleOne: "",
     titleTwo: "",
     subtitleTwo: "",
@@ -229,10 +270,10 @@ const [whyChooseData, setWhyChooseData] = useState({
     dispatch(fetchHomepage()); // Call API on component mount
   }, [dispatch]);
 
-   const handleSubmitWhyChoose = (e) => {
-      e.preventDefault();
-      dispatch(updateWhyChoose(whyChooseData));
-    };
+  const handleSubmitWhyChoose = (e) => {
+    e.preventDefault();
+    dispatch(updateWhyChoose(whyChooseData));
+  };
 
   return (
     <AboutRap>
@@ -257,96 +298,121 @@ const [whyChooseData, setWhyChooseData] = useState({
             <h2>Home Why Choose Us Section</h2>
           </div>
         </div>
-              <form>
-      <div className="slider-group">
-         <h3> Why Coose Us Heading</h3>
-        
-        <input
-          type="text"
-          placeholder=" Heading"
-          value={whyChooseData.heading}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, heading: e.target.value })
-          }
-        />
-       
+        <form>
+          <div className="slider-group">
+            <h3> Why Coose Us Heading</h3>
 
+            <input
+              type="text"
+              placeholder=" Heading"
+              value={whyChooseData.heading}
+              onChange={(e) =>
+                setWhyChooseData({ ...whyChooseData, heading: e.target.value })
+              }
+            />
 
-        <h3>First Why Coose Us</h3>
-        <label>Title
-        <input
-          type="text"
-          placeholder=" Title"
-          value={whyChooseData.titleOne}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, titleOne: e.target.value })
-          }
-        />
-        </label>
-        <label> Content
-        <textarea
-          type="text"
-          placeholder="Content"
-          value={whyChooseData.subtitleOne}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, subtitleOne: e.target.value })
-          }
-        />
-        </label>
-        <h3>Second Why Coose Us</h3>
-            <label>Title
-        <input
-          type="text"
-          placeholder=" Title "
-          value={whyChooseData.titleTwo}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, titleTwo: e.target.value })
-          }
-        />
-        </label>
-        <label> Content
-        <textarea
-          type="text"
-          placeholder="Content"
-          value={whyChooseData.subtitleTwo}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, subtitleTwo: e.target.value })
-          }
-        />
-        </label>
-        <h3>Third Why Coose Us</h3>
-        <label> Title
-        <input
-          type="text"
-          placeholder=" Title"
-          value={whyChooseData.titleThree}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, titleThree: e.target.value })
-          }
-        />
-        </label>
-        <label>Content
-        <textarea
-          type="text"
-          placeholder="Content"
-          value={whyChooseData.subtitleThree}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, subtitleThree: e.target.value })
-          }
-        />
-     
-       </label>
+            <h3>First Why Coose Us</h3>
+            <label>
+              Title
+              <input
+                type="text"
+                placeholder=" Title"
+                value={whyChooseData.titleOne}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    titleOne: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <label>
+              {" "}
+              Content
+              <textarea
+                type="text"
+                placeholder="Content"
+                value={whyChooseData.subtitleOne}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    subtitleOne: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <h3>Second Why Coose Us</h3>
+            <label>
+              Title
+              <input
+                type="text"
+                placeholder=" Title "
+                value={whyChooseData.titleTwo}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    titleTwo: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <label>
+              {" "}
+              Content
+              <textarea
+                type="text"
+                placeholder="Content"
+                value={whyChooseData.subtitleTwo}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    subtitleTwo: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <h3>Third Why Coose Us</h3>
+            <label>
+              {" "}
+              Title
+              <input
+                type="text"
+                placeholder=" Title"
+                value={whyChooseData.titleThree}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    titleThree: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <label>
+              Content
+              <textarea
+                type="text"
+                placeholder="Content"
+                value={whyChooseData.subtitleThree}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    subtitleThree: e.target.value,
+                  })
+                }
+              />
+            </label>
 
-      
-         <div className="btns">
-        <button className="btn-2" onClick={handleSubmitWhyChoose}>{chooseUsLoading ? (
-                                  <ClipLoader color="white" size={35} />
-                                ) : (
-                                  "Update Why Choose Us"
-                                )}</button>
-        </div>
-      </div>
-</form>
+            <div className="btns">
+              <button className="btn-2" onClick={handleSubmitWhyChoose}>
+                {chooseUsLoading ? (
+                  <ClipLoader color="white" size={35} />
+                ) : (
+                  "Update Why Choose Us"
+                )}
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
       {chooseUsData ? (
         <div className="dropdown-container">

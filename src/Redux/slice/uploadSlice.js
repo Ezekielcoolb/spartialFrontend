@@ -17,7 +17,7 @@ export const uploadMedia = createAsyncThunk(
       }
 
       const res = await axios.post(
-        `http://localhost:5000/api/upload/${folderName}`,
+        `https://spatial-backend.onrender.com/api/upload/${folderName}`,
         formData,
         {
           headers: {

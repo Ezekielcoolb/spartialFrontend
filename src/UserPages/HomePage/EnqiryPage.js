@@ -192,6 +192,47 @@ const AboutRap = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+
+  @media (max-width: 700px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 500px;
+    }
+    .btns button {
+      width: 500px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 350px;
+    }
+  }
+
+  @media (max-width: 410px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 300px;
+    }
+  }
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 270px;
+    }
+  }
 `;
 
 const EnquirySectionHome = () => {
@@ -199,11 +240,10 @@ const EnquirySectionHome = () => {
   const { homeObject, loading, error } = useSelector((state) => state.content);
   const { loading: uploading } = useSelector((state) => state.upload);
   const { enquiryLoading, enquiryData } = useSelector((state) => state.users);
-const [whyChooseData, setWhyChooseData] = useState({
+  const [whyChooseData, setWhyChooseData] = useState({
     title: "",
-     mainTitle: "",
+    mainTitle: "",
     downText: "",
-  
   });
   console.log(homeObject);
 
@@ -215,7 +255,6 @@ const [whyChooseData, setWhyChooseData] = useState({
         title: whyChoose.title || "",
         mainTitle: whyChoose.mainTitle || "",
         downText: whyChoose.downText || "",
-        
       });
     }
   }, [whyChoose]);
@@ -224,10 +263,10 @@ const [whyChooseData, setWhyChooseData] = useState({
     dispatch(fetchHomepage()); // Call API on component mount
   }, [dispatch]);
 
-   const handleSubmitWhyChoose = (e) => {
-      e.preventDefault();
-      dispatch(updateEnquirySection(whyChooseData));
-    };
+  const handleSubmitWhyChoose = (e) => {
+    e.preventDefault();
+    dispatch(updateEnquirySection(whyChooseData));
+  };
 
   return (
     <AboutRap>
@@ -252,54 +291,61 @@ const [whyChooseData, setWhyChooseData] = useState({
             <h2>Home Enquiry Section</h2>
           </div>
         </div>
-              <form>
-      <div className="slider-group">
-      
-       
+        <form>
+          <div className="slider-group">
+            <label>
+              Title
+              <input
+                type="text"
+                placeholder=" Title"
+                value={whyChooseData.title}
+                onChange={(e) =>
+                  setWhyChooseData({ ...whyChooseData, title: e.target.value })
+                }
+              />
+            </label>
+            <label>
+              {" "}
+              Main Title
+              <input
+                type="text"
+                placeholder="Main Title"
+                value={whyChooseData.mainTitle}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    mainTitle: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <label>
+              {" "}
+              Down Text
+              <input
+                type="text"
+                placeholder=" Down Text "
+                value={whyChooseData.downText}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    downText: e.target.value,
+                  })
+                }
+              />
+            </label>
 
-
-        <label>Title
-        <input
-          type="text"
-          placeholder=" Title"
-          value={whyChooseData.title}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, title: e.target.value })
-          }
-        />
-        </label>
-        <label> Main Title
-        <input
-          type="text"
-          placeholder="Main Title"
-          value={whyChooseData.mainTitle}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, mainTitle: e.target.value })
-          }
-        />
-        </label>
-            <label> Down Text
-        <input
-          type="text"
-          placeholder=" Down Text "
-          value={whyChooseData.downText}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, downText: e.target.value })
-          }
-        />
-        </label>
-        
-
-      
-         <div className="btns">
-        <button className="btn-2" onClick={handleSubmitWhyChoose}>{enquiryLoading ? (
-                                  <ClipLoader color="white" size={35} />
-                                ) : (
-                                  "Update Enquiry Section"
-                                )}</button>
-        </div>
-      </div>
-</form>
+            <div className="btns">
+              <button className="btn-2" onClick={handleSubmitWhyChoose}>
+                {enquiryLoading ? (
+                  <ClipLoader color="white" size={35} />
+                ) : (
+                  "Update Enquiry Section"
+                )}
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
       {enquiryData ? (
         <div className="dropdown-container">

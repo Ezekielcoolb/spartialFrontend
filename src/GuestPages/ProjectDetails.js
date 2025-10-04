@@ -6,12 +6,12 @@ import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ClipLoader } from "react-spinners";
+import { fetchProjectDetails } from "../Redux/slice/homeSlice";
 
 const DetailsRap = styled.div`
 background: #000000;
   .detail-1 {
     position: relative; /* needed for pseudo-element layering */
-    background-image: url("/images/image-2.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -20,7 +20,7 @@ background: #000000;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    justify-content: flex-end;
+    justify-content: space-between;
     
     min-height: 80vh;
     height: auto;
@@ -73,7 +73,9 @@ background: #000000;
     font-size: 22px;
   }
 
-
+.detail-2-img {
+  height: 700px;
+}
    .detail-1 h2 {
     color: #ffffff;
     font-size: 50px !important;
@@ -243,6 +245,19 @@ background: #000000;
     line-height: 26px;
     max-width: 776px;
   }
+.describe h2, .describe h4, .describe h5, 
+.describe h6, .describe h1 {
+font-size: 20px !important;
+font-weight: 500 !important;
+}
+  ol,li, ul{
+ color: #ffffffb2;
+ list-style: none;
+  font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    max-width: 776px;
+}
   .detail-3-right li {
     color: #ffffffb2;
     font-weight: 600;
@@ -986,35 +1001,12 @@ background: #000000;
 `;
 
 const ProjectDetails = () => {
-  const detailImageList = [
-    {image: "/images/image-1.jpeg"},
-    {image: "/images/image-2.jpg"},
-    {image: "/images/image-3.jpg"},
-  ];
-  const parsedFeatures = [
-    {
-      name: "Living Room",
-      value: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit",
-      icon: "/images/icon-7.png",
-    },
-      {
-      name: "Living Room",
-      value: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit",
-      icon: "/images/icon-7.png",
-    },
-      {
-      name: "Living Room",
-      value: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit",
-      icon: "/images/icon-7.png",
-    },
-      {
-      name: "Living Room",
-      value: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit",
-      icon: "/images/icon-7.png",
-    }
-  ]
+
+
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { id } = useParams();
 
   const [activeLink, setActiveLink] = useState("photo");
@@ -1048,14 +1040,33 @@ const ProjectDetails = () => {
     image: "/images/image-1.jpeg",
   };
 
-  // const location = useLocation();
-  //  useEffect(() => {
-  //     setTimeout(() => {
-  //       window.scrollTo(0, 0);
-  //       document.body.scrollTop = 0;
-  //       document.documentElement.scrollTop = 0;
-  //     }, 0);
-  //   }, [location.pathname]);
+ const URL = "https://spatial-backend.onrender.com";
+ 
+   const { homeData, homeObject, projectDetails, loading, error } = useSelector(
+     (state) => state.content || []
+   );
+ 
+   console.log(projectDetails);
+  
+ 
+   const details = projectDetails?.project
+     const detailImageList = details?.bannerList || []
+   const location = useLocation();
+   useEffect(() => {
+     setTimeout(() => {
+       window.scrollTo(0, 0);
+       document.body.scrollTop = 0;
+       document.documentElement.scrollTop = 0;
+     }, 0);
+   }, [location.pathname]);
+ 
+   useEffect(() => {
+    if (id) {
+     dispatch(fetchProjectDetails(id)); // Call API on component mount
+
+    }
+   }, [dispatch]);
+ 
 
 
 
@@ -1115,17 +1126,20 @@ const ProjectDetails = () => {
      
 
        <div
-       
+        style={{
+          backgroundColor: "#000000",
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${URL}${details?.banner})`,
+        }}
         className="detail-1 containers"
       >
-        <h2>Project Details</h2>
+        <h2>{details?.name}</h2>
         <div className="about-sub">
           <div className="about-sub-left">
             <Link to="/home" className="home-link">
               Home
             </Link>
-            <div className="about-sub-left-div"></div>
-            <p>Environmental Impact Assessment </p>
+            {/* <div className="about-sub-left-div"></div>
+            <p>{details?.name}</p> */}
           </div>
           {/* <p>
             Whether you’re building, remodeling, buying, or selling, we bring seamless project execution under one roof.
@@ -1136,9 +1150,9 @@ const ProjectDetails = () => {
         <div className="details-2-upper">
           <div className="details-2-upper-1">
             <img src="/images/icon-3.png" alt="" />
-            <p>79 Agbolade ogunniyi </p>
+            <p>{details?.address} </p>
           </div>
-          <h1>Environmental Impact Assessment </h1>
+          <h1>{details?.name} </h1>
         </div>
         <div className="details-2-middle">
           <div className="details-2-middle-sub">
@@ -1152,7 +1166,7 @@ const ProjectDetails = () => {
             </div>
             <div className="details-2-middle-inner">
               <p>Status</p>
-              <h4>Ongoing</h4>
+              <h4>{details?.projectStatus}</h4>
             </div>
           </div>
           <div className="details-2-middle-sub">
@@ -1166,7 +1180,7 @@ const ProjectDetails = () => {
             </div>
             <div className="details-2-middle-inner">
               <p>Project Type</p>
-              <h4>Training</h4>
+              <h4>{details?.projectType}</h4>
             </div>
           </div>
           <div className="details-2-middle-sub">
@@ -1180,7 +1194,7 @@ const ProjectDetails = () => {
             </div>
             <div className="details-2-middle-inner">
               <p>Project Size</p>
-              <h4>With 500 people</h4>
+              <h4>{details?.projectSize}</h4>
             </div>
           </div>
           <div className="details-2-middle-sub">
@@ -1199,7 +1213,12 @@ const ProjectDetails = () => {
                 month: "long",
                 day: "numeric",
               })}</h4> */}
-              <h4> 20th Aug, 2023</h4>
+              <h4> 
+                
+                 {details?.dateCreated
+                      ? new Date(details.dateCreated).toLocaleDateString("en-GB")
+                      : ""}
+              </h4>
             </div>
           </div>
           {/* <div className="details-2-middle-sub">
@@ -1212,42 +1231,39 @@ const ProjectDetails = () => {
             </div>
           </div> */}
         </div>
-        <img className={`${videosec?.image}`} src="/images/image-9.png" alt="" />
+        <img className="detail-2-img" src={`${URL}${details?.banner}`} alt="" />
       </div>
       <div className="detail-3 containers">
         <div className="detail-3-left">
           <h2>Project description</h2>
-          {/* <div
+          <div className="describe"
               style={{
                 display: "flex",
                 flexDirection: "column",
                 gap: "20px",
               }}
               dangerouslySetInnerHTML={{ __html: details?.description }}
-            /> */}
-            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur quae ab illoentore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Sed ut perspiciatis unde omnis iste natus error 
-              sit voluptatem accusantium doloreue laudantium</p>
-            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conseuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloreue laudantium, 
-              totam rem aperiam.</p>
+            />
+           
         </div>
         <div className="detail-3-right">
           <h4>Key Details</h4>
           <ul>
             <li>
               <span>Location: </span>
-              21 Opebi Road, Ikeja, Lagos.
+              {details?.address}
             </li>
             <li>
-              <span>Category</span>
-              Training
+              <span>Category: </span>
+              {details?.projectType}
             </li>
             <li>
               <span>Client Name: </span>
-              Environmental Protection Agency
+              {details?.client}
             </li>
             <li>
-              <span>Special Features</span>
-              Amenities, Smart Home Technology, Sustainable Design.
+              <span>Special Features: </span>
+             {details?.specialFeatures}
             </li>
            
           </ul>
@@ -1256,15 +1272,15 @@ const ProjectDetails = () => {
       <div className="detail-4 containers">
         <h2>Features</h2>
         <div className="all-detail-sub-card">
-          {parsedFeatures.map((feature, index) => (
+          {details?.projectFeatures?.map((feature, index) => (
  <div className="detail-4-sub">
-            <h4>{feature?.name}</h4>
+            <h4>{feature?.title}</h4>
             <p>
-             {feature?.value}
+             {feature?.content}
             </p>
             <img className="detail-4-sub-cut" src="/images/cut-in.png" alt="" />
             <div className="detail-4-sub-circle">
-              <img src={feature?.icon} alt="" />
+              <img src="/images/img-4.png" alt="" />
             </div>
           </div>
           ))}
@@ -1322,7 +1338,7 @@ const ProjectDetails = () => {
   <div className="carousel-item prev">
 
     <img 
-     src={detailImageList[prevIndex].image}
+     src={`${URL}${detailImageList[prevIndex]}`}
      alt="Previous" />
   </div>
 )}
@@ -1333,7 +1349,7 @@ const ProjectDetails = () => {
     onAnimationEnd={() => setAnimation("")}
   >
     <img
-    src={detailImageList[currentIndexNew].image}
+    src={`${URL}${detailImageList[currentIndexNew]}`}
      
       alt="Current"
     />
@@ -1343,7 +1359,7 @@ const ProjectDetails = () => {
 {detailImageList[nextIndex] && (
   <div className="carousel-item next">
     <img 
-     src={detailImageList[nextIndex].image}
+     src={`${URL}${detailImageList[nextIndex]}`}
      alt="Next" />
   </div>
 )}
@@ -1389,7 +1405,7 @@ const ProjectDetails = () => {
                         onAnimationEnd={() => setAnimation("")}
                       >
                         <img
-                          src={detailImageList[currentIndexNew].image}
+                          src={`${URL}${detailImageList[currentIndexNew]}`}
                           alt="Current Slide"
                         />
                       </div>
@@ -1476,15 +1492,15 @@ backgroundImage: `url(${videosec?.image})`,
                   )}
 
                   {isPlaying &&
-                    (videosec.video.includes("youtube") ||
-                    videosec.video.includes("youtu.be") ? (
+                    (details.video.includes("youtube") ||
+                    details.video.includes("youtu.be") ? (
                       <iframe
                         width="100%"
                         height="100%"
                         src={`${
-                          videosec.video.includes("?")
-                            ? `${videosec.video}&playsinline=1&autoplay=1`
-                            : `${videosec.video}?playsinline=1&autoplay=1`
+                          details.video.includes("?")
+                            ? `${details.video}&playsinline=1&autoplay=1`
+                            : `${details.video}?playsinline=1&autoplay=1`
                         }`}
                         title="Video"
                         frameBorder="0"
@@ -1499,7 +1515,7 @@ backgroundImage: `url(${videosec?.image})`,
                         playsInline
                         autoPlay
                       >
-                        <source src={videosec?.video} />
+                        <source src={`${URL}${details?.video}`} />
                         Your browser does not support this video format.
                       </video>
                     ))}

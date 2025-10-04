@@ -6,6 +6,8 @@ import uploadReducer from "./slice/uploadSlice";
 import userAboutReducer from "./slice/aboutUserSlice"
 import projectReducer from "./slice/projectSlice"
 import serviceReducer from "./slice/serviceSlice"
+import messageReducer from "./slice/messageSlice"
+import authReducer from "./slice/authSlice"
 
 const store = configureStore({
   reducer: {
@@ -16,6 +18,8 @@ const store = configureStore({
     userAbout: userAboutReducer,
     project: projectReducer,
     service: serviceReducer,
+    message: messageReducer,
+    auth: authReducer,
   },
   
 });

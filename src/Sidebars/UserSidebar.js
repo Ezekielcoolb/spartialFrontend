@@ -37,8 +37,15 @@ const sidebarConfig = [
     link: "/users/services",
     title: "Services",
   },
-  {
+   {
     id: 4,
+    img: "/images/pay-1.png",
+    imgTwo: "/images/pay-2.png",
+    link: "/users/messages",
+    title: "Messages",
+  },
+  {
+    id: 5,
     img: "/images/set-1.png",
     imgTwo: "/images/set-2.png",  
     link: "/users/settings",

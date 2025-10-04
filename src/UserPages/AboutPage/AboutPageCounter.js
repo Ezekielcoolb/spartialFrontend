@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { fetchHomepage, fetchObjectpage } from "../../Redux/slice/homeSlice";
 import { resetUpload, uploadMedia } from "../../Redux/slice/uploadSlice";
-import { resetWhoWeAre, updateHomeCounter, updateWhoWeAre } from "../../Redux/slice/userSlice";
+import {
+  resetWhoWeAre,
+  updateHomeCounter,
+  updateWhoWeAre,
+} from "../../Redux/slice/userSlice";
 import { ClipLoader } from "react-spinners";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Link } from "react-router-dom";
@@ -187,21 +191,62 @@ const AboutRap = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+
+  @media (max-width: 700px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 500px;
+    }
+    .btns button {
+      width: 500px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 350px;
+    }
+  }
+
+  @media (max-width: 410px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 300px;
+    }
+  }
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 270px;
+    }
+  }
 `;
 
 const AboutPageCounter = () => {
   const dispatch = useDispatch();
   const { aboutObject, loading, error } = useSelector((state) => state.content);
   const { loading: uploading } = useSelector((state) => state.upload);
-  const { counterLoading, counterData } =
-    useSelector((state) => state.userAbout);
-   const [homeCounterData, setHomeCounterData] = useState({
-     customer: "",
-     training: "",
-     experience:  "",
-     banner:  "",
-     
-   });
+  const { counterLoading, counterData } = useSelector(
+    (state) => state.userAbout
+  );
+  const [homeCounterData, setHomeCounterData] = useState({
+    customer: "",
+    training: "",
+    experience: "",
+    banner: "",
+  });
   console.log(counterData);
 
   const counters = aboutObject?.aboutCounter;
@@ -213,7 +258,6 @@ const AboutPageCounter = () => {
         training: counters.training || "",
         experience: counters.experience || "",
         banner: counters.banner || "",
-       
       });
     }
   }, [counters]);
@@ -222,12 +266,11 @@ const AboutPageCounter = () => {
     dispatch(fetchObjectpage()); // Call API on component mount
   }, [dispatch]);
 
-  
-   const handleSubmitCounter = (e) => {
-      e.preventDefault();
-      dispatch(updateCounterAbout(homeCounterData));
-    };
- const handleUploadTwo = async (type, file) => {
+  const handleSubmitCounter = (e) => {
+    e.preventDefault();
+    dispatch(updateCounterAbout(homeCounterData));
+  };
+  const handleUploadTwo = async (type, file) => {
     dispatch(uploadMedia({ folderName: "home", file }))
       .unwrap()
       .then((res) => {
@@ -263,41 +306,54 @@ const AboutPageCounter = () => {
             <h2>About Page Counter Section</h2>
           </div>
         </div>
-             <form>
-      <div className="slider-group">
-        <label>Number of Customers So Far
-        <input
-          type="text"
-          placeholder=" Enter Number"
-          value={homeCounterData.customer}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, customer: e.target.value })
-          }
-        />
-        </label>
-        <label> Number of Training Conducted
-        <input
-          type="text"
-          placeholder=" Enter number"
-          value={homeCounterData.training}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, training: e.target.value })
-          }
-        />
-        </label>
-        
-        <label>Years of Experience
-        <input
-          type="number"
-          placeholder=" Experience"
-          value={homeCounterData.experience}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, experience: e.target.value })
-          }
-        />
-        </label>
-        
-         <div className="upload-container">
+        <form>
+          <div className="slider-group">
+            <label>
+              Number of Customers So Far
+              <input
+                type="text"
+                placeholder=" Enter Number"
+                value={homeCounterData.customer}
+                onChange={(e) =>
+                  setHomeCounterData({
+                    ...homeCounterData,
+                    customer: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <label>
+              {" "}
+              Number of Training Conducted
+              <input
+                type="text"
+                placeholder=" Enter number"
+                value={homeCounterData.training}
+                onChange={(e) =>
+                  setHomeCounterData({
+                    ...homeCounterData,
+                    training: e.target.value,
+                  })
+                }
+              />
+            </label>
+
+            <label>
+              Years of Experience
+              <input
+                type="number"
+                placeholder=" Experience"
+                value={homeCounterData.experience}
+                onChange={(e) =>
+                  setHomeCounterData({
+                    ...homeCounterData,
+                    experience: e.target.value,
+                  })
+                }
+              />
+            </label>
+
+            <div className="upload-container">
               <label className="upload-box">
                 <input
                   type="file"
@@ -312,24 +368,25 @@ const AboutPageCounter = () => {
 
               {homeCounterData.banner && (
                 <img
-                  src={`http://localhost:5000${homeCounterData.banner}`}
+                  src={`https://spatial-backend.onrender.com${homeCounterData.banner}`}
                   alt="banner"
                   className="preview-image"
                 />
               )}
             </div>
-       
 
-      
-         <div className="btns">
-        <button className="btn-2" onClick={handleSubmitCounter}> {counterLoading ? (
-                          <ClipLoader color="white" size={35} />
-                        ) : (
-                          "Update Counter"
-                        )}</button>
-        </div>
-      </div>
-</form>
+            <div className="btns">
+              <button className="btn-2" onClick={handleSubmitCounter}>
+                {" "}
+                {counterLoading ? (
+                  <ClipLoader color="white" size={35} />
+                ) : (
+                  "Update Counter"
+                )}
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
       {counterData ? (
         <div className="dropdown-container">

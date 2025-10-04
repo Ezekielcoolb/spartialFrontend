@@ -2,7 +2,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/about";
+// const API_URL = "http://localhost:5000/api/about";
+const API_URL = "https://spatial-backend.onrender.com/api/about";
+
 
 export const updateAboutusAbout = createAsyncThunk(
   "whoWeAre/updateAboutusAbout",

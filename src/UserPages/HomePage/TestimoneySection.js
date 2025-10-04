@@ -231,15 +231,52 @@ const SliderRap = styled.div`
     border-top: 1px solid #ccc;
     padding-top: 30px;
   }
+
+  @media (max-width: 500px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 300px;
+    }
+    padding: 30px 0px;
+    .upper-slide {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 20px;
+    }
+    .btns-new {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .be-done {
+      display: none;
+    }
+  }
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 280px;
+    }
+  }
 `;
 
 const TestimonySectionHome = () => {
   const dispatch = useDispatch();
   const { loading: uploading } = useSelector((state) => state.upload);
   const { homeObject, loading, error } = useSelector((state) => state.content);
-  const { sliderloading, slider, sliderUpade, testiHeadloading, testiHeading, testiListloading, testiList, sliderDelete } = useSelector(
-    (state) => state.users
-  );
+  const {
+    sliderloading,
+    slider,
+    sliderUpade,
+    testiHeadloading,
+    testiHeading,
+    testiListloading,
+    testiList,
+    sliderDelete,
+  } = useSelector((state) => state.users);
   const [selectedId, setSelectedId] = useState(null);
   const [openImageDrop, setOpenImageDrop] = useState(true);
   const [openVideoDrop, setOpenVideoDrop] = useState(false);
@@ -247,21 +284,17 @@ const TestimonySectionHome = () => {
   const [openVideoDropTwo, setOpenVideoDropTwo] = useState(false);
   const [newSliderOpen, setNewSliderOpen] = useState(false);
 
-  
-
   const handleOpen = () => {
     setNewSliderOpen(!newSliderOpen);
   };
   const sliding = homeObject?.testimoneyTwo?.lists || [];
-  const heading = homeObject?.testimoneyTwo?.headings 
+  const heading = homeObject?.testimoneyTwo?.headings;
 
   console.log(homeObject);
 
   useEffect(() => {
     dispatch(fetchHomepage()); // Call API on component mount
   }, [dispatch]);
-
-  
 
   const handleClick = (id) => {
     setSelectedId(id);
@@ -271,16 +304,18 @@ const TestimonySectionHome = () => {
     ? sliding?.find((item) => item._id === selectedId)
     : null;
 
-  const [headingTesti, setHeadingTesti] = useState({ title: "", mainTitle: "" });
-   const [listTesti, setListTesti] = useState({
-     name: "",
-     content: "",
-   });
- 
+  const [headingTesti, setHeadingTesti] = useState({
+    title: "",
+    mainTitle: "",
+  });
+  const [listTesti, setListTesti] = useState({
+    name: "",
+    content: "",
+  });
 
   const [formData, setFormData] = useState({
-      name: "",
-     content: "",
+    name: "",
+    content: "",
   });
 
   // whenever selectedSlide changes, update formData
@@ -309,20 +344,17 @@ const TestimonySectionHome = () => {
 
   const handleClose = () => {
     dispatch(resetSlider());
-    setNewSliderOpen(false)
+    setNewSliderOpen(false);
     setSelectedId(null);
-    setListTesti(
-        {
-   name: "",
-     content: "",
-  }
-    )
+    setListTesti({
+      name: "",
+      content: "",
+    });
   };
-const handleHeadingSubmitTesti = (e) => {
+  const handleHeadingSubmitTesti = (e) => {
     e.preventDefault();
     dispatch(
       postTestimonyHeading({
-     
         title: headingTesti.title,
         mainTitle: headingTesti.mainTitle,
       })
@@ -340,7 +372,11 @@ const handleHeadingSubmitTesti = (e) => {
     );
   };
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this customer's feedback?")) {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this customer's feedback?"
+      )
+    ) {
       dispatch(deleteTestimonyHome(id));
     }
   };
@@ -368,36 +404,36 @@ const handleHeadingSubmitTesti = (e) => {
             <h2>Customer's Feedback Section</h2>
           </div>
         </div>
-         <div className="slider-group">
-        <h3>Heading</h3>
-        <input
-          type="text"
-          placeholder="Heading Title"
-          value={headingTesti.title}
-          onChange={(e) =>
-            setHeadingTesti({ ...headingTesti, title: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder="Heading Main Title"
-          value={headingTesti.mainTitle}
-          onChange={(e) =>
-            setHeadingTesti({ ...headingTesti, mainTitle: e.target.value })
-          }
-        />
-         <div className="upper-slide">
-        <button className="btn-2" onClick={handleHeadingSubmitTesti}>
-            {testiHeadloading ? (
-                                      <ClipLoader color="white" size={35} />
-                                    ) : (
-                                      "Update Feedback Heading"
-                                    )}
-        </button>
+        <div className="slider-group">
+          <h3>Heading</h3>
+          <input
+            type="text"
+            placeholder="Heading Title"
+            value={headingTesti.title}
+            onChange={(e) =>
+              setHeadingTesti({ ...headingTesti, title: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="Heading Main Title"
+            value={headingTesti.mainTitle}
+            onChange={(e) =>
+              setHeadingTesti({ ...headingTesti, mainTitle: e.target.value })
+            }
+          />
+          <div className="upper-slide">
+            <button className="btn-2" onClick={handleHeadingSubmitTesti}>
+              {testiHeadloading ? (
+                <ClipLoader color="white" size={35} />
+              ) : (
+                "Update Feedback Heading"
+              )}
+            </button>
+          </div>
         </div>
-      </div>
         <div className="upper-slide documents">
-            <h3>Customer's Feedbacks</h3>
+          <h3>Customer's Feedbacks</h3>
           <button
             style={{
               marginBottom: "20px",
@@ -413,7 +449,9 @@ const handleHeadingSubmitTesti = (e) => {
               <tr style={{ background: "#f4f4f4" }}>
                 <th style={{ textAlign: "left" }}>S/N</th>
                 <th style={{ textAlign: "left" }}>Name </th>
-                <th style={{ textAlign: "left" }}>Feedback</th>
+                <th className="be-done" style={{ textAlign: "left" }}>
+                  Feedback
+                </th>
                 <th style={{ textAlign: "left" }}>Action</th>
               </tr>
             </thead>
@@ -422,7 +460,7 @@ const handleHeadingSubmitTesti = (e) => {
                 <tr className="tr-hover">
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
-                  <td>{items.content}</td>
+                  <td className="be-done">{items.content}</td>
                   <td>
                     <div className="btns">
                       <button
@@ -494,9 +532,7 @@ const handleHeadingSubmitTesti = (e) => {
                         }
                       />
 
-                     
                       <div className="upper-slide">
-                       
                         <button
                           onClick={handleSubmitUpdate}
                           style={{
@@ -510,7 +546,7 @@ const handleHeadingSubmitTesti = (e) => {
                             "Update Feedback"
                           )}
                         </button>
-                         <button onClick={() => setSelectedId(null)}>
+                        <button onClick={() => setSelectedId(null)}>
                           Close
                         </button>
                       </div>
@@ -535,7 +571,7 @@ const handleHeadingSubmitTesti = (e) => {
       ) : (
         ""
       )}
-       {testiList ? (
+      {testiList ? (
         <div className="dropdown-containerTwo">
           <div className="successPop">
             <p>Customer's Feedback Saved Successfully. Thanks</p>
@@ -546,7 +582,7 @@ const handleHeadingSubmitTesti = (e) => {
         ""
       )}
 
-          {testiHeading ? (
+      {testiHeading ? (
         <div className="dropdown-containerTwo">
           <div className="successPop">
             <p>Feedback Section heading Saved Successfully. Thanks</p>
@@ -573,38 +609,34 @@ const handleHeadingSubmitTesti = (e) => {
               <div className="slider-upper">
                 <h2>Add Customer Feedback</h2>
               </div>
-                    <form>
-      <div className="slider-group">
-      
-        <input
-          type="text"
-          placeholder="Customer Full Name"
-          value={listTesti.name}
-          onChange={(e) =>
-            setListTesti({ ...listTesti, name: e.target.value })
-          }
-        />
-       
-        <textarea
-          placeholder="Enter Feedback"
-          value={listTesti.content}
-          onChange={(e) =>
-            setListTesti({ ...listTesti, content: e.target.value })
-          }
-        />
-        
-       
+              <form>
+                <div className="slider-group">
+                  <input
+                    type="text"
+                    placeholder="Customer Full Name"
+                    value={listTesti.name}
+                    onChange={(e) =>
+                      setListTesti({ ...listTesti, name: e.target.value })
+                    }
+                  />
 
-         
-        <div className="upper-slide">
-        <button className="btn-2" onClick={handleListSubmitTesti}>
-            {testiListloading ? (
-                                      <ClipLoader color="white" size={35} />
-                                    ) : (
-                                      "Save Feedback"
-                                    )}
-        </button>
-        <button
+                  <textarea
+                    placeholder="Enter Feedback"
+                    value={listTesti.content}
+                    onChange={(e) =>
+                      setListTesti({ ...listTesti, content: e.target.value })
+                    }
+                  />
+
+                  <div className="upper-slide">
+                    <button className="btn-2" onClick={handleListSubmitTesti}>
+                      {testiListloading ? (
+                        <ClipLoader color="white" size={35} />
+                      ) : (
+                        "Save Feedback"
+                      )}
+                    </button>
+                    <button
                       style={{
                         background: "red",
                       }}
@@ -614,10 +646,9 @@ const handleHeadingSubmitTesti = (e) => {
                     >
                       Close
                     </button>
-        </div>
-
-      </div>
-</form>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>

@@ -11,7 +11,6 @@ import { updateAboutusAbout } from "../../Redux/slice/aboutUserSlice";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-
 const AboutRap = styled.div`
   padding: 20px;
   .slider-group {
@@ -190,6 +189,47 @@ const AboutRap = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+
+  @media (max-width: 700px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 500px;
+    }
+    .btns button {
+      width: 500px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 350px;
+    }
+  }
+
+  @media (max-width: 410px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 300px;
+    }
+  }
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 270px;
+    }
+  }
 `;
 
 const AboutSectionAbout = () => {
@@ -234,7 +274,7 @@ const AboutSectionAbout = () => {
           ...prev,
           banner: res.data, // backend returns image URL/path
         }));
-        
+
         dispatch(resetUpload());
       })
       .catch((err) => console.error("Upload failed:", err));
@@ -281,7 +321,7 @@ const AboutSectionAbout = () => {
                 }
               />
             </label>
-             <label>
+            <label>
               Main Title:
               <input
                 type="text"
@@ -317,10 +357,12 @@ const AboutSectionAbout = () => {
                 }
               /> */}
               <ReactQuill
-  theme="snow"
-  value={whoWeAre.overview}
-  onChange={(content) => setWhoWeAre((p) => ({ ...p, overview: content }))}
-/>
+                theme="snow"
+                value={whoWeAre.overview}
+                onChange={(content) =>
+                  setWhoWeAre((p) => ({ ...p, overview: content }))
+                }
+              />
             </label>
             <div className="upload-container">
               <label className="upload-box">
@@ -337,7 +379,7 @@ const AboutSectionAbout = () => {
 
               {whoWeAre.banner && (
                 <img
-                  src={`http://localhost:5000${whoWeAre.banner}`}
+                  src={`https://spatial-backend.onrender.com${whoWeAre.banner}`}
                   alt="banner"
                   className="preview-image"
                 />

@@ -2,7 +2,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/home";
+const API_URL = "https://spatial-backend.onrender.com/api/home";
+
+
+// const API_URL = "http://localhost:5000/api/home";
+
+
 
 export const postHomeSlider = createAsyncThunk(
   "home/postHomeSlider",

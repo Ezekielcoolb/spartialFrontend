@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchGeneralpage } from "../Redux/slice/homeSlice";
 
 const FooterRap = styled.div`
 background: linear-gradient(
@@ -89,12 +90,28 @@ color: #ffffff;
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const socialLinks = [
-    { link: "mdi:facebook" },
-    { link: "mdi:twitter" },
-    { link: "mdi:instagram" },
-    { link: "mdi:linkedin" },
-  ];
+ const iconMap = {
+  Facebook: "mdi:facebook",
+  Twitter: "mdi:twitter",
+  Instagram: "mdi:instagram",
+  LinkedIn: "mdi:linkedin",
+};
+
+
+   const navigate = useNavigate();
+      const dispatch = useDispatch();
+      const { serviceDetails, generalObject, serviceObject, loading, error } =
+        useSelector((state) => state.content);
+      const URL = "https://spatial-backend.onrender.com";
+  
+      console.log(generalObject);
+  
+      const socialLinks = generalObject?.socialLinks
+      
+    useEffect(() => {
+      dispatch(fetchGeneralpage()); // Call API on component mount
+    }, [dispatch]);
+  
   return (
     <FooterRap>
       <div className="containers ">
@@ -108,22 +125,27 @@ const Footer = () => {
                 display: "block",
                 objectPosition: "top",
               }}
-              src=""
+              src={`${URL}${generalObject?.banner}`}
               alt="..."
             />
           </Link>
           <div className="footer-icon">
-            {socialLinks?.map((items) => (
-              <Link to="">
-                <Icon
-                  className="icon"
-                  width="30px"
-                  height="30px"
-                  icon={items.link}
-                  color="#ffffffb2"
-                />
-              </Link>
-            ))}
+           {socialLinks?.map((item) => (
+  <a
+    key={item._id}
+    href={item.link}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Icon
+      className="icon"
+      width="30px"
+      height="30px"
+      icon={iconMap[item.title] || "mdi:web"} // fallback
+      color="#ffffffb2"
+    />
+  </a>
+))}
           </div>
         </div>
         <div
@@ -131,11 +153,7 @@ const Footer = () => {
           style={{ fontFamily: "Roboto", fontSize: "16px" }}
         >
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit.
+              {generalObject?.siteDescription}
             </p>
           <div
             className=" footer-3"
@@ -153,12 +171,12 @@ const Footer = () => {
             <Link className="footer-link" to="/news&projects">
               Project
             </Link>
-            <Link className="footer-link" to="/privacy-policy">
+            {/* <Link className="footer-link" to="/privacy-policy">
               Privacy Policy
             </Link>
             <Link className="footer-link" to="/terms-condition">
               Terms & Conditions
-            </Link>
+            </Link> */}
             <Link className="footer-link" to="/contact">
               Contact
             </Link>
@@ -189,7 +207,7 @@ const Footer = () => {
                 style={{ color: "#ffffffb2" }}
               />
               <p className="flex gap-2 items-center">
-                spaciallimited@gmail.com
+               {generalObject?.siteEmail}
               </p>
             </div>
             <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
@@ -199,7 +217,7 @@ const Footer = () => {
                 height="18"
                 style={{ color: "#ffffffb2" }}
               />
-              <p className="flex gap-2 items-center">090000000000000</p>
+              <p className="flex gap-2 items-center">{generalObject?.sitePhone}</p>
             </div>
             <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
               <Icon
@@ -209,7 +227,7 @@ const Footer = () => {
                 style={{ color: "#ffffffb2" }}
               />
               <p className="flex gap-2 items-center">
-                123 Maplewood Crescent, Victoria Island, Lagos, Nigeria
+                {generalObject?.siteAddress}
               </p>
             </div>
           </div>

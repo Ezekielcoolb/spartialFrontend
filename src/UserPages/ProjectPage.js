@@ -228,6 +228,53 @@ const SliderRap = styled.div`
     border-top: 1px solid #ccc;
     padding-top: 30px;
   }
+
+  @media (max-width: 700px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 500px;
+    }
+    .btn-3 {
+      width: 500px;
+    }
+  }
+
+  @media (max-width: 550px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btn-3 {
+      width: 350px;
+    }
+  }
+
+  @media (max-width: 410px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btn-3 {
+      width: 300px;
+    }
+  }
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btn-3 {
+      width: 270px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .be-done {
+      display: none;
+    }
+  }
 `;
 
 const ProjectPage = () => {
@@ -479,14 +526,14 @@ const ProjectPage = () => {
 
             {headingTesti.projectPageBanner && (
               <img
-                src={`http://localhost:5000${headingTesti.projectPageBanner}`}
+                src={`https://spatial-backend.onrender.com${headingTesti.projectPageBanner}`}
                 alt="banner"
                 className="preview-image"
               />
             )}
           </div>
           <div className="upper-slide">
-            <button className="btn-2" onClick={handleHeadingSubmitTesti}>
+            <button className="btn-2 btn-3" onClick={handleHeadingSubmitTesti}>
               {testiHeadloading ? (
                 <ClipLoader color="white" size={35} />
               ) : (
@@ -512,8 +559,12 @@ const ProjectPage = () => {
               <tr style={{ background: "#f4f4f4" }}>
                 <th style={{ textAlign: "left" }}>S/N</th>
                 <th style={{ textAlign: "left" }}>Name </th>
-                <th style={{ textAlign: "left" }}>overview</th>
-                <th style={{ textAlign: "left" }}>Date</th>
+                <th className="be-done" style={{ textAlign: "left" }}>
+                  overview
+                </th>
+                <th className="be-done" style={{ textAlign: "left" }}>
+                  Date
+                </th>
                 <th style={{ textAlign: "left" }}>Action</th>
               </tr>
             </thead>
@@ -522,8 +573,8 @@ const ProjectPage = () => {
                 <tr className="tr-hover">
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
-                  <td>{items.overview}</td>
-                  <td>
+                  <td className="be-done">{items.overview}</td>
+                  <td className="be-done">
                     {new Date(items.dateCreated).toLocaleDateString("en-GB", {
                       day: "2-digit",
                       month: "2-digit",
@@ -769,7 +820,7 @@ const ProjectPage = () => {
                               {formData.bannerList.map((img, idx) => (
                                 <div key={idx} style={{ position: "relative" }}>
                                   <img
-                                    src={`http://localhost:5000${img}`}
+                                    src={`https://spatial-backend.onrender.com${img}`}
                                     alt="banner"
                                     className="preview-image"
                                     style={{ width: 80, height: 80 }}
@@ -821,7 +872,7 @@ const ProjectPage = () => {
 
                         {formData.banner && (
                           <img
-                            src={`http://localhost:5000${formData.banner}`}
+                            src={`https://spatial-backend.onrender.com${formData.banner}`}
                             alt="banner"
                             className="preview-image"
                           />
@@ -851,7 +902,7 @@ const ProjectPage = () => {
                         {formData.video && (
                           <div className="mt-3">
                             <video
-                              src={`http://localhost:5000${formData.video}`}
+                              src={`https://spatial-backend.onrender.com${formData.video}`}
                               controls
                               className="video-preview"
                               style={{ borderRadius: "8px" }}
@@ -1119,7 +1170,7 @@ const ProjectPage = () => {
                         {formData.bannerList.map((img, idx) => (
                           <div key={idx} style={{ position: "relative" }}>
                             <img
-                              src={`http://localhost:5000${img}`}
+                              src={`https://spatial-backend.onrender.com${img}`}
                               alt="banner"
                               className="preview-image"
                               style={{ width: 80, height: 80 }}
@@ -1169,7 +1220,7 @@ const ProjectPage = () => {
 
                     {listTesti.banner && (
                       <img
-                        src={`http://localhost:5000${listTesti.banner}`}
+                        src={`https://spatial-backend.onrender.com${listTesti.banner}`}
                         alt="banner"
                         className="preview-image"
                       />
@@ -1194,7 +1245,7 @@ const ProjectPage = () => {
                     {listTesti.video && (
                       <div className="mt-3">
                         <video
-                          src={`http://localhost:5000${listTesti.video}`}
+                          src={`https://spatial-backend.onrender.com${listTesti.video}`}
                           controls
                           className="video-preview"
                           style={{ borderRadius: "8px" }}

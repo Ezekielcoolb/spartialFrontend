@@ -20,7 +20,12 @@ import {
 } from "../../Redux/slice/userSlice";
 import { ClipLoader } from "react-spinners";
 import { Link } from "react-router-dom";
-import { deleteTeamMember, updateTeamListAbout, updateTeamMember, updateTeamsHeadingAbout } from "../../Redux/slice/aboutUserSlice";
+import {
+  deleteTeamMember,
+  updateTeamListAbout,
+  updateTeamMember,
+  updateTeamsHeadingAbout,
+} from "../../Redux/slice/aboutUserSlice";
 
 const SliderRap = styled.div`
   padding: 30px;
@@ -232,15 +237,68 @@ const SliderRap = styled.div`
     border-top: 1px solid #ccc;
     padding-top: 30px;
   }
+  @media (max-width: 700px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 500px;
+    }
+    .btn-3 {
+      width: 500px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btn-3 {
+      width: 350px;
+    }
+  }
+
+  @media (max-width: 410px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btn-3 {
+      width: 300px;
+    }
+  }
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btn-3 {
+      width: 270px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .be-done {
+      display: none;
+    }
+  }
 `;
 
 const AboutPageTeams = () => {
   const dispatch = useDispatch();
   const { loading: uploading } = useSelector((state) => state.upload);
   const { aboutObject, loading, error } = useSelector((state) => state.content);
-  const { sliderloading, slider, sliderUpade, testiHeadloading, testiHeading, testiListloading, testiList, sliderDelete } = useSelector(
-    (state) => state.userAbout
-  );
+  const {
+    sliderloading,
+    slider,
+    sliderUpade,
+    testiHeadloading,
+    testiHeading,
+    testiListloading,
+    testiList,
+    sliderDelete,
+  } = useSelector((state) => state.userAbout);
   const [selectedId, setSelectedId] = useState(null);
   const [openImageDrop, setOpenImageDrop] = useState(true);
   const [openVideoDrop, setOpenVideoDrop] = useState(false);
@@ -248,21 +306,17 @@ const AboutPageTeams = () => {
   const [openVideoDropTwo, setOpenVideoDropTwo] = useState(false);
   const [newSliderOpen, setNewSliderOpen] = useState(false);
 
-  
-
   const handleOpen = () => {
     setNewSliderOpen(!newSliderOpen);
   };
   const sliding = aboutObject?.teams?.lists || [];
-  const heading = aboutObject?.teams?.headings 
+  const heading = aboutObject?.teams?.headings;
 
   console.log(aboutObject);
 
   useEffect(() => {
     dispatch(fetchObjectpage()); // Call API on component mount
   }, [dispatch]);
-
-  
 
   const handleClick = (id) => {
     setSelectedId(id);
@@ -273,25 +327,24 @@ const AboutPageTeams = () => {
     : null;
 
   const [headingTesti, setHeadingTesti] = useState({ title: "", subtitle: "" });
-   const [listTesti, setListTesti] = useState({
-     name: "",
-     banner: "",
-     role: "",
-     phone: "",
-     email: "",
-     certifications:"",
-     overview:""
-   });
- 
+  const [listTesti, setListTesti] = useState({
+    name: "",
+    banner: "",
+    role: "",
+    phone: "",
+    email: "",
+    certifications: "",
+    overview: "",
+  });
 
   const [formData, setFormData] = useState({
-       name: "",
-     banner: "",
-     role: "",
-     phone: "",
-     email: "",
-     certifications:"",
-     overview:""
+    name: "",
+    banner: "",
+    role: "",
+    phone: "",
+    email: "",
+    certifications: "",
+    overview: "",
   });
 
   // whenever selectedSlide changes, update formData
@@ -325,25 +378,22 @@ const AboutPageTeams = () => {
 
   const handleClose = () => {
     dispatch(resetSlider());
-    setNewSliderOpen(false)
+    setNewSliderOpen(false);
     setSelectedId(null);
-    setListTesti(
-        {
-    name: "",
-     banner: "",
-     role: "",
-     phone: "",
-     email: "",
-     certifications:"",
-     overview:""
-  }
-    )
+    setListTesti({
+      name: "",
+      banner: "",
+      role: "",
+      phone: "",
+      email: "",
+      certifications: "",
+      overview: "",
+    });
   };
-const handleHeadingSubmitTesti = (e) => {
+  const handleHeadingSubmitTesti = (e) => {
     e.preventDefault();
     dispatch(
       updateTeamsHeadingAbout({
-     
         title: headingTesti.title,
         subtitle: headingTesti.subtitle,
       })
@@ -366,22 +416,22 @@ const handleHeadingSubmitTesti = (e) => {
     );
   };
   const handleUploadTwo = async (type, file) => {
-      dispatch(uploadMedia({ folderName: "home", file }))
-        .unwrap()
-        .then((res) => {
-          // update only the banner field
-          setListTesti((prev) => ({
-            ...prev,
-            banner: res.data, // backend returns image URL/path
-          }));
-           setFormData((prev) => ({
-            ...prev,
-            banner: res.data, // backend returns image URL/path
-          }));
-          dispatch(resetUpload());
-        })
-        .catch((err) => console.error("Upload failed:", err));
-    };
+    dispatch(uploadMedia({ folderName: "home", file }))
+      .unwrap()
+      .then((res) => {
+        // update only the banner field
+        setListTesti((prev) => ({
+          ...prev,
+          banner: res.data, // backend returns image URL/path
+        }));
+        setFormData((prev) => ({
+          ...prev,
+          banner: res.data, // backend returns image URL/path
+        }));
+        dispatch(resetUpload());
+      })
+      .catch((err) => console.error("Upload failed:", err));
+  };
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this team member?")) {
       dispatch(deleteTeamMember(id));
@@ -411,36 +461,36 @@ const handleHeadingSubmitTesti = (e) => {
             <h2>Team Member Section</h2>
           </div>
         </div>
-         <div className="slider-group">
-        <h3>Heading</h3>
-        <input
-          type="text"
-          placeholder="Heading Title"
-          value={headingTesti.title}
-          onChange={(e) =>
-            setHeadingTesti({ ...headingTesti, title: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder="Heading SubTitle"
-          value={headingTesti.subtitle}
-          onChange={(e) =>
-            setHeadingTesti({ ...headingTesti, subtitle: e.target.value })
-          }
-        />
-         <div className="upper-slide">
-        <button className="btn-2" onClick={handleHeadingSubmitTesti}>
-            {testiHeadloading ? (
-                                      <ClipLoader color="white" size={35} />
-                                    ) : (
-                                      "Update Teams Heading"
-                                    )}
-        </button>
+        <div className="slider-group">
+          <h3>Heading</h3>
+          <input
+            type="text"
+            placeholder="Heading Title"
+            value={headingTesti.title}
+            onChange={(e) =>
+              setHeadingTesti({ ...headingTesti, title: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="Heading SubTitle"
+            value={headingTesti.subtitle}
+            onChange={(e) =>
+              setHeadingTesti({ ...headingTesti, subtitle: e.target.value })
+            }
+          />
+          <div className="upper-slide">
+            <button className="btn-2 btn-3" onClick={handleHeadingSubmitTesti}>
+              {testiHeadloading ? (
+                <ClipLoader color="white" size={35} />
+              ) : (
+                "Update Teams Heading"
+              )}
+            </button>
+          </div>
         </div>
-      </div>
         <div className="upper-slide documents">
-            <h3>Team Members</h3>
+          <h3>Team Members</h3>
           <button
             style={{
               marginBottom: "20px",
@@ -456,7 +506,9 @@ const handleHeadingSubmitTesti = (e) => {
               <tr style={{ background: "#f4f4f4" }}>
                 <th style={{ textAlign: "left" }}>S/N</th>
                 <th style={{ textAlign: "left" }}>Name </th>
-                <th style={{ textAlign: "left" }}>Role</th>
+                <th className="be-done" style={{ textAlign: "left" }}>
+                  Role
+                </th>
                 <th style={{ textAlign: "left" }}>Action</th>
               </tr>
             </thead>
@@ -465,7 +517,7 @@ const handleHeadingSubmitTesti = (e) => {
                 <tr className="tr-hover">
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
-                  <td>{items.role}</td>
+                  <td className="be-done">{items.role}</td>
                   <td>
                     <div className="btns">
                       <button
@@ -538,7 +590,6 @@ const handleHeadingSubmitTesti = (e) => {
                       />
                       <input
                         placeholder="Enter Phone Number"
-
                         value={formData.phone}
                         onChange={(e) =>
                           setFormData({ ...formData, phone: e.target.value })
@@ -556,11 +607,14 @@ const handleHeadingSubmitTesti = (e) => {
                         placeholder="Enter Cretification Lists"
                         value={formData.certifications}
                         onChange={(e) =>
-                          setFormData({ ...formData, certifications: e.target.value })
+                          setFormData({
+                            ...formData,
+                            certifications: e.target.value,
+                          })
                         }
                       />
 
-                        <textarea
+                      <textarea
                         placeholder="Enter Overview"
                         value={formData.overview}
                         onChange={(e) =>
@@ -568,30 +622,31 @@ const handleHeadingSubmitTesti = (e) => {
                         }
                       />
 
-                       <div className="upload-container">
-              <label className="upload-box">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleUploadTwo("banner", e.target.files[0])}
-                />
-                <div className="upload-content">
-                  <span className="upload-icon">📤</span>
-                  <p>Upload Image</p>
-                </div>
-              </label>
+                      <div className="upload-container">
+                        <label className="upload-box">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) =>
+                              handleUploadTwo("banner", e.target.files[0])
+                            }
+                          />
+                          <div className="upload-content">
+                            <span className="upload-icon">📤</span>
+                            <p>Upload Image</p>
+                          </div>
+                        </label>
 
-              {formData.banner && (
-                <img
-                  src={`http://localhost:5000${formData.banner}`}
-                  alt="banner"
-                  className="preview-image"
-                />
-              )}
-            </div>
-                     
+                        {formData.banner && (
+                          <img
+                            src={`https://spatial-backend.onrender.com${formData.banner}`}
+                            alt="banner"
+                            className="preview-image"
+                          />
+                        )}
+                      </div>
+
                       <div className="upper-slide">
-                       
                         <button
                           onClick={handleSubmitUpdate}
                           style={{
@@ -605,7 +660,7 @@ const handleHeadingSubmitTesti = (e) => {
                             "Update Member"
                           )}
                         </button>
-                         <button onClick={() => setSelectedId(null)}>
+                        <button onClick={() => setSelectedId(null)}>
                           Close
                         </button>
                       </div>
@@ -630,7 +685,7 @@ const handleHeadingSubmitTesti = (e) => {
       ) : (
         ""
       )}
-       {testiList ? (
+      {testiList ? (
         <div className="dropdown-containerTwo">
           <div className="successPop">
             <p>Member Saved Successfully. Thanks</p>
@@ -641,7 +696,7 @@ const handleHeadingSubmitTesti = (e) => {
         ""
       )}
 
-          {testiHeading ? (
+      {testiHeading ? (
         <div className="dropdown-containerTwo">
           <div className="successPop">
             <p>Team Section heading Saved Successfully. Thanks</p>
@@ -668,90 +723,93 @@ const handleHeadingSubmitTesti = (e) => {
               <div className="slider-upper">
                 <h2>Add Member</h2>
               </div>
-                    <form>
-      <div className="slider-group">
-      
-        <input
-          type="text"
-          placeholder="Member Full Name"
-          value={listTesti.name}
-          onChange={(e) =>
-            setListTesti({ ...listTesti, name: e.target.value })
-          }
-        />
-         <input
-          type="text"
-          placeholder="Enter role"
-          value={listTesti.role}
-          onChange={(e) =>
-            setListTesti({ ...listTesti, role: e.target.value })
-          }
-        />
-         <input
-          type="text"
-          placeholder="Enter phone number"
-          value={listTesti.phone}
-          onChange={(e) =>
-            setListTesti({ ...listTesti, phone: e.target.value })
-          }
-        />
-         <input
-          type="text"
-          placeholder="Enter Email"
-          value={listTesti.email}
-          onChange={(e) =>
-            setListTesti({ ...listTesti, email: e.target.value })
-          }
-        />
-         <input
-          type="text"
-          placeholder="Enter certification list"
-          value={listTesti.certifications}
-          onChange={(e) =>
-            setListTesti({ ...listTesti, certifications: e.target.value })
-          }
-        />
-       
-        <textarea
-          placeholder="Short Overview"
-          value={listTesti.overview}
-          onChange={(e) =>
-            setListTesti({ ...listTesti, overview: e.target.value })
-          }
-        />
-        
-       <div className="upload-container">
-              <label className="upload-box">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleUploadTwo("banner", e.target.files[0])}
-                />
-                <div className="upload-content">
-                  <span className="upload-icon">📤</span>
-                  <p>Upload Image</p>
-                </div>
-              </label>
+              <form>
+                <div className="slider-group">
+                  <input
+                    type="text"
+                    placeholder="Member Full Name"
+                    value={listTesti.name}
+                    onChange={(e) =>
+                      setListTesti({ ...listTesti, name: e.target.value })
+                    }
+                  />
+                  <input
+                    type="text"
+                    placeholder="Enter role"
+                    value={listTesti.role}
+                    onChange={(e) =>
+                      setListTesti({ ...listTesti, role: e.target.value })
+                    }
+                  />
+                  <input
+                    type="text"
+                    placeholder="Enter phone number"
+                    value={listTesti.phone}
+                    onChange={(e) =>
+                      setListTesti({ ...listTesti, phone: e.target.value })
+                    }
+                  />
+                  <input
+                    type="text"
+                    placeholder="Enter Email"
+                    value={listTesti.email}
+                    onChange={(e) =>
+                      setListTesti({ ...listTesti, email: e.target.value })
+                    }
+                  />
+                  <input
+                    type="text"
+                    placeholder="Enter certification list"
+                    value={listTesti.certifications}
+                    onChange={(e) =>
+                      setListTesti({
+                        ...listTesti,
+                        certifications: e.target.value,
+                      })
+                    }
+                  />
 
-              {listTesti.banner && (
-                <img
-                  src={`http://localhost:5000${listTesti.banner}`}
-                  alt="banner"
-                  className="preview-image"
-                />
-              )}
-            </div>
+                  <textarea
+                    placeholder="Short Overview"
+                    value={listTesti.overview}
+                    onChange={(e) =>
+                      setListTesti({ ...listTesti, overview: e.target.value })
+                    }
+                  />
 
-         
-        <div className="upper-slide">
-        <button className="btn-2" onClick={handleListSubmitTesti}>
-            {testiListloading ? (
-                                      <ClipLoader color="white" size={35} />
-                                    ) : (
-                                      "Add Member"
-                                    )}
-        </button>
-        <button
+                  <div className="upload-container">
+                    <label className="upload-box">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) =>
+                          handleUploadTwo("banner", e.target.files[0])
+                        }
+                      />
+                      <div className="upload-content">
+                        <span className="upload-icon">📤</span>
+                        <p>Upload Image</p>
+                      </div>
+                    </label>
+
+                    {listTesti.banner && (
+                      <img
+                        src={`https://spatial-backend.onrender.com${listTesti.banner}`}
+                        alt="banner"
+                        className="preview-image"
+                      />
+                    )}
+                  </div>
+
+                  <div className="upper-slide">
+                    <button className="btn-2" onClick={handleListSubmitTesti}>
+                      {testiListloading ? (
+                        <ClipLoader color="white" size={35} />
+                      ) : (
+                        "Add Member"
+                      )}
+                    </button>
+                    <button
                       style={{
                         background: "red",
                       }}
@@ -761,10 +819,9 @@ const handleHeadingSubmitTesti = (e) => {
                     >
                       Close
                     </button>
-        </div>
-
-      </div>
-</form>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>

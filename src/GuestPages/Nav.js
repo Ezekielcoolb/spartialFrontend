@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import Marquee from "react-fast-marquee";
 import { Icon } from "@iconify/react/dist/iconify.js";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchGeneralpage } from "../Redux/slice/homeSlice";
 
 const NavbarContainer = styled.div`
   width: 100%;
@@ -11,12 +12,19 @@ const NavbarContainer = styled.div`
   z-index: 10000;
   background: #f5f5dc;
   padding-bottom: 10px;
-  .nav-mobile, .mobile-Contact {
+  .nav-mobile,
+  .mobile-Contact {
     display: none !important;
   }
- 
-   
-   .mobile-Contact {
+.marquee-div img {
+width: 30px;
+height: 30px;
+}
+.logo-img {
+  width: 100px;
+  height: 40px;
+}
+  .mobile-Contact {
     color: white;
     background: green;
     border-radius: 100px;
@@ -27,22 +35,21 @@ const NavbarContainer = styled.div`
     align-items: center;
     width: 120px;
     height: 40px;
-   }
-     @media (max-width: 778px) { 
-position: fixed;
-height: 60px;
-display: flex;
-align-items: center;
-padding: 30px;
- .nav-mobile {
-    display: block !important;
   }
-  .mobile-Contact {
-    display: flex !important;
+  @media (max-width: 778px) {
+    position: fixed;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    .nav-mobile {
+      display: block !important;
+    }
+    .mobile-Contact {
+      display: flex !important;
+    }
   }
-   }
 `;
-
 
 const backgroundCycle = keyframes`
   0%   { background-color: green; }
@@ -64,16 +71,16 @@ const TopBar = styled.div`
   transition: top 0.3s ease;
 
   animation: ${backgroundCycle} 15s linear infinite;
-.company-title {
-  font-weight: 600;
+  .company-title {
+    font-weight: 600;
     font-size: 16px;
     white-space: nowrap;
-}
-.marquee-div {
+  }
+  .marquee-div {
     display: flex;
     align-items: center;
     gap: 10px;
-}
+  }
   .marquee-content {
     display: flex;
     gap: 50px;
@@ -81,9 +88,9 @@ const TopBar = styled.div`
     font-size: 14px;
     margin-left: 50px;
   }
-    @media (max-width: 778px) { 
-display: none;
-    }
+  @media (max-width: 778px) {
+    display: none;
+  }
 `;
 
 const StickyNav = styled.div`
@@ -97,7 +104,8 @@ const StickyNav = styled.div`
   border-radius: ${(props) => (props.isSticky ? "0px" : "100px")};
   position: ${(props) => (props.isSticky ? "fixed" : "relative")};
   top: ${(props) => (props.isSticky ? "0" : "auto")};
-  box-shadow: ${(props) => (props.isSticky ? "0 2px 10px rgba(0,0,0,0.1)" : "none")};
+  box-shadow: ${(props) =>
+    props.isSticky ? "0 2px 10px rgba(0,0,0,0.1)" : "none"};
   transition: all 0.3s ease-in-out;
   z-index: 999;
 
@@ -123,8 +131,6 @@ const StickyNav = styled.div`
   }
 `;
 
-
-
 // Regular nav links
 const NavLink = styled(Link)`
   text-decoration: none;
@@ -132,9 +138,9 @@ const NavLink = styled(Link)`
   margin: 0 10px;
   font-weight: 500;
   transition: all 0.3s ease-in-out;
-    @media (max-width: 778px) { 
-color: black;
-    }
+  @media (max-width: 778px) {
+    color: black;
+  }
 `;
 
 // Special style for the Contact link
@@ -142,33 +148,45 @@ const ContactLink = styled(Link)`
   text-decoration: none;
   margin-left: auto;
   padding: ${(props) => (props.isSticky ? "8px 16px" : "0")};
-  color: ${(props) => (props.isSticky ? "white" : (props.color || "#a5f8c8ff"))};
+  color: ${(props) => (props.isSticky ? "white" : props.color || "#a5f8c8ff")};
   border: ${(props) => (props.isSticky ? "2px solid white" : "none")};
   border-radius: 100px;
   width: 120px;
-   font-weight: 800;
-   display: flex;
-   justify-content: center;
-    align-items: center;
-    height: ${(props) => (props.isSticky ? "40px" : "fit-content")};
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: ${(props) => (props.isSticky ? "40px" : "fit-content")};
   font-weight: ${(props) => (props.isSticky ? "600" : "600")};
   transition: all 0.3s ease-in-out;
   background: ${(props) => (props.isSticky ? "green" : "transparent")};
-    @media (max-width: 778px) { 
-display: none;
-    }
+  @media (max-width: 778px) {
+    display: none;
+  }
 `;
 
-
 const Spacer = styled.div`
-  height: ${(props) => (props.isSticky ? "72px" : "0")}; // space to prevent layout shift
+  height: ${(props) =>
+    props.isSticky ? "72px" : "0"}; // space to prevent layout shift
 `;
 
 const Navbar = () => {
   const [isSticky, setSticky] = useState(false);
- const [clicked, setClicked] = useState(false);
+  const [clicked, setClicked] = useState(false);
   const [activeLink, setActiveLink] = useState("home");
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { serviceDetails, generalObject, serviceObject, loading, error } =
+      useSelector((state) => state.content);
+    const URL = "https://spatial-backend.onrender.com";
+
+
+    
+    
+  useEffect(() => {
+    dispatch(fetchGeneralpage()); // Call API on component mount
+  }, [dispatch]);
 
 
   useEffect(() => {
@@ -179,11 +197,10 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-
-    const handleLinkClick = (link) => {
+  const handleLinkClick = (link) => {
     setActiveLink(link);
-   
-    setClicked(prev => !prev);
+
+    setClicked((prev) => !prev);
   };
 
   const { pathname } = useLocation();
@@ -192,59 +209,36 @@ const Navbar = () => {
   }, [pathname]);
 
   const handleClick = () => {
-    setClicked(prev => !prev); // Toggle open/close
+    setClicked((prev) => !prev); // Toggle open/close
   };
 
   return (
     <NavbarContainer>
       {!isSticky && (
         <TopBar>
-          <div className="company-title">SPATIAL ECOSYSTEMS LIMITED</div>
-            <Marquee speed={50} gradient={false}>
-      <div className="marquee-content">
-        <div className="marquee-div">
-               <Icon className="icon"
-                width="20px"
-                height="20px"
-                icon="tdesign:undertake-environment-protection"
-                color="white"
-              />
-            Environmental Assessment & Management</div>
-        <div className="marquee-div">
-              <Icon className="icon"
-                width="20px"
-                height="20px"
-                icon="material-symbols:health-and-safety-outline"
-                color="white"
-              />
-            Health, Safety & Regulatory Compliance</div>
-        <div className="marquee-div">
-              <Icon className="icon"
-                width="20px"
-                height="20px"
-                icon="ph:island-duotone"
-                color="white"
-              />
-            Geospatial Technology & Land Use Services</div>
-        <div className="marquee-div">
-              <Icon className="icon"
-                width="20px"
-                height="20px"
-                icon="ic:outline-emergency-recording"
-                color="white"
-              />
-            Waste, Emergency, & Capacity Services</div>
-      </div>
-    </Marquee>
-
+          <div className="company-title">{generalObject?.siteName}</div>
+          <Marquee speed={50} gradient={false}>
+            <div className="marquee-content">
+              {generalObject?.navScroll?.map((item) => (
+<div className="marquee-div">
+                <img src={`${URL}${item.icon}`}/>
+               {item?.title}
+              </div>
+              ))}
+              
+             
+            </div>
+          </Marquee>
         </TopBar>
       )}
-      <div style={{
-display: "flex",
-justifyContent: "space-between",
-width:"100%"
-      }}>
-         <div className="nav-mobile" onClick={handleClick}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        <div className="nav-mobile" onClick={handleClick}>
           {clicked ? (
             <Icon
               width="30px"
@@ -261,19 +255,29 @@ width:"100%"
             />
           )}
         </div>
- <StickyNav isSticky={isSticky} clicked={clicked}>
-  <NavLink to="/" isSticky={isSticky}>Home</NavLink>
-  <NavLink to="/about" isSticky={isSticky}>About</NavLink>
-  <NavLink to="/services" isSticky={isSticky}>Services</NavLink>
-  <NavLink to="/project" isSticky={isSticky}>Project</NavLink>
-  <ContactLink to="/contact" isSticky={isSticky}>
-    Contact
-  </ContactLink>
-</StickyNav>
- <Link className="mobile-Contact" to="/contact" >
-    Contact
-  </Link>
-</div>
+        <StickyNav isSticky={isSticky} clicked={clicked}>
+                  <img className="logo-img" src={`${URL}${generalObject?.banner}`} alt="" />
+
+          <NavLink to="/" isSticky={isSticky}>
+            Home
+          </NavLink>
+          <NavLink to="/about" isSticky={isSticky}>
+            About
+          </NavLink>
+          <NavLink to="/services" isSticky={isSticky}>
+            Services
+          </NavLink>
+          <NavLink to="/project" isSticky={isSticky}>
+            Project
+          </NavLink>
+          <ContactLink to="/contact" isSticky={isSticky}>
+            Contact
+          </ContactLink>
+        </StickyNav>
+        <Link className="mobile-Contact" to="/contact">
+          Contact
+        </Link>
+      </div>
 
       <Spacer isSticky={isSticky} />
     </NavbarContainer>

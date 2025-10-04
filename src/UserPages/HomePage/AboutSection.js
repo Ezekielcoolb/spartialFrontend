@@ -186,6 +186,47 @@ const AboutRap = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+
+  @media (max-width: 700px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 500px;
+    }
+    .btns button {
+      width: 500px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 350px;
+    }
+  }
+
+  @media (max-width: 410px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns-two button {
+      width: 300px;
+    }
+  }
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 270px;
+    }
+  }
 `;
 
 const AboutSectionHome = () => {
@@ -200,16 +241,16 @@ const AboutSectionHome = () => {
     subtitle: "",
     overview: "",
     smallBanner: "",
-      sideSectionOneHeading: "",
-      sideSectionOneContent: "",
-      sideSectionTwoHeading: "",
-      sideSectionTwoContent: "",
-      sideSectionThreeHeading: "",
-      sideSectionThreeContent: "",
-       visionHeading: "",
-      visionContent: "",
-      missionHeading: "",
-      missionContent: "",
+    sideSectionOneHeading: "",
+    sideSectionOneContent: "",
+    sideSectionTwoHeading: "",
+    sideSectionTwoContent: "",
+    sideSectionThreeHeading: "",
+    sideSectionThreeContent: "",
+    visionHeading: "",
+    visionContent: "",
+    missionHeading: "",
+    missionContent: "",
   });
   console.log(whoWeAre);
 
@@ -222,17 +263,17 @@ const AboutSectionHome = () => {
         subtitle: whoWeAreData.subtitle || "",
         banner: whoWeAreData.banner || "",
         overview: whoWeAreData.overview || "",
-         smallBanner: whoWeAreData.smallBanner || "",
-      sideSectionOneHeading: whoWeAreData.sideSectionOneContent || "",
-      sideSectionOneContent: whoWeAreData.sideSectionOneContent || "",
-      sideSectionTwoHeading: whoWeAreData.sideSectionTwoHeading || "",
-      sideSectionTwoContent:  whoWeAreData.sideSectionTwoContent || "",
-      sideSectionThreeHeading: whoWeAreData.sideSectionThreeHeading || "",
-      sideSectionThreeContent: whoWeAreData.sideSectionThreeContent || "",
-       visionHeading: whoWeAreData.visionHeading || "",
-      visionContent: whoWeAreData.visionContent || "",
-      missionHeading: whoWeAreData.missionHeading || "",
-      missionContent: whoWeAreData.missionContent || "",
+        smallBanner: whoWeAreData.smallBanner || "",
+        sideSectionOneHeading: whoWeAreData.sideSectionOneContent || "",
+        sideSectionOneContent: whoWeAreData.sideSectionOneContent || "",
+        sideSectionTwoHeading: whoWeAreData.sideSectionTwoHeading || "",
+        sideSectionTwoContent: whoWeAreData.sideSectionTwoContent || "",
+        sideSectionThreeHeading: whoWeAreData.sideSectionThreeHeading || "",
+        sideSectionThreeContent: whoWeAreData.sideSectionThreeContent || "",
+        visionHeading: whoWeAreData.visionHeading || "",
+        visionContent: whoWeAreData.visionContent || "",
+        missionHeading: whoWeAreData.missionHeading || "",
+        missionContent: whoWeAreData.missionContent || "",
       });
     }
   }, [whoWeAreData]);
@@ -254,7 +295,7 @@ const AboutSectionHome = () => {
       })
       .catch((err) => console.error("Upload failed:", err));
   };
-   const handleUploadThree = async (type, file) => {
+  const handleUploadThree = async (type, file) => {
     dispatch(uploadMedia({ folderName: "home", file }))
       .unwrap()
       .then((res) => {
@@ -321,7 +362,7 @@ const AboutSectionHome = () => {
                 }
               />
             </label>
-             <label>
+            <label>
               Vision Heading:
               <input
                 type="text"
@@ -333,7 +374,7 @@ const AboutSectionHome = () => {
                 }
               />
             </label>
-             <label>
+            <label>
               Vision Content:
               <textarea
                 type="text"
@@ -345,7 +386,7 @@ const AboutSectionHome = () => {
                 }
               />
             </label>
-             <label>
+            <label>
               Mission Heading:
               <input
                 type="text"
@@ -357,7 +398,7 @@ const AboutSectionHome = () => {
                 }
               />
             </label>
-             <label>
+            <label>
               Mission Content:
               <textarea
                 type="text"
@@ -369,7 +410,7 @@ const AboutSectionHome = () => {
                 }
               />
             </label>
-             <label>
+            <label>
               Side Section One Heading:
               <input
                 type="text"
@@ -377,11 +418,14 @@ const AboutSectionHome = () => {
                 placeholder="Enter side section one heading"
                 value={whoWeAre.sideSectionOneHeading}
                 onChange={(e) =>
-                  setWhoWeAre({ ...whoWeAre, sideSectionOneHeading: e.target.value })
+                  setWhoWeAre({
+                    ...whoWeAre,
+                    sideSectionOneHeading: e.target.value,
+                  })
                 }
               />
             </label>
-             <label>
+            <label>
               Side Section One Content:
               <textarea
                 type="text"
@@ -389,11 +433,14 @@ const AboutSectionHome = () => {
                 placeholder="Enter side section one content"
                 value={whoWeAre.sideSectionOneContent}
                 onChange={(e) =>
-                  setWhoWeAre({ ...whoWeAre, sideSectionOneContent: e.target.value })
+                  setWhoWeAre({
+                    ...whoWeAre,
+                    sideSectionOneContent: e.target.value,
+                  })
                 }
               />
             </label>
-             <label>
+            <label>
               Side Section Two Heading:
               <input
                 type="text"
@@ -401,11 +448,14 @@ const AboutSectionHome = () => {
                 placeholder="Enter side section two heading"
                 value={whoWeAre.sideSectionTwoHeading}
                 onChange={(e) =>
-                  setWhoWeAre({ ...whoWeAre, sideSectionTwoHeading: e.target.value })
+                  setWhoWeAre({
+                    ...whoWeAre,
+                    sideSectionTwoHeading: e.target.value,
+                  })
                 }
               />
             </label>
-             <label>
+            <label>
               Side Section Two Content:
               <textarea
                 type="text"
@@ -413,11 +463,14 @@ const AboutSectionHome = () => {
                 placeholder="Enter side section two content"
                 value={whoWeAre.sideSectionTwoContent}
                 onChange={(e) =>
-                  setWhoWeAre({ ...whoWeAre, sideSectionTwoContent: e.target.value })
+                  setWhoWeAre({
+                    ...whoWeAre,
+                    sideSectionTwoContent: e.target.value,
+                  })
                 }
               />
             </label>
-             <label>
+            <label>
               Side Section Three Heading:
               <input
                 type="text"
@@ -425,11 +478,14 @@ const AboutSectionHome = () => {
                 placeholder="Enter side section three heading"
                 value={whoWeAre.sideSectionThreeHeading}
                 onChange={(e) =>
-                  setWhoWeAre({ ...whoWeAre, sideSectionThreeHeading: e.target.value })
+                  setWhoWeAre({
+                    ...whoWeAre,
+                    sideSectionThreeHeading: e.target.value,
+                  })
                 }
               />
             </label>
-             <label>
+            <label>
               Side Section Three Content:
               <textarea
                 type="text"
@@ -437,17 +493,22 @@ const AboutSectionHome = () => {
                 placeholder="Enter side section three content"
                 value={whoWeAre.sideSectionThreeContent}
                 onChange={(e) =>
-                  setWhoWeAre({ ...whoWeAre, sideSectionThreeContent: e.target.value })
+                  setWhoWeAre({
+                    ...whoWeAre,
+                    sideSectionThreeContent: e.target.value,
+                  })
                 }
               />
             </label>
-             <div className="upload-container">
+            <div className="upload-container">
               <label className="upload-box">
                 Small Banner Image:
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => handleUploadThree("banner", e.target.files[0])}
+                  onChange={(e) =>
+                    handleUploadThree("banner", e.target.files[0])
+                  }
                 />
                 <div className="upload-content">
                   <span className="upload-icon">📤</span>
@@ -457,7 +518,7 @@ const AboutSectionHome = () => {
 
               {whoWeAre.smallBanner && (
                 <img
-                  src={`http://localhost:5000${whoWeAre.smallBanner}`}
+                  src={`https://spatial-backend.onrender.com${whoWeAre.smallBanner}`}
                   alt="banner"
                   className="preview-image"
                 />
@@ -491,7 +552,7 @@ const AboutSectionHome = () => {
 
               {whoWeAre.banner && (
                 <img
-                  src={`http://localhost:5000${whoWeAre.banner}`}
+                  src={`https://spatial-backend.onrender.com${whoWeAre.banner}`}
                   alt="banner"
                   className="preview-image"
                 />

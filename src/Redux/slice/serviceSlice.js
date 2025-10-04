@@ -2,10 +2,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/service";
-const API_URL_TWO = "http://localhost:5000/api/general";
+const API_URL = "https://spatial-backend.onrender.com/api/service";
+const API_URL_TWO = "https://spatial-backend.onrender.com/api/general";
 
-
+// const API_URL = "http://localhost:5000/api/service";
+// const API_URL_TWO = "http://localhost:5000/api/general";
 
 
 

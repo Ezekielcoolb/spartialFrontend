@@ -1,10 +1,10 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { fetchObjectpage } from "../Redux/slice/homeSlice";
 import { motion } from "framer-motion";
+import { fetchObjectpage } from "../Redux/slice/homeSlice";
 
 const AboutRap = styled.div`
   background: #000000;
@@ -288,6 +288,7 @@ const AboutRap = styled.div`
     font-weight: 600;
     font-size: 22px;
     line-height: 32px;
+    margin: 0px;
     max-width: 605px;
       opacity: 0;
   transform: translateX(30px);
@@ -296,6 +297,7 @@ const AboutRap = styled.div`
   .about-10-upper-right p {
     max-width: 617px;
     color: #ffffffb2;
+    margin: 0px;
     font-weight: 400;
     font-size: 18px;
     line-height: 28px;
@@ -356,7 +358,7 @@ const AboutRap = styled.div`
   .about-10-upper-right {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+   
      animation: slideInRight 1s ease-in-out forwards;
   }
   .schedule-btn {
@@ -876,7 +878,9 @@ const AboutRap = styled.div`
 .pop-div {
   background: #FFFFFF;
   box-shadow: 0px 8px 4px -4px #0000000A;
-
+max-height: 500px;
+overflow-y: auto;
+margin-top: 50px;
   box-shadow: 0px 20px 24px -4px #0000001A;
 border-radius: 8px;
 padding: 30px;  
@@ -1029,38 +1033,63 @@ height: 300px;
     }
 `;
 const About = () => {
-  const teamser = [
-    {
-      id: 0,
-      title: "Managing Consultant ",
-      certification: "Nigerian Environment Society (NES), Institute of  Safety Professionals of Nigeria (ISPON), Nigerian Red Cross Society amongst others",
-      name: "EMMANUEL GEORGE",
-      overview:
-        "Emmanuel George is a seasoned HSE and HR professional with over 23 years’ experience in safety management, environmental compliance, and HR operations. He has led HSE system implementation, audits, risk assessments, and major projects in drilling, construction, and installation, and has facilitated numerous HSE training programs.",
-      description: "Emmanuel George is the Managing Consultant for Spatial Ecosystems Limited. Emmanuel  George   has   had   more   than   23 years   experience   in   Health,   Safety   and Environmental (HSE) Management as well as in HR operations. He has had diversified and  progressive expertise in providing health, safety & environmental advice, safety  management and implementation of HSE systems. He has a success record of supervising &  managing drilling, construction and installation projects. He has been involved in the  development and implementation of HSE MS for several organisations and several studies  including EIA, EAs, HSE Audit, Resettlement Action Plan (RAP), Environmental Law Development and Analysis, HAZOP,  HAZID etc. Facilitated several HSE courses including Risk Assessment, Environmental  Awareness and Management, Fire Safety, Accident Reporting and Investigation.",
-      email: "example@example.com",
-      phone: "09000000000",
-      image: "/images/about-2.png"
-    },
-      {
-      id: 1,
-      title: "Project Director",
-      certification: "BSc in Marine Biology, MSc in Environmental Science; Pollution and Monitoring from Brunel University,  Uxbridge United Kingdom",
-      name: "OYENIKE OJUOLAPE SHOBOWALE  ",
-      overview: "Mrs. Oyenike Ojuolape Shobowale is a Project Director at Spatial Ecosystems Limited, specializing in environmental science and waste management. With degrees in Marine Biology and Environmental Science, she has worked in the UK and Nigeria on waste management, pollution control, and regulatory compliance, including leadership roles in MARPOL operations.",
-      description: "Mrs. Oyenike Ojuolape Shobowale is a Project Director with Spatial Ecosystems Limited. She is an  Environmental Scientist/ Waste Management Specialist with comprehensive industry  knowledge of environmental management systems, technologies and regulatory issues with  emphasis on pollution and monitoring. She has a BSc in Marine Biology from the University of Lagos Akoka, Yaba, Nigeria and she  has an MSc in Environmental Science; Pollution and Monitoring from Brunel University,  Uxbridge United Kingdom. She worked as a Waste Management Advisor with Hyder Consulting (UK) Limited,  developing and implementing waste management schemes for various local government  boroughs in the UK, assisting the local councils to meet waste prevention, recycling and  landfill diversion targets. She was the Regional Manager (West), for African Circle pollution Management Limited,  overseeing the company’s MARPOL waste management operations in Lagos Ports, Free Zone  Enterprises and Lagos Offshore.",
-      email: "example@example.com",
-      phone: "09000000000",
-      image: "/images/about-4.png"
-    },
-  ];
+
+    const dispatch = useDispatch();
+
+    const { homeData, homeObject, aboutObject, loading, error } = useSelector(
+      (state) => state.content || []
+    );
+
+console.log(aboutObject);
+const location = useLocation();
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }, 0);
+  }, [location.pathname]);
+
+
+const about = aboutObject?.aboutUs
+const mission = aboutObject?.missionVission
+const teamHead = aboutObject?.teams?.headings
+const counter = aboutObject?.aboutCounter
+const teamser = aboutObject?.teams?.lists
+ const URL = "https://spatial-backend.onrender.com"
+  // const teamser = [
+  //   {
+  //     id: 0,
+  //     title: "Managing Consultant ",
+  //     certification: "Nigerian Environment Society (NES), Institute of  Safety Professionals of Nigeria (ISPON), Nigerian Red Cross Society amongst others",
+  //     name: "EMMANUEL GEORGE",
+  //     overview:
+  //       "Emmanuel George is a seasoned HSE and HR professional with over 23 years’ experience in safety management, environmental compliance, and HR operations. He has led HSE system implementation, audits, risk assessments, and major projects in drilling, construction, and installation, and has facilitated numerous HSE training programs.",
+  //     description: "Emmanuel George is the Managing Consultant for Spatial Ecosystems Limited. Emmanuel  George   has   had   more   than   23 years   experience   in   Health,   Safety   and Environmental (HSE) Management as well as in HR operations. He has had diversified and  progressive expertise in providing health, safety & environmental advice, safety  management and implementation of HSE systems. He has a success record of supervising &  managing drilling, construction and installation projects. He has been involved in the  development and implementation of HSE MS for several organisations and several studies  including EIA, EAs, HSE Audit, Resettlement Action Plan (RAP), Environmental Law Development and Analysis, HAZOP,  HAZID etc. Facilitated several HSE courses including Risk Assessment, Environmental  Awareness and Management, Fire Safety, Accident Reporting and Investigation.",
+  //     email: "example@example.com",
+  //     phone: "09000000000",
+  //     image: "/images/about-2.png"
+  //   },
+  //     {
+  //     id: 1,
+  //     title: "Project Director",
+  //     certification: "BSc in Marine Biology, MSc in Environmental Science; Pollution and Monitoring from Brunel University,  Uxbridge United Kingdom",
+  //     name: "OYENIKE OJUOLAPE SHOBOWALE  ",
+  //     overview: "Mrs. Oyenike Ojuolape Shobowale is a Project Director at Spatial Ecosystems Limited, specializing in environmental science and waste management. With degrees in Marine Biology and Environmental Science, she has worked in the UK and Nigeria on waste management, pollution control, and regulatory compliance, including leadership roles in MARPOL operations.",
+  //     description: "Mrs. Oyenike Ojuolape Shobowale is a Project Director with Spatial Ecosystems Limited. She is an  Environmental Scientist/ Waste Management Specialist with comprehensive industry  knowledge of environmental management systems, technologies and regulatory issues with  emphasis on pollution and monitoring. She has a BSc in Marine Biology from the University of Lagos Akoka, Yaba, Nigeria and she  has an MSc in Environmental Science; Pollution and Monitoring from Brunel University,  Uxbridge United Kingdom. She worked as a Waste Management Advisor with Hyder Consulting (UK) Limited,  developing and implementing waste management schemes for various local government  boroughs in the UK, assisting the local councils to meet waste prevention, recycling and  landfill diversion targets. She was the Regional Manager (West), for African Circle pollution Management Limited,  overseeing the company’s MARPOL waste management operations in Lagos Ports, Free Zone  Enterprises and Lagos Offshore.",
+  //     email: "example@example.com",
+  //     phone: "09000000000",
+  //     image: "/images/about-4.png"
+  //   },
+  // ];
  const refs = useRef([]);
-  const dispatch = useDispatch();
 
   const [selectedBroker, setSelectedBroker] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
 
-  
+   useEffect(() => {
+      dispatch(fetchObjectpage()); // Call API on component mount
+    }, [dispatch]);
  
 useEffect(() => {
     const observer = new IntersectionObserver(
@@ -1106,14 +1135,14 @@ useEffect(() => {
       <div
   style={{
     backgroundColor: "#000000",
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/images/image-4.jpg)`,
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${URL}${about?.banner})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
   }}
   className="about-1 containers"
 >
-  <h2 >About Us</h2>
+  <h2 >{about?.title}</h2>
 </div>
 
   <div className="about-10 containers">
@@ -1121,24 +1150,23 @@ useEffect(() => {
           <div className="about-10-upper">
             <div className="home-2-upper-left">
               
-                <p>About us</p>
+                <p>{about?.title}</p>
              
             </div>
-            <h2>Shaping the world of things to come</h2>
+            <h2>{about?.mainTitle}</h2>
           </div>
           <div className="about-10-upper-right">
             <h4>
-            We’d love to share more with you, please complete this form and our dedicated team will get back to you shortly.
+           {about?.subtitle}
             </h4>
-            {/* <div
+            <div
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "20px",
+               
               }}
-              dangerouslySetInnerHTML={{ __html: about?.content }}
-            /> */}
-            <p>In markets from renewable energy, sports and entertainment, to data centers and healthcare, we work to ensure the built environment leaves a lasting positive impact. Together, we strive to make your project better than you imagined possible.</p>
+              dangerouslySetInnerHTML={{ __html: about?.overview }}
+            />
             <Link
               href="" // replace with the actual link
               target="_blank"
@@ -1209,8 +1237,8 @@ useEffect(() => {
 
       <div id="core-values" className="home-3 containers">
         <div className="home-3-upper">
-          <p>Our core values</p>
-          <h2>Global executive leadership</h2>
+          <p>{mission?.title}</p>
+          <h2>{mission?.subtitle}</h2>
         </div>
 
         <div className="home-3-new-all ">
@@ -1223,12 +1251,9 @@ useEffect(() => {
             viewport={{ once: false }}
           >
             <div className="home-3-card-up">
-              <h5>Our Core Values, Mission and Vision</h5>
+              <h5>{mission?.coreValue}</h5>
               <h6>
-                A successful business is built on trust and this we communicate
-                to our clients by paying close attention to their needs and
-                responding with the best possible solutions in a timely,
-                professional and ethical manner.
+                {mission?.coreValueContent}
               </h6>
             </div>
           </motion.div>
@@ -1245,13 +1270,9 @@ useEffect(() => {
             >
               <div className="home-3-card">
                 <div className="home-3-card-up">
-                  <h4>Our Mission</h4>
+                  <h4>{mission?.mission}</h4>
                   <p>
-                    To utilize competence and skill pool through education,
-                    empowerment and innovative solutions in ensuring safe,
-                    healthy and quality development of our clientele at the most
-                    effective cost, while upholding best practices and
-                    international standards.
+                   {mission?.missionContent}
                   </p>
                 </div>
               </div>
@@ -1268,11 +1289,9 @@ useEffect(() => {
             >
               <div className="home-3-card">
                 <div className="home-3-card-up">
-                  <h4>Our Vision</h4>
+                  <h4>{mission?.vision}</h4>
                   <p>
-                    To be the foremost organization providing effective &
-                    quality services in occupational health, safety,
-                    environmental management & related disciplines.
+                    {mission?.visionContent}
                   </p>
                 </div>
               </div>
@@ -1283,7 +1302,7 @@ useEffect(() => {
 
       <div
         style={{
-          backgroundImage: `url(${`/images/about-1.png`})`,
+          backgroundImage: `url(${URL}${counter?.banner})`,
         }}
         className="about-3"
       >
@@ -1299,7 +1318,7 @@ useEffect(() => {
               />
             </div>
             <div className="about-3-card-sub">
-              <h4>80,123</h4>
+              <h4>{counter?.customer} +</h4>
               <p>Customers to date</p>
             </div>
           </div>
@@ -1315,7 +1334,7 @@ useEffect(() => {
                 />
               </div>
               <div className="about-3-card-sub">
-                <h4>500+</h4>
+                <h4>{counter?.training} +</h4>
                 <p>Training Conducted</p>
               </div>
             </div>
@@ -1330,7 +1349,7 @@ useEffect(() => {
                 />
               </div>
               <div className="about-3-card-sub">
-                <h4>15+</h4>
+                <h4>{counter?.experience} +</h4>
                 <p>Years of Experience</p>
               </div>
             </div>
@@ -1339,8 +1358,8 @@ useEffect(() => {
       </div>
       <div id="our-team" className="about-4 containers">
         <div className="about-4-upper">
-          <p>Our Teams</p>
-          <h2>Global executive leadership</h2>
+          <p>{teamHead?.title}</p>
+          <h2>{teamHead?.subtitle}</h2>
         </div>
         <div className="about-4-down">
       {teamser?.map((item, index) => (
@@ -1350,9 +1369,9 @@ useEffect(() => {
           onClick={() => handlePop(item)}
           className="about-4-sub"
         >
-          <img src={item.image} alt="" />
+          <img src={`${URL}${item?.banner}`} alt="" />
           <div className="about-4-inner">
-            <p>{item?.title}</p>
+            <p>{item?.role}</p>
             <h4>{item?.name}</h4>
           </div>
         </div>
@@ -1367,22 +1386,22 @@ useEffect(() => {
           <div className="pop-div">
             <div className="pop-div-header">
               <img
-                src={selectedBroker?.image}
+                src={`${URL}${selectedBroker?.banner}`}
                 alt={selectedBroker?.name}
               />
               <div className="pop-div-header-sub">
                 <h2>
                   {selectedBroker?.name} 
                 </h2>
-                <p>{selectedBroker?.title }</p>
+                <p>{selectedBroker?.role }</p>
               </div>
             </div>
             <div className="pop-div-body">
               <div className="pop-1">
-                <div className="email-phone">
+                {/* <div className="email-phone">
                   <p>Phone number:</p>
                   <h4>{selectedBroker?.phone || "N/A"}</h4>
-                </div>
+                </div> */}
                 <div className="email-phone">
                   <p>Email:</p>
                   <h4>{selectedBroker?.email || "N/A"}</h4>
@@ -1391,7 +1410,7 @@ useEffect(() => {
                   <p>Certifications:</p>
                   <h4 style={{
                     maxWidth: "200px"
-                  }}>{selectedBroker?.certification || "N/A"}</h4>
+                  }}>{selectedBroker?.certifications || "N/A"}</h4>
                 </div>
               </div>
               <div className="pop-2">

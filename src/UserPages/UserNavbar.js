@@ -256,7 +256,7 @@ const handleLogOut =  () => {
 
         <div className="usernav-2">
 
-          <button onClick={handleLogOut} className="logOut">Log Out</button>
+          {/* <button onClick={handleLogOut} className="logOut">Log Out</button> */}
          
          
         </div>

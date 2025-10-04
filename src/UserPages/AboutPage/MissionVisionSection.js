@@ -192,22 +192,65 @@ const AboutRap = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+
+  @media (max-width: 700px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 500px;
+    }
+    .btns button {
+      width: 500px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 350px;
+    }
+  }
+
+  @media (max-width: 410px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 300px;
+    }
+  }
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 270px;
+    }
+  }
 `;
 
 const MissionVisionSection = () => {
   const dispatch = useDispatch();
   const { aboutObject, loading, error } = useSelector((state) => state.content);
   const { loading: uploading } = useSelector((state) => state.upload);
-  const { chooseUsLoading, chooseUsData } = useSelector((state) => state.userAbout);
-const [whyChooseData, setWhyChooseData] = useState({
+  const { chooseUsLoading, chooseUsData } = useSelector(
+    (state) => state.userAbout
+  );
+  const [whyChooseData, setWhyChooseData] = useState({
     title: "",
-     subtitle: "",
+    subtitle: "",
     mission: "",
     missionContent: "",
     vision: "",
     visionContent: "",
     coreValue: "",
-     coreValueContent: "",
+    coreValueContent: "",
   });
   console.log(aboutObject);
 
@@ -232,10 +275,10 @@ const [whyChooseData, setWhyChooseData] = useState({
     dispatch(fetchObjectpage()); // Call API on component mount
   }, [dispatch]);
 
-   const handleSubmitWhyChoose = (e) => {
-      e.preventDefault();
-      dispatch(updateMissionVisionAbout(whyChooseData));
-    };
+  const handleSubmitWhyChoose = (e) => {
+    e.preventDefault();
+    dispatch(updateMissionVisionAbout(whyChooseData));
+  };
 
   return (
     <AboutRap>
@@ -260,104 +303,130 @@ const [whyChooseData, setWhyChooseData] = useState({
             <h2>About Mission and Vision Section</h2>
           </div>
         </div>
-              <form>
-      <div className="slider-group">
-         <h3> Header Title</h3>
-        
-        <input
-          type="text"
-          placeholder=" title"
-          value={whyChooseData.title}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, title: e.target.value })
-          }
-        />
-        <label>Header Subtitle
-        <input
-          type="text"
-          placeholder=" Subtitle"
-          value={whyChooseData.subtitle}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, subtitle: e.target.value })
-          }
-        />
-        </label>
-        <label> Mission
-        <input
-          type="text"
-          placeholder="Mission"
-          value={whyChooseData.mission}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, mission: e.target.value })
-          }
-        />
-        </label>
-       
-            <label>Mission Content
-        <textarea
-          type="text"
-          placeholder=" Mission Content "
-          value={whyChooseData.missionContent}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, missionContent: e.target.value })
-          }
-        />
-        </label>
-        <label> Vision
-        <input
-          type="text"
-          placeholder="Vision"
-          value={whyChooseData.vision}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, vision: e.target.value })
-          }
-        />
-        </label>
-       
-        <label> Vision Content
-        <textarea
-          type="text"
-          placeholder=" Vision Content"
-          value={whyChooseData.visionContent}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, visionContent: e.target.value })
-          }
-        />
-        </label>
-        <label>Core Values
-        <input
-          type="text"
-          placeholder="Core Values"
-          value={whyChooseData.coreValue}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, coreValue: e.target.value })
-          }
-        />
-        
-     
-       </label>
+        <form>
+          <div className="slider-group">
+            <h3> Header Title</h3>
 
-        <label>Core Values Content
-        <textarea
-          type="text"
-          placeholder="Core Values Content"
-          value={whyChooseData.coreValueContent}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, coreValueContent: e.target.value })
-          }
-        />
-        
-     
-       </label>
-         <div className="btns">
-        <button className="btn-2" onClick={handleSubmitWhyChoose}>{chooseUsLoading ? (
-                                  <ClipLoader color="white" size={35} />
-                                ) : (
-                                  "Update Counter"
-                                )}</button>
-        </div>
-      </div>
-</form>
+            <input
+              type="text"
+              placeholder=" title"
+              value={whyChooseData.title}
+              onChange={(e) =>
+                setWhyChooseData({ ...whyChooseData, title: e.target.value })
+              }
+            />
+            <label>
+              Header Subtitle
+              <input
+                type="text"
+                placeholder=" Subtitle"
+                value={whyChooseData.subtitle}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    subtitle: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <label>
+              {" "}
+              Mission
+              <input
+                type="text"
+                placeholder="Mission"
+                value={whyChooseData.mission}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    mission: e.target.value,
+                  })
+                }
+              />
+            </label>
+
+            <label>
+              Mission Content
+              <textarea
+                type="text"
+                placeholder=" Mission Content "
+                value={whyChooseData.missionContent}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    missionContent: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <label>
+              {" "}
+              Vision
+              <input
+                type="text"
+                placeholder="Vision"
+                value={whyChooseData.vision}
+                onChange={(e) =>
+                  setWhyChooseData({ ...whyChooseData, vision: e.target.value })
+                }
+              />
+            </label>
+
+            <label>
+              {" "}
+              Vision Content
+              <textarea
+                type="text"
+                placeholder=" Vision Content"
+                value={whyChooseData.visionContent}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    visionContent: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <label>
+              Core Values
+              <input
+                type="text"
+                placeholder="Core Values"
+                value={whyChooseData.coreValue}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    coreValue: e.target.value,
+                  })
+                }
+              />
+            </label>
+
+            <label>
+              Core Values Content
+              <textarea
+                type="text"
+                placeholder="Core Values Content"
+                value={whyChooseData.coreValueContent}
+                onChange={(e) =>
+                  setWhyChooseData({
+                    ...whyChooseData,
+                    coreValueContent: e.target.value,
+                  })
+                }
+              />
+            </label>
+            <div className="btns">
+              <button className="btn-2" onClick={handleSubmitWhyChoose}>
+                {chooseUsLoading ? (
+                  <ClipLoader color="white" size={35} />
+                ) : (
+                  "Update Counter"
+                )}
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
       {chooseUsData ? (
         <div className="dropdown-container">

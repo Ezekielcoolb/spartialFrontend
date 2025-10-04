@@ -11,13 +11,14 @@ html, body {
   /* This removes any vertical overflow */
   /* width: 100%;
   height: 100%; */
+  font-family: 'Roboto', 'Inter', sans-serif;
  
 }
 
 
 
 .App {
-font-family: 'Roboto';
+/* font-family: 'Inter'; */
 }
 
 .containers {
@@ -38,7 +39,7 @@ font-family: 'Roboto';
   align-items: center;
   background: rgba(0, 0, 0, 0.3); /* Semi-transparent dark background */
   backdrop-filter: blur(1px); /* Adds a blur effect */
-  z-index: 9999;
+  z-index: 100000;
   top: 0;
   left: 0;
 }
@@ -274,8 +275,22 @@ flex-direction: column;
 }
 
 @media (max-width: 500px) {
+  .successPop {
+    padding: 30px 10px;
+  }
   .containers {
       padding-right: 10px !important;
       padding-left: 10px !important;
   }
+
+    .custom-table {
+    border-collapse: collapse;
+    text-align: left;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    
+    /* 🔑 forces overflow on small screens, fits on large */
+    width: max(100%, 500px) !important;
+  }
 }
+

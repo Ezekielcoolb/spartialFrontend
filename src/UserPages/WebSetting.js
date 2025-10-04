@@ -6,7 +6,11 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { ClipLoader } from "react-spinners";
 import { Link } from "react-router-dom";
 
-import { fetchGeneralpage, fetchProjectpage, fetchServicepage } from "../Redux/slice/homeSlice";
+import {
+  fetchGeneralpage,
+  fetchProjectpage,
+  fetchServicepage,
+} from "../Redux/slice/homeSlice";
 import {
   addToProjectList,
   deleteSpecificProject,
@@ -17,7 +21,13 @@ import {
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { resetUpload, uploadMedia } from "../Redux/slice/uploadSlice";
-import { addToServiceList, deleteSpecificService, postWebGeneralSetting, updateHomeServiceHeadings, updateSpecificService } from "../Redux/slice/serviceSlice";
+import {
+  addToServiceList,
+  deleteSpecificService,
+  postWebGeneralSetting,
+  updateHomeServiceHeadings,
+  updateSpecificService,
+} from "../Redux/slice/serviceSlice";
 
 const SliderRap = styled.div`
   padding: 30px;
@@ -249,6 +259,47 @@ const SliderRap = styled.div`
     height: 30px;
     border-radius: 5px;
   }
+
+  @media (max-width: 700px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 500px;
+    }
+    .btns button {
+      width: 500px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 350px;
+    }
+  }
+
+  @media (max-width: 410px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 300px;
+    }
+  }
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box,
+    .btns button {
+      width: 270px;
+    }
+  }
 `;
 
 const WebSetting = () => {
@@ -257,10 +308,7 @@ const WebSetting = () => {
   const { generalObject, loading, error } = useSelector(
     (state) => state.content
   );
-  const {
-   generalloading,
-   generalPost,
-  } = useSelector((state) => state.service);
+  const { generalloading, generalPost } = useSelector((state) => state.service);
   const [selectedId, setSelectedId] = useState(null);
 
   const [newSliderOpen, setNewSliderOpen] = useState(false);
@@ -270,8 +318,7 @@ const WebSetting = () => {
   };
   const sliding = generalObject?.webSetting || [];
 
-
-//   console.log(generalObject);
+  //   console.log(generalObject);
 
   useEffect(() => {
     dispatch(fetchGeneralpage()); // Call API on component mount
@@ -281,25 +328,19 @@ const WebSetting = () => {
     setSelectedId(id);
   };
 
-
-
- 
- 
-
   const [formData, setFormData] = useState({
-  siteName: "",
+    siteName: "",
     sitePhone: "",
-   siteEmail: "",
-   siteAddress: "",
+    siteEmail: "",
+    siteAddress: "",
     navScroll: [],
     socialLinks: [],
-   
-   
+
     siteDescription: "",
-    
+
     banner: "",
   });
-console.log(formData);
+  console.log(formData);
 
   // whenever selectedSlide changes, update formData
   useEffect(() => {
@@ -310,31 +351,23 @@ console.log(formData);
         siteEmail: generalObject.siteEmail || "",
         siteAddress: generalObject.siteAddress || "",
         navScroll: generalObject.navScroll || [],
-         socialLinks: generalObject.socialLinks || [],
+        socialLinks: generalObject.socialLinks || [],
         siteDescription: generalObject.siteDescription || "",
-       
+
         banner: generalObject.banner || "",
-      
       });
     }
   }, [generalObject]);
 
- 
-
   const handleClose = () => {
     dispatch(resetSlider());
-   
- 
   };
-
 
   // ✅ Handle list add
   const handleListSubmitTesti = (e) => {
     e.preventDefault();
     dispatch(postWebGeneralSetting({ ...formData }));
   };
-
-
 
   const handleUploadTwo = async (type, file) => {
     dispatch(uploadMedia({ folderName: "home", file }))
@@ -352,18 +385,18 @@ console.log(formData);
   };
 
   const handleNavScrollIconUpload = (idx, file) => {
-  dispatch(uploadMedia({ folderName: "navscroll-icons", file }))
-    .unwrap()
-    .then((res) => {
-      const arr = [...formData.navScroll];
-      arr[idx].icon = res.data; // backend returns image URL/path
-      setFormData({ ...formData, navScroll: arr });
-      dispatch(resetUpload());
-    })
-    .catch((err) => console.error("Upload failed:", err));
-};
+    dispatch(uploadMedia({ folderName: "navscroll-icons", file }))
+      .unwrap()
+      .then((res) => {
+        const arr = [...formData.navScroll];
+        arr[idx].icon = res.data; // backend returns image URL/path
+        setFormData({ ...formData, navScroll: arr });
+        dispatch(resetUpload());
+      })
+      .catch((err) => console.error("Upload failed:", err));
+  };
 
-    const handleUpload = async (type, file) => {
+  const handleUpload = async (type, file) => {
     dispatch(uploadMedia({ folderName: "home", file }))
       .unwrap()
       .then((res) => {
@@ -377,7 +410,6 @@ console.log(formData);
       })
       .catch((err) => console.error("Upload failed:", err));
   };
-
 
   return (
     <SliderRap>
@@ -393,245 +425,252 @@ console.log(formData);
             <h2>Web Setting Page </h2>
           </div>
         </div>
-            <div className="slider">
-             
-              <form>
-                <div className="slider-group">
-                    <label> Site Name
-                  <input
-                    type="text"
-                    placeholder="Site Name"
-                    value={formData.siteName}
-                    onChange={(e) =>
-                      setFormData({ ...formData, siteName: e.target.value })
-                    }
-                  />
-                  </label>
-                    <label> Site Email
-                  <input
-                    type="email"
-                    placeholder="Site Email"
-                    value={formData.siteEmail}
-                    onChange={(e) =>
-                      setFormData({ ...formData, siteEmail: e.target.value })
-                    }
-                  />
-                  </label>
-                    <label> Site Phone Number
-                  <input
-                    type="text"
-                    placeholder="Site Numner"
-                    value={formData.sitePhone}
-                    onChange={(e) =>
-                      setFormData({ ...formData, sitePhone: e.target.value })
-                    }
-                  />
-                  </label>
-                    <label> Site Address
-                  <input
-                    type="text"
-                    placeholder="Site Address"
-                    value={formData.siteAddress}
-                    onChange={(e) =>
-                      setFormData({ ...formData, siteAddress: e.target.value })
-                    }
-                  />
-                  </label>
-                  <label> Site Description
-                  <textarea
-                    type="text"
-                    placeholder="Enter short overview"
-                    value={formData.siteDescription}
-                    onChange={(e) =>
-                      setFormData({ ...formData, siteDescription: e.target.value })
-                    }
-                  />
-                </label>
-            
+        <div className="slider">
+          <form>
+            <div className="slider-group">
+              <label>
+                {" "}
+                Site Name
+                <input
+                  type="text"
+                  placeholder="Site Name"
+                  value={formData.siteName}
+                  onChange={(e) =>
+                    setFormData({ ...formData, siteName: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                {" "}
+                Site Email
+                <input
+                  type="email"
+                  placeholder="Site Email"
+                  value={formData.siteEmail}
+                  onChange={(e) =>
+                    setFormData({ ...formData, siteEmail: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                {" "}
+                Site Phone Number
+                <input
+                  type="text"
+                  placeholder="Site Numner"
+                  value={formData.sitePhone}
+                  onChange={(e) =>
+                    setFormData({ ...formData, sitePhone: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                {" "}
+                Site Address
+                <input
+                  type="text"
+                  placeholder="Site Address"
+                  value={formData.siteAddress}
+                  onChange={(e) =>
+                    setFormData({ ...formData, siteAddress: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                {" "}
+                Site Description
+                <textarea
+                  type="text"
+                  placeholder="Enter short overview"
+                  value={formData.siteDescription}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      siteDescription: e.target.value,
+                    })
+                  }
+                />
+              </label>
 
-                  
-                
-
-                 
-
- <div >  
- <h4>   Nav Scrolls    </h4>         {/* Nav Scroll Array */}
-{formData.navScroll.map((feat, idx) => (
-  <div className="add-section-drop" key={idx}>
-    <input
-      type="text"
-      placeholder="NavTitle"
-      value={feat.title}
-      onChange={(e) => {
-        const arr = [...formData.navScroll];
-        arr[idx].title = e.target.value;
-        setFormData({ ...formData, navScroll: arr });
-      }}
-    />
-      <label className="upload-box upload-box-two">
-    <input
-      type="file"
-      accept="image/*"
-      onChange={e => handleNavScrollIconUpload(idx, e.target.files[0])}
-    />
-      <div className="upload-content">
-                        <span className="upload-icon">📤</span>
-                        <p>Upload Icon Image</p>
-                      </div>
-      </label>
-    {feat.icon && (
-      <img
-        src={`http://localhost:5000${feat.icon}`}
-        alt="icon"
-        style={{ width: 32, height: 32 }}
-      />
-    )}
-    <button type="button" onClick={() => {
-      const arr = [...formData.navScroll];
-      arr.splice(idx, 1);
-      setFormData({ ...formData, navScroll: arr });
-    }}>
-      Remove
-    </button>
-  </div>
-))}
-<button style={{
-    width:" 120px",
-    height: "40px",
-    borderRadius: "10px",
-    border: "1px solid #777373ff",
-    background: "#20195bff",
-    color: "white",
-    fontWeight: "600",
-}}
-  type="button"
-  onClick={() =>
-    setFormData({
-      ...formData,
-      navScroll: [
-        ...(formData.navScroll || []),
-        { title: "", icon: "" },
-      ],
-    })
-  }
->
-  Add Nav Item
-</button>
-</div> 
-                    
-
-                     {/* Why Choose  Array */}
-                      <div>
-                        <h4>Social Links</h4>
-                        {formData.socialLinks.map((feat, idx) => (
-                          <div className="add-section-drop" key={idx} style={{ marginBottom: 8 }}>
-                            <input
-                              type="text"
-                              placeholder="Link Title"
-                              value={feat.title}
-                              onChange={(e) => {
-                                const arr = [...formData.socialLinks];
-                                arr[idx].title = e.target.value;
-                                setFormData({
-                                  ...formData,
-                                  socialLinks: arr,
-                                });
-                              }}
-                              style={{ marginRight: 8 }}
-                            />
-                            <input
-                              type="text"
-                              placeholder="Social Link"
-                              value={feat.link}
-                              onChange={(e) => {
-                                const arr = [...formData.socialLinks];
-                                arr[idx].link = e.target.value;
-                                setFormData({
-                                  ...formData,
-                                  socialLinks: arr,
-                                });
-                              }}
-                            />
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const arr = [...formData.socialLinks];
-                                arr.splice(idx, 1);
-                                setFormData({
-                                  ...formData,
-                                  socialLinks: arr,
-                                });
-                              }}
-                              style={{ marginLeft: 8 }}
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        ))}
-                        <button
-                        style={{
-    width:" 120px",
-    height: "40px",
-    borderRadius: "10px",
-    border: "1px solid #777373ff",
-    background: "#20195bff",
-    color: "white",
-    fontWeight: "600",
-}}
-                          type="button"
-                          onClick={() =>
-                            setFormData({
-                              ...formData,
-                              socialLinks: [
-                                ...(formData.socialLinks || []),
-                                { title: "", content: "" },
-                              ],
-                            })
-                          }
-                        >
-                          Add New
-                        </button>
-                      </div>
-
-                     
-
-                 
-
-                  <div className="upload-container">
-                    <label className="upload-box">
+              <div>
+                <h4> Nav Scrolls </h4> {/* Nav Scroll Array */}
+                {formData.navScroll.map((feat, idx) => (
+                  <div className="add-section-drop" key={idx}>
+                    <input
+                      type="text"
+                      placeholder="NavTitle"
+                      value={feat.title}
+                      onChange={(e) => {
+                        const arr = [...formData.navScroll];
+                        arr[idx].title = e.target.value;
+                        setFormData({ ...formData, navScroll: arr });
+                      }}
+                    />
+                    <label className="upload-box upload-box-two">
                       <input
                         type="file"
                         accept="image/*"
                         onChange={(e) =>
-                          handleUpload("banner", e.target.files[0])
+                          handleNavScrollIconUpload(idx, e.target.files[0])
                         }
                       />
                       <div className="upload-content">
                         <span className="upload-icon">📤</span>
-                        <p>Upload Image</p>
+                        <p>Upload Icon Image</p>
                       </div>
                     </label>
-
-                    {formData.banner && (
+                    {feat.icon && (
                       <img
-                        src={`http://localhost:5000${formData.banner}`}
-                        alt="banner"
-                        className="preview-image"
+                        src={`https://spatial-backend.onrender.com${feat.icon}`}
+                        alt="icon"
+                        style={{ width: 32, height: 32 }}
                       />
                     )}
-                  </div>
-
-               
-
-                  <div className="upper-slide">
-                    <button className="btn-2" onClick={handleListSubmitTesti}>
-                      {generalloading ? (
-                        <ClipLoader color="white" size={35} />
-                      ) : (
-                        "Update Web Setting"
-                      )}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const arr = [...formData.navScroll];
+                        arr.splice(idx, 1);
+                        setFormData({ ...formData, navScroll: arr });
+                      }}
+                    >
+                      Remove
                     </button>
-                    {/* <button
+                  </div>
+                ))}
+                <button
+                  style={{
+                    width: " 120px",
+                    height: "40px",
+                    borderRadius: "10px",
+                    border: "1px solid #777373ff",
+                    background: "#20195bff",
+                    color: "white",
+                    fontWeight: "600",
+                  }}
+                  type="button"
+                  onClick={() =>
+                    setFormData({
+                      ...formData,
+                      navScroll: [
+                        ...(formData.navScroll || []),
+                        { title: "", icon: "" },
+                      ],
+                    })
+                  }
+                >
+                  Add Nav Item
+                </button>
+              </div>
+
+              {/* Why Choose  Array */}
+              <div>
+                <h4>Social Links</h4>
+                {formData.socialLinks.map((feat, idx) => (
+                  <div
+                    className="add-section-drop"
+                    key={idx}
+                    style={{ marginBottom: 8 }}
+                  >
+                    <input
+                      type="text"
+                      placeholder="Link Title"
+                      value={feat.title}
+                      onChange={(e) => {
+                        const arr = [...formData.socialLinks];
+                        arr[idx].title = e.target.value;
+                        setFormData({
+                          ...formData,
+                          socialLinks: arr,
+                        });
+                      }}
+                      style={{ marginRight: 8 }}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Social Link"
+                      value={feat.link}
+                      onChange={(e) => {
+                        const arr = [...formData.socialLinks];
+                        arr[idx].link = e.target.value;
+                        setFormData({
+                          ...formData,
+                          socialLinks: arr,
+                        });
+                      }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const arr = [...formData.socialLinks];
+                        arr.splice(idx, 1);
+                        setFormData({
+                          ...formData,
+                          socialLinks: arr,
+                        });
+                      }}
+                      style={{ marginLeft: 8 }}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <button
+                  style={{
+                    width: " 120px",
+                    height: "40px",
+                    borderRadius: "10px",
+                    border: "1px solid #777373ff",
+                    background: "#20195bff",
+                    color: "white",
+                    fontWeight: "600",
+                  }}
+                  type="button"
+                  onClick={() =>
+                    setFormData({
+                      ...formData,
+                      socialLinks: [
+                        ...(formData.socialLinks || []),
+                        { title: "", content: "" },
+                      ],
+                    })
+                  }
+                >
+                  Add New
+                </button>
+              </div>
+
+              <div className="upload-container">
+                <label className="upload-box">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleUpload("banner", e.target.files[0])}
+                  />
+                  <div className="upload-content">
+                    <span className="upload-icon">📤</span>
+                    <p>Upload Image</p>
+                  </div>
+                </label>
+
+                {formData.banner && (
+                  <img
+                    src={`https://spatial-backend.onrender.com${formData.banner}`}
+                    alt="banner"
+                    className="preview-image"
+                  />
+                )}
+              </div>
+
+              <div className="upper-slide">
+                <button className="btn-2" onClick={handleListSubmitTesti}>
+                  {generalloading ? (
+                    <ClipLoader color="white" size={35} />
+                  ) : (
+                    "Update Web Setting"
+                  )}
+                </button>
+                {/* <button
                       style={{
                         background: "red",
                       }}
@@ -641,15 +680,11 @@ console.log(formData);
                     >
                       Close
                     </button> */}
-                  </div>
-                </div>
-              </form>
+              </div>
             </div>
-       
-       
+          </form>
+        </div>
       </div>
-
-     
 
       {generalPost ? (
         <div className="dropdown-containerTwo">
@@ -661,16 +696,8 @@ console.log(formData);
       ) : (
         ""
       )}
-      
-    
-     
-      {newSliderOpen ? (
-        <div className="dropdown-container">
-          
-        </div>
-      ) : (
-        ""
-      )}
+
+      {newSliderOpen ? <div className="dropdown-container"></div> : ""}
     </SliderRap>
   );
 };

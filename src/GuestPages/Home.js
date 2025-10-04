@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { fetchHomepage, fetchObjectpage } from "../Redux/slice/homeSlice";
+import { fetchForAllHomepage, fetchHomepage, fetchObjectpage } from "../Redux/slice/homeSlice";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -1485,22 +1485,30 @@ const HomeRap = styled.div`
     z-index: 0;
     border-radius: 30px;
     margin: 50px 30px;
+
     margin-top: 130px;
     padding-top: 150px;
     padding-bottom: 50px !important;
     margin-bottom: 0px !important;
   }
 
-  .home-11-cut {
-    position: absolute;
-    top: 0px;
-    right: 40%;
-  }
-  .all-circle-con {
-    position: absolute;
-    top: -70px;
-    right: 46%;
-  }
+   .top-center {
+  position: absolute;
+  top: 0; /* stick to top */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* keeps image + circle centered */
+  z-index: 5;
+}
+
+    .all-circle-con {
+  position: absolute;
+  top: 20%; /* adjust relative to image */
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
   .circle-container {
     position: relative;
@@ -1649,7 +1657,10 @@ const HomeRap = styled.div`
  
 }
 
-
+.circlecontainer  {
+ position: relative;
+  height: 200px;
+}
 
 .circle-text {
   width: 100%;
@@ -1760,7 +1771,7 @@ const HomeRap = styled.div`
     .choose-div-body {
       flex-wrap: wrap;
     }
-    .home-11-cut {
+    /* .home-11-cut {
       position: absolute;
       top: 0px;
       right: 30% !important;
@@ -1769,7 +1780,7 @@ const HomeRap = styled.div`
       position: absolute;
       top: -70px;
       right: 39%;
-    }
+    } */
     .home-8-input {
       grid-template-columns: repeat(1, 1fr);
     }
@@ -1803,7 +1814,7 @@ const HomeRap = styled.div`
   }
 
   @media (max-width: 800px) {
-    .home-11-cut {
+    /* .home-11-cut {
       position: absolute;
       top: 0px;
       right: 30% !important;
@@ -1812,7 +1823,7 @@ const HomeRap = styled.div`
       position: absolute;
       top: -70px;
       right: 39%;
-    }
+    } */
   }
   @media (max-width: 800px) {
     /* .home-11-cut {
@@ -1835,7 +1846,7 @@ const HomeRap = styled.div`
       gap: 20px;
       padding-bottom: 10px;
     }
-    .home-11-cut {
+    /* .home-11-cut {
       position: absolute;
       top: 0px;
       right: 20% !important;
@@ -1844,7 +1855,7 @@ const HomeRap = styled.div`
       position: absolute;
       top: -70px;
       right: 33%;
-    }
+    } */
     .home-1 h1 {
       font-size: 40px;
       line-height: 50px;
@@ -1906,7 +1917,7 @@ const HomeRap = styled.div`
 } */
   }
   @media (max-width: 450px) {
-    .home-11-cut {
+    /* .home-11-cut {
       position: absolute;
       top: 0px;
       right: 15% !important;
@@ -1915,11 +1926,11 @@ const HomeRap = styled.div`
       position: absolute;
       top: -70px;
       right: 32%;
-    }
+    } */
   }
 
   @media (max-width: 410px) {
-    .home-11-cut {
+    /* .home-11-cut {
       position: absolute;
       top: 0px;
       right: 10% !important;
@@ -1928,10 +1939,10 @@ const HomeRap = styled.div`
       position: absolute;
       top: -70px;
       right: 29%;
-    }
+    } */
   }
   @media (max-width: 370px) {
-    .home-11-cut {
+    /* .home-11-cut {
       position: absolute;
       top: 0px;
       right: 5% !important;
@@ -1940,7 +1951,7 @@ const HomeRap = styled.div`
       position: absolute;
       top: -70px;
       right: 26%;
-    }
+    } */
   }
 `;
 
@@ -1983,147 +1994,71 @@ const Counter = ({ end, duration = 2000 }) => {
 };
 
 const Home = () => {
-  const slider = [
-    {
-      id: 0,
-      banner: "/images/image-1.jpeg",
 
-      title: "Leading Experts in HSE and Environmental Management",
-      sub_title:
-        "Delivering sustainable, world-class solutions through NEBOSH, IOSH, and OSHA-certified practices.",
-    },
-    {
-      id: 1,
-      video: "/images/video-1.mp4",
-      title: "Sustainable Solutions for Complex Environments",
-      sub_title:
-        "From consulting to project execution — we thrive in challenging and critical conditions.",
-    },
-    {
-      id: 2,
-      banner: "/images/image-3.jpg",
-      title: "Empowering Safety, Driving Excellence",
-      sub_title:
-        "Indigenous expertise with global standards for Health, Safety, and Environmental compliance.",
-    },
-    {
-      id: 3,
-      video: "/images/video-2.mp4",
-      title: "Your Trusted Partner in HSE & Project Management",
-      sub_title:
-        "Audits, training, and consulting services designed to protect people, projects, and the planet.",
-    },
-  ];
 
-  const images = [
-    "/images/image_2.png",
-    "/images/image_3.png",
-    "/images/image_4.png",
-  ];
+  
+  const URL = "https://spatial-backend.onrender.com"
 
-  const services = [
-    {
-      id: 0,
-      banner: "/images/image-1.jpeg",
-      title: "Environmental Assessment & Management",
-      sub_title:
-        "These services support organizations in evaluating, managing, and minimizing environmental and social impacts in compliance with national and international standards.",
-    },
-    {
-      id: 1,
-      banner: "/images/image-2.jpg",
-      title: "Health, Safety & Regulatory Compliance",
-      sub_title:
-        "Focused on developing systems and assessments that promote workplace safety, regulatory compliance, and risk management.",
-    },
-    {
-      id: 2,
-      banner: "/images/image-3.jpg",
-      title: "Geospatial Technology & Land Use Services",
-      sub_title:
-        "These services utilize advanced mapping and spatial tools to support planning, resource management, and environmental monitoring.",
-    },
-    // {
-    //     id: 3,
-    //     banner: "/images/image-4.jpg",
-    //     title: "Waste, Emergency, & Capacity Services",
-    //     sub_title: "These offerings support waste management, emergency response, and institutional capacity building for both public and private sectors.",
-    // },
-  ];
 
-  const documents = [
-    {
-      id: 0,
-      title: "Task management",
-      overview: "Lorem ipsum dolor sit amet consectetur. Et diam aenean",
-      image: "/images/task_img.png",
-    },
-    {
-      id: 1,
-      title: "Environmental certification",
-      overview: "Lorem ipsum dolor sit amet consectetur. Et diam aenean",
-      image: "/images/task_img.png",
-    },
-    {
-      id: 2,
-      title: "Document management",
-      overview: "Lorem ipsum dolor sit amet consectetur. Et diam aenean",
-      image: "/images/task_img.png",
-    },
-    {
-      id: 3,
-      title: "Training management",
-      overview: "Lorem ipsum dolor sit amet consectetur. Et diam aenean",
-      image: "/images/task_img.png",
-    },
-  ];
 
-  const testimonials = [
-    {
-      id: 1,
-      full_name: "MARIA JABLONSKI",
-      testimony:
-        "Their team are easy to work with and helped me make amazing websites in a short amount of time. Thanks guys for all your hard work. Trust us we looked for a very long time.",
-      image: "/images/image-8.png",
-      pic: "images/img-3.png",
-    },
-    {
-      id: 2,
-      full_name: "LIONEL MESSI",
-      testimony:
-        "Their team are easy to work with and helped me make amazing websites in a short amount of time. Thanks guys for all your hard work. Trust us we looked for a very long time.",
-      image: "/images/image-8.png",
-      pic: "images/img-3.png",
-    },
-  ];
+  const [animation, setAnimation] = useState("");
+   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { homeData, homeObject, aboutObject, loading, error } = useSelector(
+    (state) => state.content || []
+  );
+  console.log(homeData);
 
-  const counters = [
-    {
-      counter: "Our Training",
-      title:
-        "We engage as early as possible, typically during the conceptual or schematic stage",
-    },
-    {
-      counter: "Our Impact",
-      title:
-        "Engage as early as possible, typically during the conceptual or schematic stage",
-      image: "/images/image-3.jpg",
-    },
-    {
-      counter: "Local experties",
-      title: "We engage as early as possible, typically during the conceptual.",
-      image: "/images/image-4.jpg",
-    },
-  ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndexTwo, setCurrentIndexTwo] = useState(0);
+  const intervalRef = useRef(null);
+  const isPausedRef = useRef(false);
+  const isPausedTwoRef = useRef(false);
 
+  const [currentDiv, setCurrentDiv] = useState(0);
+  const [currentIndexp, setCurrentIndexp] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const itemsPerView = 2;
+  const itemsPerViewTwo = 1;
+  console.log(selectedImage);
+  const [activeLink, setActiveLink] = useState("home");
+
+
+
+
+
+  //   const slider = homeObject?.data?.slider || [];
+  const about = homeObject?.data?.about;
+const slider = homeData?.home?.slider || []
+const counter = homeData?.home?.counter
+const whoWeAre = homeData?.home?.whoWeAre
+const testimonials = homeData?.home?.testimoneyTwo?.lists || []
+const testimonialHead = homeData?.home?.testimoneyTwo?.headings 
+const enquires = homeData?.home?.enquiries
+const whyChose = homeData?.home?.whyChooseUsNew
+
+  const servicess = homeObject?.data?.services || [];
+  const documents = homeData?.home?.documentsTwo?.lists
+  console.log(testimonials);
+  
+    const documentHead = homeData?.home?.documentsTwo?.headings
+ const services = homeData?.services?.list || []
+ const portfolio = homeData?.projects?.list || []
+
+  const serviceHead = homeData?.services?.headings
+ const portfolioHead = homeData?.projects?.headings 
+
+
+ 
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(slider[0]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [activeSlideIndexes, setActiveSlideIndexes] = useState(0);
   const [currentSlider, setCurrentSlider] = useState(services[0]);
   const [currentIndexNew, setCurrentIndexNew] = useState(0);
 
   const currentTestimony = testimonials[currentIndexNew];
-
-  const [animation, setAnimation] = useState("");
-
+  
   const handleNextNew = () => {
     setAnimation("slide-left");
     setCurrentIndexNew((prevIndex) => (prevIndex + 1) % testimonials.length);
@@ -2179,42 +2114,7 @@ const Home = () => {
     return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   }, []);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { homeObject, aboutObject, loading, error } = useSelector(
-    (state) => state.content || []
-  );
-  console.log(homeObject);
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentIndexTwo, setCurrentIndexTwo] = useState(0);
-  const intervalRef = useRef(null);
-  const isPausedRef = useRef(false);
-  const isPausedTwoRef = useRef(false);
-
-  const [currentDiv, setCurrentDiv] = useState(0);
-  const [currentIndexp, setCurrentIndexp] = useState(0);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const itemsPerView = 2;
-  const itemsPerViewTwo = 1;
-  console.log(selectedImage);
-  const [activeLink, setActiveLink] = useState("home");
-
-  //   const slider = homeObject?.data?.slider || [];
-  const about = homeObject?.data?.about;
-  const footerTitle = homeObject?.data?.footerTitle;
-  const moreServices = homeObject?.data?.moreServices;
-  const newsletter = homeObject?.data?.newsletter;
-  // const portfolio = homeObject?.data?.portfolio;
-  const servicess = homeObject?.data?.services;
-  const whyChoseUs = homeObject?.data?.whyChoseUs;
-  const sectionOne = aboutObject?.data?.sectionOne;
-  const sectionTwo = aboutObject?.data?.sectionTwo;
-  const sectionThree = aboutObject?.data?.secThree;
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-  const [currentSlide, setCurrentSlide] = useState(slider[0]);
-  const [activeIndex, setActiveIndex] = useState(0);
-
+ 
   // const currentSlide = slider[currentIndex];
   const settings = {
     dots: true,
@@ -2230,26 +2130,34 @@ const Home = () => {
     },
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % documents.length);
-    }, 5000); // every 4 seconds
+ useEffect(() => {
+  const interval = setInterval(() => {
+    setActiveIndex((prev) => (prev + 1) % documents?.length);
+  }, 3000);
+  return () => clearInterval(interval);
+}, [documents?.length]);
 
-    return () => clearInterval(interval);
-  }, []);
 
-  const getPositionClass = (index) => {
-    const relativeIndex =
-      (index - activeIndex + documents.length) % documents.length;
-    if (relativeIndex === 0) return "center";
-    if (relativeIndex === 1) return "right";
-    if (relativeIndex === documents.length - 1) return "left";
-    return "hidden"; // hide other items
-  };
+const getPositionClass = (index) => {
+  const relativeIndex =
+    (index - activeIndex + documents?.length) % documents?.length;
+  if (relativeIndex === 0) return "center";
+  if (relativeIndex === 1) return "right";
+  if (relativeIndex === documents?.length - 1) return "left";
+  return "back"; // instead of hidden, give them a default class
+};
+
+
 
   useEffect(() => {
     dispatch(fetchHomepage()); // Call API on component mount
   }, [dispatch]);
+
+    useEffect(() => {
+    dispatch(fetchForAllHomepage()); // Call API on component mount
+  }, [dispatch]);
+
+  
   useEffect(() => {
     dispatch(fetchObjectpage()); // Call API on component mount
   }, [dispatch]);
@@ -2334,38 +2242,38 @@ const Home = () => {
     }
   };
 
-  const portfolio = [
-    {
-      image: "/images/image-2.jpg",
-      video: "/images/video-1.mp4",
-      title: "Environmental Impact Assessment (EIA) for CNG Facility",
-      content:
-        "Conducted a comprehensive EIA to assess the potential environmental and socio-economic impacts of a proposed Compressed Natural Gas (CNG) facility. The study ensured alignment with regulatory standards and provided mitigation strategies to support sustainable energy development.",
-      client: "Basswood Energy Limited",
-      address: "Lagos-Ibadan Expressway, Ogun State",
-    },
-    {
-      image: "/images/image-3.jpg",
-      video: "/images/video-2.mp4",
-      title: "Environmental and Social Due Diligence (ESDD)",
-      content:
-        ": Conducted an ESDD to assess environmental, health, safety, and social risks associated with industrial operations. The findings informed risk mitigation plans and compliance strategies in line with international best practices.",
-      client: "Supertech Industries Limited",
-      address: "Ondo State",
-    },
-    {
-      image: "/images/image-4.jpg",
-      video: "",
-      title: "Training in Occupational Health",
-      content:
-        "Development and implementation of a certified management system covering environment, quality, and occupational safety. Risk prevention and safety culture in telecom operations.",
-      client: "Ikeja Electricity Distribution Company",
-      address: "Lagos",
-    },
-  ];
+  // const portfolio = [
+  //   {
+  //     image: "/images/image-2.jpg",
+  //     video: "/images/video-1.mp4",
+  //     title: "Environmental Impact Assessment (EIA) for CNG Facility",
+  //     content:
+  //       "Conducted a comprehensive EIA to assess the potential environmental and socio-economic impacts of a proposed Compressed Natural Gas (CNG) facility. The study ensured alignment with regulatory standards and provided mitigation strategies to support sustainable energy development.",
+  //     client: "Basswood Energy Limited",
+  //     address: "Lagos-Ibadan Expressway, Ogun State",
+  //   },
+  //   {
+  //     image: "/images/image-3.jpg",
+  //     video: "/images/video-2.mp4",
+  //     title: "Environmental and Social Due Diligence (ESDD)",
+  //     content:
+  //       ": Conducted an ESDD to assess environmental, health, safety, and social risks associated with industrial operations. The findings informed risk mitigation plans and compliance strategies in line with international best practices.",
+  //     client: "Supertech Industries Limited",
+  //     address: "Ondo State",
+  //   },
+  //   {
+  //     image: "/images/image-4.jpg",
+  //     video: "",
+  //     title: "Training in Occupational Health",
+  //     content:
+  //       "Development and implementation of a certified management system covering environment, quality, and occupational safety. Risk prevention and safety culture in telecom operations.",
+  //     client: "Ikeja Electricity Distribution Company",
+  //     address: "Lagos",
+  //   },
+  // ];
 
   const visibleImages = 2;
-  const totalSlides = Math.ceil((portfolio.length || 0) / visibleImages);
+  const totalSlides = Math.ceil((portfolio?.length || 0) / visibleImages);
 
   const handlePrevTwo = () => {
     if (currentIndexp > 0) {
@@ -2389,12 +2297,7 @@ const Home = () => {
   //   navigate(`/management/${id}`)
   // }
 
-  let parsedContent = [];
-  try {
-    parsedContent = JSON.parse(about?.paragraph_one);
-  } catch (e) {
-    console.error("Failed to parse content:", e);
-  }
+
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -2415,7 +2318,7 @@ const Home = () => {
     visible: { opacity: 1, x: 0, y: 0, transition: { duration: 0.8 } },
   };
 
-  console.log(parsedContent);
+ 
 
   return (
     <HomeRap>
@@ -2435,6 +2338,7 @@ const Home = () => {
                 {/* ✅ Conditionally render background video or image */}
                 {slide?.video ? (
                   <video
+                  loading="lazy"
                     autoPlay
                     muted
                     loop
@@ -2449,7 +2353,7 @@ const Home = () => {
                       filter: "blur(2px)",
                       zIndex: -3,
                     }}
-                    src={slide.video}
+                    src={`${URL}${slide?.video}`}
                   />
                 ) : (
                   <div
@@ -2459,7 +2363,7 @@ const Home = () => {
                       left: 0,
                       width: "100%",
                       height: "100%",
-                      backgroundImage: `url(${slide?.banner})`,
+                      backgroundImage: `url(${URL}${slide?.banner})`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                       filter: "blur(4px)",
@@ -2492,7 +2396,7 @@ const Home = () => {
                   }}
                 >
                   <h1 className="slide-heading">{slide?.title}</h1>
-                  <p className="slide-subtitle">{slide?.sub_title}</p>
+                  <p className="slide-subtitle">{slide?.subtitle}</p>
                   <Link
                     onClick={() => handleLinkClick("contact")}
                     className="get-in-touch"
@@ -2508,12 +2412,11 @@ const Home = () => {
       <div className="home-2 containers">
         <div className="home-2-upper">
           <div className="home-2-upper-left">
-            <p>Who we are</p>
+            <p>{whoWeAre?.title}</p>
           </div>
           <div className="home-2-upper-right">
             <h2>
-              The largest privately held Health, safety and regulatory
-              compliance in the world
+              {whoWeAre?.subtitle}
             </h2>
             <div className="all-mission-vision">
               <div className="mission-vission">
@@ -2525,11 +2428,10 @@ const Home = () => {
                     icon="game-icons:extra-vision"
                     color="black"
                   />
-                  <h4>Our Vision</h4>
+                  <h4>{whoWeAre?.visionHeading}</h4>
                 </div>
                 <p>
-                  To empower businesses with cutting-edge web solutions that
-                  enhance their digital presence and drive growth.
+                  {whoWeAre?.visionContent}
                 </p>
               </div>
               <div className="mission-vission">
@@ -2541,12 +2443,10 @@ const Home = () => {
                     icon="icon-park-outline:user-to-user-transmission"
                     color="black"
                   />
-                  <h4>Our Mission</h4>
+                  <h4>{whoWeAre?.missionHeading}</h4>
                 </div>
                 <p>
-                  Our solutions are designed to meet the needs of modern
-                  enterprises, ensuring they thrive in today’s competitive
-                  online landscape.
+                  {whoWeAre?.missionContent}
                 </p>
               </div>
             </div>
@@ -2556,10 +2456,11 @@ const Home = () => {
           <motion.img
             variants={leftVariant}
             initial="hidden"
+            loading = "lazy"
             whileInView="visible"
             viewport={{ once: false, amount: 0.2 }}
             className="home-2-down-img"
-            src="/images/image-1.jpeg"
+            src={`${URL}${whoWeAre?.banner}`}
             alt=""
           />
           <motion.div
@@ -2569,22 +2470,48 @@ const Home = () => {
             viewport={{ once: false, amount: 0.2 }}
             className="home-2-sub"
           >
-            {counters?.map((items, index) => (
-              <div
+             <div
                 style={{
-                  backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${items?.image})`,
+                 backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${whoWeAre?.sideSectionOneHeading?.image})`,
+
                 }}
                 className="home-2-inner"
               >
-                <h6>0{index + 1}</h6>
+                <h6>01</h6>
                 <div className="home-2-inner-sub">
-                  <h4>{items?.counter}</h4>
-                  <p>{items?.title}</p>
+                  <h4>{whoWeAre?.sideSectionOneHeading}</h4>
+                  <p>{whoWeAre?.sideSectionOneContent}</p>
                 </div>
               </div>
-            ))}
 
-            <img src="/images/image-3.jpg" alt="" />
+               <div
+                style={{
+                backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${whoWeAre?.sideSectionOneHeading?.image})`,
+
+                }}
+                className="home-2-inner"
+              >
+                <h6>02</h6>
+                 <div className="home-2-inner-sub">
+                  <h4>{whoWeAre?.sideSectionTwoHeading}</h4>
+                  <p>{whoWeAre?.sideSectionTwoContent}</p>
+                </div>
+              </div>
+               <div
+                style={{
+              backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${whoWeAre?.sideSectionOneHeading?.image})`,
+
+                }}
+                className="home-2-inner"
+              >
+                <h6>03</h6>
+                 <div className="home-2-inner-sub">
+                  <h4>{whoWeAre?.sideSectionThreeHeading}</h4>
+                  <p>{whoWeAre?.sideSectionThreeContent}</p>
+                </div>
+              </div>
+
+            <img  loading = "lazy" src={`${URL}${whoWeAre?.smallBanner}`} alt="" />
           </motion.div>
         </div>
       </div>
@@ -2597,11 +2524,9 @@ const Home = () => {
                 <img src="/images/green_svg.png" />
                 <p>The modern standard</p>
               </div> */}
-              <h2>Our Services</h2>
+              <h2>{serviceHead?.title}</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur. Elementum tellus eu
-                pulvinar amet aliquam nullam massa augue. Lorem suspendisse
-                interdum bibendum morbi neque nullam. Etiam mattis nulla.
+               {serviceHead?.subtitle}
               </p>
               <Link className="sub-col-5-btn btn" to="">
                 Learn{" "}
@@ -2620,7 +2545,7 @@ const Home = () => {
                   key={index}
                   style={{
                     //   flex: `0 0 ${100 / services?.length}%`,
-                    backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.3), #000), url(${service?.banner})`,
+                    backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.3), #000), url(${URL}${service?.banner})`,
                     height: "418px",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
@@ -2634,8 +2559,8 @@ const Home = () => {
                     color: "#fff",
                   }}
                 >
-                  <h4>{service.title}</h4>
-                  <p>{service.sub_title}</p>
+                  <h4>{service.name}</h4>
+                  <p>{service.overview}</p>
                 </div>
               ))}
             </div>
@@ -2647,11 +2572,9 @@ const Home = () => {
                 <img src="/images/green_svg.png" />
                 <p>The modern standard</p>
               </div> */}
-            <h2>Our Services</h2>
+            <h2>{serviceHead?.title}</h2>
             <p>
-              Lorem ipsum dolor sit amet consectetur. Elementum tellus eu
-              pulvinar amet aliquam nullam massa augue. Lorem suspendisse
-              interdum bibendum morbi neque nullam. Etiam mattis nulla.
+              {serviceHead?.subtitle}
             </p>
             <Link className="sub-col-5-btn btn" to="">
               Learn{" "}
@@ -2673,12 +2596,13 @@ const Home = () => {
             }}
           >
             <Slider {...settingsing}>
-              {services.map((service, index) => (
+              {services?.map((service, index) => (
                 <div key={index}>
                   <div
                     className="services-text"
                     style={{
-                      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.3), #000), url(${service.banner})`,
+                      
+                      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.3), #000), url(${URL}${service.banner})`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                       height: "400px",
@@ -2692,8 +2616,8 @@ const Home = () => {
                       padding: "40px",
                     }}
                   >
-                    <h4>{service.title}</h4>
-                    <p>{service.sub_title}</p>
+                    <h4>{service.name}</h4>
+                    <p>{service.overview}</p>
                   </div>
                 </div>
               ))}
@@ -2704,14 +2628,14 @@ const Home = () => {
 
       <div className="containers home-2">
         <div className="col-3">
-          <h2>Beautiful documentation that converts users</h2>
-          <p>A platform you can rely on to reach your audience</p>
+          <h2>{documentHead?.title}</h2>
+          <p>{documentHead?.subtitle}</p>
         </div>
         <div>
           <div className="triangle-carousel">
-            {documents.map((doc, index) => (
-              <div key={doc.id} className={`card ${getPositionClass(index)}`}>
-                <img src={doc.image} alt={doc.title} />
+            {documents?.map((doc, index) => (
+              <div key={doc._id} className={`card ${getPositionClass(index)}`}>
+                <img  loading = "lazy" src={`${URL}${doc?.banner}`} alt={doc.title} />
                 <div className="task-div">
                   <h3>{doc.title}</h3>
                   <p>{doc.overview}</p>
@@ -2724,10 +2648,9 @@ const Home = () => {
 
       <div className="counter-div containers">
         <div className="counter-head">
-          <h2>Helping Small Business to Grow and Expand</h2>
+          <h2>{counter?.title}</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore.
+            {counter?.subtitle}
           </p>
         </div>
         {/* <div className="counter-body" ref={ref}>
@@ -2781,7 +2704,7 @@ const Home = () => {
         <div className="counter-1">
           <div className="counter-text">
             <h4>
-             {inView && <CountUp end={200} duration={3} />}
+             {inView && <CountUp end={Number(counter?.projectDone)} duration={3} />}
             </h4>
             <p>Project Done</p>
           </div>
@@ -2810,7 +2733,7 @@ const Home = () => {
          <div className="counter-1">
           <div className="counter-text">
             <h4>
-              {inView && <CountUp end={15} duration={3} />}
+              {inView && <CountUp end={Number(counter?.yearsOfExperience)} duration={3} />}
             </h4>
             <p>Years of Experience</p>
           </div>
@@ -2839,7 +2762,7 @@ const Home = () => {
          <div className="counter-1">
           <div className="counter-text">
             <h4>
-              {inView && <CountUp end={56} duration={3} />}
+              {inView && <CountUp end={Number(counter?.awardWinning)} duration={3} />}
             </h4>
             <p>Number of Training Conducted</p>
           </div>
@@ -2868,7 +2791,7 @@ const Home = () => {
          <div className="counter-1 ">
           <div className="counter-text">
             <h4>
-              {inView && <CountUp end={200} duration={3} />}
+              {inView && <CountUp end={Number(counter?.satisfiedCustomers)} duration={3} />}
             </h4>
             <p>Satisfied customers</p>
           </div>
@@ -2900,11 +2823,9 @@ const Home = () => {
       <div id="company" className="over-4 containers">
         <div className="over-4-header-all">
           <div className="over-4-header">
-            <h4>Explore Ongoing Projects</h4>
+            <h4>{portfolioHead?.title}</h4>
             <p>
-              We have successfully executed numerous high-impact environmental
-              projects across various industries and regions in Nigeria. Below
-              are some of our most recent engagements:
+              {portfolioHead?.subtitle}
             </p>
           </div>
         </div>
@@ -2919,7 +2840,7 @@ const Home = () => {
               className="gallery-inner"
               style={{ transform: `translateX(-${translateXPercent}%)` }}
             >
-              {portfolio.map((item, index) => (
+              {portfolio?.map((item, index) => (
                 <div className="galery-div" key={index}>
                   <div
                     className="banner-wrapper"
@@ -2930,15 +2851,15 @@ const Home = () => {
                     }}
                   >
                     <img
-                      src={item?.image}
+                      src={`${URL}${item?.banner}`}
                       alt={`pic-${index}`}
                       className="gallery-img"
                     />
                     {item?.video && <div className="play-button">▶</div>}
                   </div>
                   <div className="galery-div-inner">
-                    <h4>{item.title}</h4>
-                    <p>{item?.content}</p>
+                    <h4>{item.name}</h4>
+                    <p>{item?.overview}</p>
                     <div className="galery-div-inner-icon">
                       <Icon
                         width="14px"
@@ -3001,12 +2922,12 @@ const Home = () => {
                     playsInline // ✅ iPhone inline support
                     autoPlay // ✅ autoplay when modal opens
                   >
-                    <source src={selectedImage.video} />
+                    <source src={`${URL}${selectedImage.video}`} />
                     Your browser does not support this video format.
                   </video>
                 )
               ) : (
-                <img src={selectedImage?.image} alt="enlarged" />
+                <img  loading = "lazy" src={`${URL}${selectedImage?.banner}`} alt="enlarged" />
               )}
 
               <button
@@ -3022,7 +2943,7 @@ const Home = () => {
 
       <div className="choose-div-all  containers">
         <div className="choose-div-header">
-          <h2>We're reliable and trusted by clients</h2>
+          <h2>{whyChose?.heading}</h2>
         </div>
         <div className="choose-div-body">
           {/* Left Card */}
@@ -3042,12 +2963,9 @@ const Home = () => {
                 color="black"
               />
             </div>
-            <h4>People</h4>
+            <h4>{whyChose?.titleOne}</h4>
             <p>
-              Our people are professionals from different industry with a wealth
-              of experience in HSE management. They are able to discover and
-              uncover underlying issues challenging many companies as regards to
-              safety management.
+              {whyChose?.subtitleOne}
             </p>
           </motion.div>
 
@@ -3068,12 +2986,9 @@ const Home = () => {
                 color="black"
               />
             </div>
-            <h4>Process</h4>
+            <h4>{whyChose?.titleTwo}</h4>
             <p>
-              Our process flow is guided by ISO and globally accepted standards
-              and certifications. We ensure that our solutions meet with
-              regulatory policies and put our clients in the green as far as
-              compliance is concerned
+              {whyChose?.subtitleTwo}
             </p>
           </motion.div>
 
@@ -3094,12 +3009,9 @@ const Home = () => {
                 color="black"
               />
             </div>
-            <h4>Technology</h4>
+             <h4>{whyChose?.titleThree}</h4>
             <p>
-              In a technology driven world, Spatial Ecosystem deploy the latest
-              E-solutions when needed, incorporating management information
-              systems that will ensure a smooth running of processes with lesser
-              effort but with greater results.
+              {whyChose?.subtitleThree}
             </p>
           </motion.div>
         </div>
@@ -3114,11 +3026,11 @@ const Home = () => {
                   color: "black",
                 }}
               >
-                Quick Enquiry
+               {enquires?.title}
               </p>
             </div>
             <h2>
-              Get specialist advice for residential, commercial or property
+              {enquires?.mainTitle}
             </h2>
           </div>
           <div className="home-8-down">
@@ -3130,7 +3042,7 @@ const Home = () => {
             </div>
             <div className="home-8-down-sub">
               <h4>
-                We're excited to connect with you! Required fields are marked *
+                 {enquires?.downText}
               </h4>
               <Link
                 target="_blank"
@@ -3149,18 +3061,49 @@ const Home = () => {
               </Link>
             </div>
           </div>
-          <img className="side-img-1" src="/images/side-img-1.png" alt="" />
-          <img className="side-img-2" src="/images/side-img-2.png" alt="" />
+          <img  loading = "lazy" className="side-img-1" src="/images/side-img-1.png" alt="" />
+          <img loading = "lazy" className="side-img-2" src="/images/side-img-2.png" alt="" />
         </div>
       </div>
 
       <div className="home-10 containers">
+                <div className="top-center">
+    <img className="home-11-cut" src="/images/cut-in-2.png" alt="" />
+    <div className="all-circle-con">
+      <div className="circlecontainer">
+        <img  loading = "lazy"
+          src="/images/image-1.jpeg"
+          alt="round image"
+          className="center-image"
+        />
+
+        <svg className="circle-text" viewBox="0 0 300 300">
+          <defs>
+            <path
+              id="circlePath"
+              d="M 150, 150
+                 m -120, 0
+                 a 120,120 0 1,1 240,0
+                 a 120,120 0 1,1 -240,0"
+            />
+          </defs>
+          <text fill="#ffb805ff" fontSize="22px" fontWeight="700">
+            <textPath href="#circlePath" startOffset="0%">
+              What People Say • What People Say • What People Say • What People Say •
+            </textPath>
+          </text>
+        </svg>
+      </div>
+    </div>
+  </div>
+                  
         <div className="home-10-sub">
           <h6>
-            <span></span>A world wide Distributor green energy
+            <span></span>{}
           </h6>
-          <h2>Our customers also share their success stories.</h2>
+          <h2>{testimonialHead?.mainTitle}.</h2>
         </div>
+        
         <div className="home-11-inner-2" {...handlers}>
           <Icon
             className="icon-home-11"
@@ -3175,12 +3118,12 @@ const Home = () => {
             className={`logitech ${animation}`}
             onAnimationEnd={() => setAnimation("")} // reset animation after it plays
           >
-            <p>{currentTestimony?.testimony}</p>
+            <p>{currentTestimony?.content}</p>
             <img
               src="/images/listener-person.png"
-              alt={currentTestimony?.full_name}
+              alt={currentTestimony?.name}
             />
-            <h5 className="leonel">{currentTestimony?.full_name}</h5>
+            <h5 className="leonel">{currentTestimony?.name}</h5>
           </div>
 
           <Icon
@@ -3192,34 +3135,7 @@ const Home = () => {
             onClick={handleNextNew}
           />
         </div>
-        <img className="home-11-cut" src="/images/cut-in-2.png" alt="" />
-        <div className="all-circle-con">
-          <div class="circle-container">
-            <img
-              src="/images/image-1.jpeg"
-              alt="round image"
-              class="center-image"
-            />
-
-            <svg class="circle-text" viewBox="0 0 300 300">
-              <defs>
-                <path
-                  id="circlePath"
-                  d="M 150, 150
-           m -120, 0
-           a 120,120 0 1,1 240,0
-           a 120,120 0 1,1 -240,0"
-                />
-              </defs>
-              <text fill="#e77817" font-size="22" font-weight="700">
-                <textPath href="#circlePath" startOffset="0%">
-                  What people say • What people say • What people say • What
-                  people say •
-                </textPath>
-              </text>
-            </svg>
-          </div>
-        </div>
+       
       </div>
     </HomeRap>
   );

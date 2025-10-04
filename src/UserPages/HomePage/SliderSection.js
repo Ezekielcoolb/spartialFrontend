@@ -81,7 +81,9 @@ const SliderRap = styled.div`
     overflow: hidden; /* keep overlay inside */
     z-index: 0;
   }
-
+  .successPop {
+    overflow-y: auto;
+  }
   .upper-slide button::before {
     content: "";
     position: absolute;
@@ -219,11 +221,41 @@ const SliderRap = styled.div`
   input[type="file"] {
     display: none;
   }
+  @media (max-width: 500px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 300px;
+    }
+    padding: 30px 0px;
+    .upper-slide {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 20px;
+    }
+    .be-done {
+      display: none;
+    }
+    .btns-new {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 280px;
+    }
+  }
 `;
 
 const SliderSection = () => {
   const dispatch = useDispatch();
-    const { loading: uploading } = useSelector((state) => state.upload);
+  const { loading: uploading } = useSelector((state) => state.upload);
   const { homeObject, loading, error } = useSelector((state) => state.content);
   const { sliderloading, slider, sliderUpade, sliderDelete } = useSelector(
     (state) => state.users
@@ -364,13 +396,13 @@ const SliderSection = () => {
             }}
           >
             <Link to="/users/dashboard">
-            <Icon
-              className="icon"
-              width="20px"
-              height="20px"
-              icon="formkit:arrowleft"
-              color="black"
-            />
+              <Icon
+                className="icon"
+                width="20px"
+                height="20px"
+                icon="formkit:arrowleft"
+                color="black"
+              />
             </Link>
             <h2>Home Slider</h2>
           </div>
@@ -380,9 +412,11 @@ const SliderSection = () => {
           <table className="custom-table">
             <thead>
               <tr style={{ background: "#f4f4f4" }}>
-                <th style={{ textAlign: "left" }}>S/N</th>
+                <th style={{ textAlign: "left", width: "fit-content" }}>S/N</th>
                 <th style={{ textAlign: "left" }}>Title </th>
-                <th style={{ textAlign: "left" }}>Overview</th>
+                <th className="be-done" style={{ textAlign: "left" }}>
+                  Overview
+                </th>
                 <th style={{ textAlign: "left" }}>Action</th>
               </tr>
             </thead>
@@ -391,8 +425,8 @@ const SliderSection = () => {
                 <tr className="tr-hover">
                   <td>{index + 1}</td>
                   <td>{items.title}</td>
-                  <td>{items.subtitle}</td>
-                  <td>
+                  <td className="be-done">{items.subtitle}</td>
+                  <td style={{ textAlign: "left" }}>
                     <div className="btns">
                       <button
                         onClick={() => handleClick(items._id)}
@@ -435,119 +469,124 @@ const SliderSection = () => {
       {selectedSlide ? (
         <div className="dropdown-container">
           <div className="successPop">
-            <div className="successPop-div">
-              <div className="slider-group">
-                <label>
-                  Slider title:
-                  <input
-                    type="text"
-                    name="title"
-                    placeholder="Enter Title"
-                    value={formData.title}
-                    onChange={handleChange}
-                  />
-                </label>
-                <label>
-                  Slider overview:
-                  <input
-                    type="text"
-                    name="subtitle"
-                    placeholder="Enter overview"
-                    value={formData.subtitle}
-                    onChange={handleChange}
-                  />
-                </label>
-                <div className="slider-2">
-                  <h4>Upload either a video or an image</h4>
-                  <div className="btnses">
-                    <button className="btnses-1" onClick={handleImageDrop}>
-                      Upload Image
-                    </button>
-                    <button className="btnses-1" onClick={handleVideoDrop}>
-                      Upload Video
-                    </button>
-                  </div>
-                  {openImageDrop && (
-                    <div className="upload-container">
-                      <label className="upload-box">
-                        <input
-                          type="file"
-                          accept="image/*"
-                          disabled={!!formData.video}
-                          onChange={(e) =>
-                            handleUpload("banner", e.target.files[0])
-                          }
-                          hidden
-                        />
-                        <div className="upload-content">
-                          <span className="upload-icon">📤</span>
-                          <p>Upload Image</p>
-                        </div>
-                      </label>
-
-                      {formData.banner && (
-                        <img
-                          src={`http://localhost:5000${formData.banner}`}
-                          alt="banner"
-                          className="preview-image"
-                        />
-                      )}
+            <div className="slider">
+              <div className="slider-upper">
+                <h2>Add New Home Slider</h2>
+              </div>
+              <div className="successPop-div">
+                <div className="slider-group">
+                  <label>
+                    Slider title:
+                    <input
+                      type="text"
+                      name="title"
+                      placeholder="Enter Title"
+                      value={formData.title}
+                      onChange={handleChange}
+                    />
+                  </label>
+                  <label>
+                    Slider overview:
+                    <input
+                      type="text"
+                      name="subtitle"
+                      placeholder="Enter overview"
+                      value={formData.subtitle}
+                      onChange={handleChange}
+                    />
+                  </label>
+                  <div className="slider-2">
+                    <h4>Upload either a video or an image</h4>
+                    <div className="btnses">
+                      <button className="btnses-1" onClick={handleImageDrop}>
+                        Upload Image
+                      </button>
+                      <button className="btnses-1" onClick={handleVideoDrop}>
+                        Upload Video
+                      </button>
                     </div>
-                  )}
-
-                  {/* Video Upload OR YouTube Link (disabled if banner exists) */}
-                  {openVideoDrop && (
-                    <div className="upload-two-box">
-                      <label
-                        htmlFor="video-upload"
-                        className="upload-two-label"
-                      >
-                        <div className="upload-content">
-                          <i className="fas fa-video"></i>
-                          <p>Upload Video</p>
-                        </div>
-                      </label>
-                      <input
-                        id="video-upload"
-                        type="file"
-                        accept="video/mp4,video/avi,video/mov"
-                        disabled={!!formData.banner} // disable if banner exists
-                        onChange={(e) =>
-                          handleUpload("video", e.target.files[0])
-                        }
-                      />
-
-                      {/* ✅ Video Preview */}
-                      {formData.video && (
-                        <div className="mt-3">
-                          <video
-                            src={`http://localhost:5000${formData.video}`}
-                            controls
-                            className="video-preview"
-                            style={{ borderRadius: "8px" }}
+                    {openImageDrop && (
+                      <div className="upload-container">
+                        <label className="upload-box">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            disabled={!!formData.video}
+                            onChange={(e) =>
+                              handleUpload("banner", e.target.files[0])
+                            }
+                            hidden
                           />
-                        </div>
-                      )}
-                    </div>
-                  )}
+                          <div className="upload-content">
+                            <span className="upload-icon">📤</span>
+                            <p>Upload Image</p>
+                          </div>
+                        </label>
+
+                        {formData.banner && (
+                          <img
+                            src={`https://spatial-backend.onrender.com${formData.banner}`}
+                            alt="banner"
+                            className="preview-image"
+                          />
+                        )}
+                      </div>
+                    )}
+
+                    {/* Video Upload OR YouTube Link (disabled if banner exists) */}
+                    {openVideoDrop && (
+                      <div className="upload-two-box">
+                        <label
+                          htmlFor="video-upload"
+                          className="upload-two-label"
+                        >
+                          <div className="upload-content">
+                            <i className="fas fa-video"></i>
+                            <p>Upload Video</p>
+                          </div>
+                        </label>
+                        <input
+                          id="video-upload"
+                          type="file"
+                          accept="video/mp4,video/avi,video/mov"
+                          disabled={!!formData.banner} // disable if banner exists
+                          onChange={(e) =>
+                            handleUpload("video", e.target.files[0])
+                          }
+                        />
+
+                        {/* ✅ Video Preview */}
+                        {formData.video && (
+                          <div className="mt-3">
+                            <video
+                              src={`https://spatial-backend.onrender.com${formData.video}`}
+                              controls
+                              className="video-preview"
+                              style={{ borderRadius: "8px" }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="btns">
-              <button onClick={() => setSelectedId(null)}>Close</button>
-              <button
-                onClick={handleSubmitUpdate}
-                style={{
-                  background: "#062c12ff",
-                  color: "#ffffff",
-                }}
-              >
-                {sliderloading ? (
-                  <ClipLoader color="white" size={35} />
-                ) : (
-                  "Update Slider"
-                )}
-              </button>
+              <div className="btns">
+                <button onClick={() => setSelectedId(null)}>Close</button>
+                <button
+                  onClick={handleSubmitUpdate}
+                  style={{
+                    background: "#062c12ff",
+                    color: "#ffffff",
+                  }}
+                >
+                  {sliderloading ? (
+                    <ClipLoader color="white" size={35} />
+                  ) : (
+                    "Update Slider"
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -580,7 +619,7 @@ const SliderSection = () => {
           <div className="successPop">
             <div className="slider">
               <div className="slider-upper">
-                <h2>Update Home Slider</h2>
+                <h2>Add New Home Slider</h2>
               </div>
               <form>
                 {sliders.map((slider, index) => (
@@ -643,7 +682,7 @@ const SliderSection = () => {
 
                           {slider.banner && (
                             <img
-                              src={`http://localhost:5000${slider.banner}`}
+                              src={`https://spatial-backend.onrender.com${slider.banner}`}
                               alt="banner"
                               className="preview-image"
                             />

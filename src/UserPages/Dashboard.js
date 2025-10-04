@@ -1,6 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  postDocumentsHeading, postDocumentsList, postHomeSlider, postTestimonyHeading, postTestimonyList, resetSlider, resetWhoWeAre, updateHomeCounter, updateWhoWeAre, updateWhyChoose } from "../Redux/slice/userSlice";
+import {
+  postDocumentsHeading,
+  postDocumentsList,
+  postHomeSlider,
+  postTestimonyHeading,
+  postTestimonyList,
+  resetSlider,
+  resetWhoWeAre,
+  updateHomeCounter,
+  updateWhoWeAre,
+  updateWhyChoose,
+} from "../Redux/slice/userSlice";
 import { resetUpload, uploadMedia } from "../Redux/slice/uploadSlice";
 import styled from "styled-components";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -31,7 +42,8 @@ const DashboardRap = styled.div`
     top: 5px;
     right: -40px;
   }
-  input, textarea {
+  input,
+  textarea {
     width: 400px;
     height: 40px;
     border-radius: 10px;
@@ -186,11 +198,16 @@ const DashboardRap = styled.div`
 const SliderForm = () => {
   const dispatch = useDispatch();
   const { loading: uploading } = useSelector((state) => state.upload);
-  const { sliderloading, slider, testiHeading, testiHeadloading, 
-     whoLoading, whoData, testiListloading, testiList
-     } = useSelector(
-    (state) => state.users
-  );
+  const {
+    sliderloading,
+    slider,
+    testiHeading,
+    testiHeadloading,
+    whoLoading,
+    whoData,
+    testiListloading,
+    testiList,
+  } = useSelector((state) => state.users);
   const [sliders, setSliders] = useState([
     { banner: "", title: "", subtitle: "", video: "" },
   ]);
@@ -201,8 +218,8 @@ const SliderForm = () => {
     subtitle: "",
     overview: "",
   });
-const [whyChooseData, setWhyChooseData] = useState({
-     titleOne: "",
+  const [whyChooseData, setWhyChooseData] = useState({
+    titleOne: "",
     subtitleOne: "",
     titleTwo: "",
     subtitleTwo: "",
@@ -213,9 +230,9 @@ const [whyChooseData, setWhyChooseData] = useState({
   const [homeCounterData, setHomeCounterData] = useState({
     title: "",
     projectDone: "",
-    yearsOfExperience:  "",
-    awardWinning:  "",
-    satisfiedCustomers:  "",
+    yearsOfExperience: "",
+    awardWinning: "",
+    satisfiedCustomers: "",
     subtitle: "",
   });
 
@@ -225,20 +242,21 @@ const [whyChooseData, setWhyChooseData] = useState({
     banner: "",
     overview: "",
   });
-   const [headingTesti, setHeadingTesti] = useState({ title: "", mainTitle: "" });
+  const [headingTesti, setHeadingTesti] = useState({
+    title: "",
+    mainTitle: "",
+  });
   const [listTesti, setListTesti] = useState({
     name: "",
     content: "",
   });
 
   console.log(listTesti);
-  
 
-const handleHeadingSubmitTesti = (e) => {
+  const handleHeadingSubmitTesti = (e) => {
     e.preventDefault();
     dispatch(
       postTestimonyHeading({
-     
         title: headingTesti.title,
         subtitle: headingTesti.subtitle,
       })
@@ -260,7 +278,6 @@ const handleHeadingSubmitTesti = (e) => {
     e.preventDefault();
     dispatch(
       postDocumentsHeading({
-     
         title: headingForm.title,
         subtitle: headingForm.subtitle,
       })
@@ -279,9 +296,6 @@ const handleHeadingSubmitTesti = (e) => {
     );
   };
 
-
- 
-
   const [openImageDrop, setOpenImageDrop] = useState(true);
   const [openVideoDrop, setOpenVideoDrop] = useState(false);
   const [openSliderDrop, setOpenSliderDrop] = useState(false);
@@ -297,20 +311,19 @@ const handleHeadingSubmitTesti = (e) => {
   const handleOpenWhoDrop = () => {
     setOpenWhoWeAreDrop(!openWhoWeAreDrop);
   };
-   const handleDocumnetDrop = () => {
+  const handleDocumnetDrop = () => {
     setOpenDocumentDrop(!openDocumentDrop);
   };
-  
- const handleCounterDrop = () => {
+
+  const handleCounterDrop = () => {
     setOpenCounterDrop(!openCounterDrop);
   };
-   const handleFeedbackDrop = () => {
+  const handleFeedbackDrop = () => {
     setOpenFeedBackDrop(!openFeedBackDrop);
   };
-   const handleWhyChooseDrop = () => {
+  const handleWhyChooseDrop = () => {
     setOpenWhyChooseDrop(!openWhyChooseDrop);
   };
-
 
   const handleImageDrop = () => {
     setOpenImageDrop(!openImageDrop);
@@ -379,7 +392,7 @@ const handleHeadingSubmitTesti = (e) => {
       })
       .catch((err) => console.error("Upload failed:", err));
   };
- const handleUploadThree = async (type, file) => {
+  const handleUploadThree = async (type, file) => {
     dispatch(uploadMedia({ folderName: "home", file }))
       .unwrap()
       .then((res) => {
@@ -399,17 +412,17 @@ const handleHeadingSubmitTesti = (e) => {
     dispatch(postHomeSlider(payload));
   };
 
-   const handleSubmitRwo = (e) => {
+  const handleSubmitRwo = (e) => {
     e.preventDefault();
     dispatch(updateWhoWeAre(whoWeAre));
   };
 
-   const handleSubmitCounter = (e) => {
+  const handleSubmitCounter = (e) => {
     e.preventDefault();
     dispatch(updateHomeCounter(homeCounterData));
   };
 
-   const handleSubmitWhyChoose = (e) => {
+  const handleSubmitWhyChoose = (e) => {
     e.preventDefault();
     dispatch(updateWhyChoose(whyChooseData));
   };
@@ -599,326 +612,367 @@ const handleHeadingSubmitTesti = (e) => {
                   />
                 )}
               </div>
-               <div className="btns">
-              <button onClick={handleSubmitRwo} className="btn-2" type="submit" disabled={uploading}>
-                {whoLoading ? "Submitting..." : "✅ Submit"}
-              </button>
+              <div className="btns">
+                <button
+                  onClick={handleSubmitRwo}
+                  className="btn-2"
+                  type="submit"
+                  disabled={uploading}
+                >
+                  {whoLoading ? "Submitting..." : "✅ Submit"}
+                </button>
               </div>
             </div>
           </form>
         )}
       </div>
-       <div className="slider">
+      <div className="slider">
         <div onClick={handleDocumnetDrop} className="slider-upper">
           <h2>Update Documents Section</h2>
         </div>
         {openDocumentDrop && (
           <>
-         {/* Heading Form */}
-      <div className="slider-group">
-        <h3>Heading</h3>
-        <input
-          type="text"
-          placeholder="Heading Title"
-          value={headingForm.title}
-          onChange={(e) =>
-            setHeadingForm({ ...headingForm, title: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder="Heading Subtitle"
-          value={headingForm.subtitle}
-          onChange={(e) =>
-            setHeadingForm({ ...headingForm, subtitle: e.target.value })
-          }
-        />
-         <div className="btns">
-        <button className="btn-2" onClick={handleHeadingSubmit}>Save Heading</button>
-        </div>
-      </div>
-
-      {/* Document Form */}
-      <form>
-      <div className="slider-group">
-        <h3>Add Document</h3>
-        <input
-          type="text"
-          placeholder="Document Title"
-          value={listForm.title}
-          onChange={(e) =>
-            setListForm({ ...listForm, title: e.target.value })
-          }
-        />
-       
-        <textarea
-          placeholder="Overview"
-          value={listForm.overview}
-          onChange={(e) =>
-            setListForm({ ...listForm, overview: e.target.value })
-          }
-        />
-        
-       
-
-         <div className="upload-container">
-                <label className="upload-box">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) =>
-                      handleUploadThree("banner", e.target.files[0])
-                    }
-                  />
-                  <div className="upload-content">
-                    <span className="upload-icon">📤</span>
-                    <p>Upload Image</p>
-                  </div>
-                </label>
-
-                {listForm.banner && (
-                  <img
-                    src={`http://localhost:5000${listForm.banner}`}
-                    alt="banner"
-                    className="preview-image"
-                  />
-                )}
+            {/* Heading Form */}
+            <div className="slider-group">
+              <h3>Heading</h3>
+              <input
+                type="text"
+                placeholder="Heading Title"
+                value={headingForm.title}
+                onChange={(e) =>
+                  setHeadingForm({ ...headingForm, title: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                placeholder="Heading Subtitle"
+                value={headingForm.subtitle}
+                onChange={(e) =>
+                  setHeadingForm({ ...headingForm, subtitle: e.target.value })
+                }
+              />
+              <div className="btns">
+                <button className="btn-2" onClick={handleHeadingSubmit}>
+                  Save Heading
+                </button>
               </div>
-         <div className="btns">
-        <button className="btn-2" onClick={handleListSubmit}>Save Document</button>
-        </div>
-      </div>
-</form>
-     
+            </div>
+
+            {/* Document Form */}
+            <form>
+              <div className="slider-group">
+                <h3>Add Document</h3>
+                <input
+                  type="text"
+                  placeholder="Document Title"
+                  value={listForm.title}
+                  onChange={(e) =>
+                    setListForm({ ...listForm, title: e.target.value })
+                  }
+                />
+
+                <textarea
+                  placeholder="Overview"
+                  value={listForm.overview}
+                  onChange={(e) =>
+                    setListForm({ ...listForm, overview: e.target.value })
+                  }
+                />
+
+                <div className="upload-container">
+                  <label className="upload-box">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) =>
+                        handleUploadThree("banner", e.target.files[0])
+                      }
+                    />
+                    <div className="upload-content">
+                      <span className="upload-icon">📤</span>
+                      <p>Upload Image</p>
+                    </div>
+                  </label>
+
+                  {listForm.banner && (
+                    <img
+                      src={`http://localhost:5000${listForm.banner}`}
+                      alt="banner"
+                      className="preview-image"
+                    />
+                  )}
+                </div>
+                <div className="btns">
+                  <button className="btn-2" onClick={handleListSubmit}>
+                    Save Document
+                  </button>
+                </div>
+              </div>
+            </form>
           </>
         )}
       </div>
-       <div className="slider">
+      <div className="slider">
         <div onClick={handleCounterDrop} className="slider-upper">
           <h2>Update Counter Section</h2>
         </div>
         {openCounterDrop && (
           <>
-      
+            {/* Counter Form */}
+            <form>
+              <div className="slider-group">
+                <input
+                  type="text"
+                  placeholder=" Title"
+                  value={homeCounterData.title}
+                  onChange={(e) =>
+                    setHomeCounterData({
+                      ...homeCounterData,
+                      title: e.target.value,
+                    })
+                  }
+                />
+                <input
+                  type="text"
+                  placeholder=" Subtitle"
+                  value={homeCounterData.subtitle}
+                  onChange={(e) =>
+                    setHomeCounterData({
+                      ...homeCounterData,
+                      subtitle: e.target.value,
+                    })
+                  }
+                />
+                <input
+                  type="number"
+                  placeholder=" Project Done Count"
+                  value={homeCounterData.projectDone}
+                  onChange={(e) =>
+                    setHomeCounterData({
+                      ...homeCounterData,
+                      projectDone: e.target.value,
+                    })
+                  }
+                />
+                <input
+                  type="number"
+                  placeholder="Years of Experience"
+                  value={homeCounterData.yearsOfExperience}
+                  onChange={(e) =>
+                    setHomeCounterData({
+                      ...homeCounterData,
+                      yearsOfExperience: e.target.value,
+                    })
+                  }
+                />
+                <input
+                  type="number"
+                  placeholder="Number of award worn"
+                  value={homeCounterData.awardWinning}
+                  onChange={(e) =>
+                    setHomeCounterData({
+                      ...homeCounterData,
+                      awardWinning: e.target.value,
+                    })
+                  }
+                />
+                <input
+                  type="number"
+                  placeholder="Number of Customers Satisfied"
+                  value={homeCounterData.satisfiedCustomers}
+                  onChange={(e) =>
+                    setHomeCounterData({
+                      ...homeCounterData,
+                      satisfiedCustomers: e.target.value,
+                    })
+                  }
+                />
 
-      {/* Counter Form */}
-      <form>
-      <div className="slider-group">
-        <input
-          type="text"
-          placeholder=" Title"
-          value={homeCounterData.title}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, title: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder=" Subtitle"
-          value={homeCounterData.subtitle}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, subtitle: e.target.value })
-          }
-        />
-        <input
-          type="number"
-          placeholder=" Project Done Count"
-          value={homeCounterData.projectDone}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, projectDone: e.target.value })
-          }
-        />
-        <input
-          type="number"
-          placeholder="Years of Experience"
-          value={homeCounterData.yearsOfExperience}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, yearsOfExperience: e.target.value })
-          }
-        />
-         <input
-          type="number"
-          placeholder="Number of award worn"
-          value={homeCounterData.awardWinning}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, awardWinning: e.target.value })
-          }
-        />
-        <input
-          type="number"
-          placeholder="Number of Customers Satisfied"
-          value={homeCounterData.satisfiedCustomers}
-          onChange={(e) =>
-            setHomeCounterData({ ...homeCounterData, satisfiedCustomers: e.target.value })
-          }
-        />
-       
-
-      
-         <div className="btns">
-        <button className="btn-2" onClick={handleSubmitCounter}>Save Counter</button>
-        </div>
-      </div>
-</form>
-     
+                <div className="btns">
+                  <button className="btn-2" onClick={handleSubmitCounter}>
+                    Save Counter
+                  </button>
+                </div>
+              </div>
+            </form>
           </>
         )}
       </div>
- <div className="slider">
+      <div className="slider">
         <div onClick={handleWhyChooseDrop} className="slider-upper">
           <h2>Update Why Choose Us Section</h2>
         </div>
         {openWhyChooseDrop && (
           <>
-      
+            {/* Counter Form */}
+            <form>
+              <div className="slider-group">
+                <input
+                  type="text"
+                  placeholder=" Title One"
+                  value={whyChooseData.titleOne}
+                  onChange={(e) =>
+                    setWhyChooseData({
+                      ...whyChooseData,
+                      titleOne: e.target.value,
+                    })
+                  }
+                />
+                <textarea
+                  type="text"
+                  placeholder="Content One"
+                  value={whyChooseData.subtitleOne}
+                  onChange={(e) =>
+                    setWhyChooseData({
+                      ...whyChooseData,
+                      subtitleOne: e.target.value,
+                    })
+                  }
+                />
+                <input
+                  type="text"
+                  placeholder=" Title Two"
+                  value={whyChooseData.titleTwo}
+                  onChange={(e) =>
+                    setWhyChooseData({
+                      ...whyChooseData,
+                      titleTwo: e.target.value,
+                    })
+                  }
+                />
+                <textarea
+                  type="text"
+                  placeholder="Content Two"
+                  value={whyChooseData.subtitleTwo}
+                  onChange={(e) =>
+                    setWhyChooseData({
+                      ...whyChooseData,
+                      subtitleTwo: e.target.value,
+                    })
+                  }
+                />
+                <input
+                  type="text"
+                  placeholder=" Title Three"
+                  value={whyChooseData.titleThree}
+                  onChange={(e) =>
+                    setWhyChooseData({
+                      ...whyChooseData,
+                      titleThree: e.target.value,
+                    })
+                  }
+                />
+                <textarea
+                  type="text"
+                  placeholder="Content Three"
+                  value={whyChooseData.subtitleThree}
+                  onChange={(e) =>
+                    setWhyChooseData({
+                      ...whyChooseData,
+                      subtitleThree: e.target.value,
+                    })
+                  }
+                />
 
-      {/* Counter Form */}
-      <form>
-      <div className="slider-group">
-        <input
-          type="text"
-          placeholder=" Title One"
-          value={whyChooseData.titleOne}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, titleOne: e.target.value })
-          }
-        />
-        <textarea
-          type="text"
-          placeholder="Content One"
-          value={whyChooseData.subtitleOne}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, subtitleOne: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder=" Title Two"
-          value={whyChooseData.titleTwo}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, titleTwo: e.target.value })
-          }
-        />
-        <textarea
-          type="text"
-          placeholder="Content Two"
-          value={whyChooseData.subtitleTwo}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, subtitleTwo: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder=" Title Three"
-          value={whyChooseData.titleThree}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, titleThree: e.target.value })
-          }
-        />
-        <textarea
-          type="text"
-          placeholder="Content Three"
-          value={whyChooseData.subtitleThree}
-          onChange={(e) =>
-            setWhyChooseData({ ...whyChooseData, subtitleThree: e.target.value })
-          }
-        />
-     
-       
-
-      
-         <div className="btns">
-        <button className="btn-2" onClick={handleSubmitWhyChoose}>Save Why Choose Us</button>
-        </div>
-      </div>
-</form>
-     
+                <div className="btns">
+                  <button className="btn-2" onClick={handleSubmitWhyChoose}>
+                    Save Why Choose Us
+                  </button>
+                </div>
+              </div>
+            </form>
           </>
         )}
       </div>
 
-       <div className="slider">
+      <div className="slider">
         <div onClick={handleFeedbackDrop} className="slider-upper">
           <h2>Update Customer Feedback Section</h2>
         </div>
         {openFeedBackDrop && (
           <>
-         {/* Heading Form */}
-      <div className="slider-group">
-        <h3>Heading</h3>
-        <input
-          type="text"
-          placeholder="Heading Title"
-          value={headingTesti.title}
-          onChange={(e) =>
-            setHeadingTesti({ ...headingTesti, title: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder="Heading Main Title"
-          value={headingTesti.mainTitle}
-          onChange={(e) =>
-            setHeadingTesti({ ...headingTesti, mainTitle: e.target.value })
-          }
-        />
-         <div className="btns">
-        <button className="btn-2" onClick={handleHeadingSubmitTesti}>Save Heading</button>
-        </div>
-      </div>
+            {/* Heading Form */}
+            <div className="slider-group">
+              <h3>Heading</h3>
+              <input
+                type="text"
+                placeholder="Heading Title"
+                value={headingTesti.title}
+                onChange={(e) =>
+                  setHeadingTesti({ ...headingTesti, title: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                placeholder="Heading Main Title"
+                value={headingTesti.mainTitle}
+                onChange={(e) =>
+                  setHeadingTesti({
+                    ...headingTesti,
+                    mainTitle: e.target.value,
+                  })
+                }
+              />
+              <div className="btns">
+                <button className="btn-2" onClick={handleHeadingSubmitTesti}>
+                  Save Heading
+                </button>
+              </div>
+            </div>
 
-      {/* Document Form */}
-      <form>
-      <div className="slider-group">
-        <h3>Add Customer Feedback</h3>
-        <input
-          type="text"
-          placeholder="Customer Full Name"
-          value={listTesti.name}
-          onChange={(e) =>
-            setListTesti({ ...listTesti, name: e.target.value })
-          }
-        />
-       
-        <textarea
-          placeholder="Enter Feedback"
-          value={listTesti.content}
-          onChange={(e) =>
-            setListTesti({ ...listTesti, content: e.target.value })
-          }
-        />
-        
-       
+            {/* Document Form */}
+            <form>
+              <div className="slider-group">
+                <h3>Add Customer Feedback</h3>
+                <input
+                  type="text"
+                  placeholder="Customer Full Name"
+                  value={listTesti.name}
+                  onChange={(e) =>
+                    setListTesti({ ...listTesti, name: e.target.value })
+                  }
+                />
 
-         
-         <div className="btns">
-        <button className="btn-2" onClick={handleListSubmitTesti}>Save Document</button>
-        </div>
-      </div>
-</form>
-     
+                <textarea
+                  placeholder="Enter Feedback"
+                  value={listTesti.content}
+                  onChange={(e) =>
+                    setListTesti({ ...listTesti, content: e.target.value })
+                  }
+                />
+
+                <div className="btns">
+                  <button className="btn-2" onClick={handleListSubmitTesti}>
+                    Save Document
+                  </button>
+                </div>
+              </div>
+            </form>
           </>
         )}
       </div>
 
-
-<div>
-      {slider ? (
-        <div className="dropdown-container">
-          <div className="successPop">
-            <p></p>
-            <button onClick={() => resetSlider()}>Close</button>
+      <div>
+        {slider ? (
+          <div className="dropdown-container">
+            <div className="successPop">
+              <p></p>
+              <button onClick={() => resetSlider()}>Close</button>
+            </div>
           </div>
-        </div>
-      ): ""}
-       {whoData ? (
-        <div className="dropdown-container">
-          <div className="successPop">
-            <p>Who we are updated successfully</p>
-            <button onClick={() => dispatch(resetWhoWeAre())}>Close</button>
+        ) : (
+          ""
+        )}
+        {whoData ? (
+          <div className="dropdown-container">
+            <div className="successPop">
+              <p>Who we are updated successfully</p>
+              <button onClick={() => dispatch(resetWhoWeAre())}>Close</button>
+            </div>
           </div>
-        </div>
-      ): ""}
+        ) : (
+          ""
+        )}
       </div>
     </DashboardRap>
   );

@@ -3,17 +3,39 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 
-const API_URL = "http://localhost:5000/api/home"
-const API_URL_TWO = "http://localhost:5000/api/general"
-const BASE_URL = "http://localhost:5000/api/about"
-const BASE_URL_NEW = "http://localhost:5000/api/project"
-const BASE_URL_TWO = "http://localhost:5000/api/service"
+const API_URL = "https://spatial-backend.onrender.com/api/home"
+const API_URL_TWO = "https://spatial-backend.onrender.com/api/general"
+const BASE_URL = "https://spatial-backend.onrender.com/api/about"
+const BASE_URL_NEW = "https://spatial-backend.onrender.com/api/project"
+const BASE_URL_TWO = "https://spatial-backend.onrender.com/api/service"
+
+
+
+// const API_URL = "http://localhost:5000/api/home"
+// const API_URL_TWO = "http://localhost:5000/api/general"
+// const BASE_URL = "http://localhost:5000/api/about"
+// const BASE_URL_NEW = "http://localhost:5000/api/project"
+// const BASE_URL_TWO = "http://localhost:5000/api/service"
 // Async thunk for fetching Home data
 export const fetchHomepage = createAsyncThunk(
   "content/fetchFeatures",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${API_URL}/user/auth/all-home`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching Home data:", error);
+      return rejectWithValue(error.response?.data || "An error occurred while fetching Home data");
+    }
+  }
+);
+
+
+export const fetchForAllHomepage = createAsyncThunk(
+  "content/fetchForAllHomepage",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${API_URL}/home-page/home`);
       return response.data;
     } catch (error) {
       console.error("Error fetching Home data:", error);
@@ -53,7 +75,7 @@ export const fetchObjectpage = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${BASE_URL_NEW}/user/auth/projects/single-project/${id}`);
-      return response.data?.data;
+      return response.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
     }
@@ -79,7 +101,7 @@ export const fetchObjectpage = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${BASE_URL_TWO}/user/auth/services/specific-service/${id}`);
-      return response.data?.data;
+      return response.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
     }
@@ -141,11 +163,13 @@ const homeSlice = createSlice({
     contactObject: null,
     aboutObject: null,
     contactloading: false,
+    projectDetails: null,
     generalObject: null,
     successContact: null,
     serviceDetails: null,
     serviceObject: null,
     aboutloading: false,
+    homeData: null,
     loading: false,
     submitloading: false,
     error: null,
@@ -169,6 +193,22 @@ const homeSlice = createSlice({
         state.homeObject = action.payload;
       })
       .addCase(fetchHomepage.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+
+
+        builder
+      // Fetch Home Data
+      .addCase(fetchForAllHomepage.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchForAllHomepage.fulfilled, (state, action) => {
+        state.loading = false;
+        state.homeData = action.payload;
+      })
+      .addCase(fetchForAllHomepage.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
@@ -229,6 +269,20 @@ builder
         state.projectObject = action.payload;
       })
       .addCase(fetchProjectpage.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+
+builder
+         .addCase(fetchProjectDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProjectDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.projectDetails = action.payload;
+      })
+      .addCase(fetchProjectDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

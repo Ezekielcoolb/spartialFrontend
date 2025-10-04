@@ -227,15 +227,54 @@ const SliderRap = styled.div`
     border-top: 1px solid #ccc;
     padding-top: 30px;
   }
+  @media (max-width: 500px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 300px;
+    }
+    .be-done {
+      display: none;
+    }
+    padding: 30px 0px;
+    .slider-group-two {
+      margin-left: 20px;
+    }
+    .upper-slide {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 20px;
+    }
+    .btns-new {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+  @media (max-width: 370px) {
+    input,
+    textarea,
+    .upload-two-label,
+    .upload-box {
+      width: 280px;
+    }
+  }
 `;
 
 const DocumentSectionHome = () => {
   const dispatch = useDispatch();
   const { loading: uploading } = useSelector((state) => state.upload);
   const { homeObject, loading, error } = useSelector((state) => state.content);
-  const { sliderloading, slider, sliderUpade, docloading, headings, docListloading, lists, sliderDelete } = useSelector(
-    (state) => state.users
-  );
+  const {
+    sliderloading,
+    slider,
+    sliderUpade,
+    docloading,
+    headings,
+    docListloading,
+    lists,
+    sliderDelete,
+  } = useSelector((state) => state.users);
   const [selectedId, setSelectedId] = useState(null);
   const [openImageDrop, setOpenImageDrop] = useState(true);
   const [openVideoDrop, setOpenVideoDrop] = useState(false);
@@ -243,13 +282,11 @@ const DocumentSectionHome = () => {
   const [openVideoDropTwo, setOpenVideoDropTwo] = useState(false);
   const [newSliderOpen, setNewSliderOpen] = useState(false);
 
-  
-
   const handleOpen = () => {
     setNewSliderOpen(!newSliderOpen);
   };
   const sliding = homeObject?.documentsTwo?.lists || [];
-  const heading = homeObject?.documentsTwo?.headings 
+  const heading = homeObject?.documentsTwo?.headings;
 
   console.log(lists);
 
@@ -323,15 +360,13 @@ const DocumentSectionHome = () => {
 
   const handleClose = () => {
     dispatch(resetSlider());
-    setNewSliderOpen(false)
+    setNewSliderOpen(false);
     setSelectedId(null);
-    setListForm(
-        {
-    title: "",
-    banner: "",
-    overview: "",
-  }
-    )
+    setListForm({
+      title: "",
+      banner: "",
+      overview: "",
+    });
   };
   const handleHeadingSubmit = (e) => {
     e.preventDefault();
@@ -384,7 +419,7 @@ const DocumentSectionHome = () => {
             <h2>Document Section</h2>
           </div>
         </div>
-        <div className="slider-group">
+        <div className="slider-group slider-group-two">
           <h3>Update Home Document Heading</h3>
           <input
             type="text"
@@ -403,19 +438,22 @@ const DocumentSectionHome = () => {
             }
           />
           <div className="upper-slide">
-            <button style={{
-                background: "#18075bff"
-            }} onClick={handleHeadingSubmit}>
-               {docloading ? (
-                                <ClipLoader color="white" size={35} />
-                              ) : (
-                                "Update Heading"
-                              )}
+            <button
+              style={{
+                background: "#18075bff",
+              }}
+              onClick={handleHeadingSubmit}
+            >
+              {docloading ? (
+                <ClipLoader color="white" size={35} />
+              ) : (
+                "Update Heading"
+              )}
             </button>
           </div>
         </div>
         <div className="upper-slide documents">
-            <h3>Documents</h3>
+          <h3>Documents</h3>
           <button
             style={{
               marginBottom: "20px",
@@ -431,7 +469,9 @@ const DocumentSectionHome = () => {
               <tr style={{ background: "#f4f4f4" }}>
                 <th style={{ textAlign: "left" }}>S/N</th>
                 <th style={{ textAlign: "left" }}>Title </th>
-                <th style={{ textAlign: "left" }}>Overview</th>
+                <th className="be-done " style={{ textAlign: "left" }}>
+                  Overview
+                </th>
                 <th style={{ textAlign: "left" }}>Action</th>
               </tr>
             </thead>
@@ -440,7 +480,7 @@ const DocumentSectionHome = () => {
                 <tr className="tr-hover">
                   <td>{index + 1}</td>
                   <td>{items.title}</td>
-                  <td>{items.overview}</td>
+                  <td className="be-done">{items.overview}</td>
                   <td>
                     <div className="btns">
                       <button
@@ -530,7 +570,7 @@ const DocumentSectionHome = () => {
 
                         {formData.banner && (
                           <img
-                            src={`http://localhost:5000${formData.banner}`}
+                            src={`https://spatial-backend.onrender.com${formData.banner}`}
                             alt="banner"
                             className="preview-image"
                           />
@@ -575,7 +615,7 @@ const DocumentSectionHome = () => {
       ) : (
         ""
       )}
-       {lists ? (
+      {lists ? (
         <div className="dropdown-containerTwo">
           <div className="successPop">
             <p>Document Saved Successfully. Thanks</p>
@@ -586,7 +626,7 @@ const DocumentSectionHome = () => {
         ""
       )}
 
-          {headings ? (
+      {headings ? (
         <div className="dropdown-containerTwo">
           <div className="successPop">
             <p>Document heading Saved Successfully. Thanks</p>
@@ -649,7 +689,7 @@ const DocumentSectionHome = () => {
 
                     {listForm.banner && (
                       <img
-                        src={`http://localhost:5000${listForm.banner}`}
+                        src={`https://spatial-backend.onrender.com${listForm.banner}`}
                         alt="banner"
                         className="preview-image"
                       />
@@ -658,10 +698,10 @@ const DocumentSectionHome = () => {
                   <div className="upper-slide">
                     <button className="btn-2" onClick={handleListSubmit}>
                       {docListloading ? (
-                            <ClipLoader color="white" size={35} />
-                          ) : (
-                            "Save Document"
-                          )}
+                        <ClipLoader color="white" size={35} />
+                      ) : (
+                        "Save Document"
+                      )}
                     </button>
                     <button
                       style={{

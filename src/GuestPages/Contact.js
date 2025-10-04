@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useDispatch, useSelector } from "react-redux";
-
+import { addMessage, resetSlider } from "../Redux/slice/messageSlice";
+import { ClipLoader } from "react-spinners";
 
 const ContactRap = styled.div`
 @media (max-width: 778px) {
@@ -254,11 +255,17 @@ z-index: 9999;
 `;
 
 const Contact = () => {
-
+const dispatch = useDispatch()
+   const { successContact, submitloading, error } = useSelector(
+      (state) => state.message || []
+    );
+    console.log(successContact);
+    console.log(error);
+    
 
   const [form, setForm] = useState({
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     message: "",
   });
@@ -271,15 +278,18 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+      dispatch(addMessage(form));
   };
 
   const handleRest = () => {
     setForm({
-      first_name: "",
-      last_name: "",
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
       email: "",
       message: "",
     });
+dispatch(resetSlider())
   };
   return (
     <ContactRap>
@@ -298,9 +308,9 @@ const Contact = () => {
                     First Name
                     <input
                       type="text"
-                      name="first_name"
+                      name="firstName"
                       placeholder="First Name"
-                      value={form.first_name}
+                      value={form.firstName}
                       onChange={handleChange}
                       required
                     />
@@ -309,9 +319,20 @@ const Contact = () => {
                     Last Name
                     <input
                       type="text"
-                      name="last_name"
+                      name="lastName"
                       placeholder="Last Name"
-                      value={form.last_name}
+                      value={form.lastName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </label>
+                   <label>
+                    Phone Number
+                    <input
+                      type="text"
+                      name="phoneNumber"
+                      placeholder="Phone Number"
+                      value={form.phoneNumber}
                       onChange={handleChange}
                       required
                     />
@@ -344,7 +365,7 @@ const Contact = () => {
                 </div>
                 
                   <button type="submit">
-               Submit </button>
+               {submitloading ? <ClipLoader size={18} color="#fff" /> : "Submit"} </button>
               </form>
             </div>
            
@@ -392,7 +413,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
-      {/* {successContact ? (
+      {successContact ? (
         <div className="dropdown-contain">
           <div className="dropdown-div">
             <p>Thank you for contacting us! We will get back to you soon.</p>
@@ -403,7 +424,7 @@ const Contact = () => {
         </div>
       ) : (
         ""
-      )} */}
+      )}
     </ContactRap>
   );
 };
